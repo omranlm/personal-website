@@ -6,6 +6,8 @@
   <title>OSM Syria Community — Omran Najjar</title>
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
   <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
   <style>
     /* ── OSM Syria theme overrides ── */
     body {
@@ -56,6 +58,41 @@
 
     /* tech tags */
     .tech-tag { background: var(--osm-dark); color: #a8dbd5; }
+
+    /* community map */
+    .community-map-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid #b8d8d4;
+      margin: .5rem 0 2rem;
+      position: relative;
+    }
+    #community-map {
+      width: 100%;
+      height: 420px;
+    }
+    .map-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e8f5f3;
+      font-size: .88rem;
+      color: var(--osm-teal2);
+      z-index: 1000;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+    .map-loading.hidden { opacity: 0; }
+    /* maplibre popup overrides */
+    .maplibregl-popup-content {
+      border-radius: 8px;
+      font-size: .82rem;
+      color: #1a2820;
+      padding: .75rem 1rem;
+    }
+    .maplibregl-popup-content strong { color: #006560; }
 
     /* fair-links (used for osm-syria links too) */
     .fair-link { background: #fff; border-color: #b8d8d4; color: var(--osm-dark); }
@@ -325,6 +362,17 @@
         <li><strong>التمثيل:</strong> أُمثِّل مجتمع OSM السوري في المنتديات الأوسع لـ OSM والنقاشات الدولية للخرائط المفتوحة</li>
       </ul>
 
+      <h2 class="lang-en">Community Map</h2>
+      <h2 class="lang-ar">خريطة المجتمع</h2>
+      <p class="lang-en" style="margin-bottom:.75rem;">Live data from the community's uMap project — members and locations across Syria and the global diaspora.</p>
+      <p class="lang-ar" style="margin-bottom:.75rem;">بيانات مباشرة من مشروع uMap للمجتمع — أعضاء ومواقع في سوريا والشتات العالمي.</p>
+      <div class="community-map-wrap">
+        <div class="map-loading" id="map-loading">
+          <span class="lang-en">Loading map data…</span>
+          <span class="lang-ar">جاري تحميل بيانات الخريطة…</span>
+        </div>
+        <div id="community-map"></div>
+      </div>
       <h2 class="lang-en">Links</h2>
       <h2 class="lang-ar">الروابط</h2>
       <div class="fair-links">
@@ -351,7 +399,7 @@
         <a href="https://docs.google.com/document/d/1zjavmvoauSKdO8bOZHegefcna7cGwBe2Z-xL_7MVijw/edit#heading=h.omcngg4ejt5v" target="_blank" rel="noopener" class="fair-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           <span class="lang-en">Meeting Notes</span>
-          <span class="lang-ar">ملاحظات الاجتماعات</span>
+          <span class="lang-ar">دقائق الاجتماعات الدورية
         </a>
       </div>
 
@@ -373,6 +421,114 @@
 
     const saved = localStorage.getItem('osm-syria-lang');
     if (saved === 'ar') setLang('ar');
+
+    // ── Community map (MapLibre GL) ──
+    const LAYER1_URL = 'https://umap.hotosm.org/en/datalayer/133/4e4a68af-e16d-455a-ab95-201c4f5981f1/';
+    const LAYER2_URL = 'https://umap.hotosm.org/en/datalayer/133/3d6af9a8-72d8-4351-b867-abe909088ece/';
+
+    const map = new maplibregl.Map({
+      container: 'community-map',
+      style: {
+        version: 8,
+        sources: {
+          osm: {
+            type: 'raster',
+            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            tileSize: 256,
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }
+        },
+        layers: [{ id: 'osm', type: 'raster', source: 'osm' }]
+      },
+      center: [38, 34],
+      zoom: 4,
+      scrollZoom: true,
+      attributionControl: false
+    });
+
+    map.addControl(new maplibregl.AttributionControl({ compact: false }), 'bottom-right');
+    map.addControl(new maplibregl.NavigationControl(), 'top-right');
+
+    function popupHTML(props) {
+      const name = props.name || props.Name || '';
+      const country = props.country || '';
+      const desc = props.description || props.Description || '';
+      return `${name ? `<strong>${name}</strong>` : ''}${country ? `<br><span style="color:#7a9e99">${country}</span>` : ''}${desc ? `<br>${desc}` : ''}`;
+    }
+
+    function addClickPopup(layerId) {
+      map.on('click', layerId, e => {
+        const props = e.features[0].properties;
+        const html = popupHTML(props);
+        if (html.trim()) {
+          new maplibregl.Popup({ closeButton: false, maxWidth: '260px' })
+            .setLngLat(e.lngLat)
+            .setHTML(html)
+            .addTo(map);
+        }
+      });
+      map.on('mouseenter', layerId, () => map.getCanvas().style.cursor = 'pointer');
+      map.on('mouseleave', layerId, () => map.getCanvas().style.cursor = '');
+    }
+
+    map.on('load', async () => {
+      try {
+        const [res1, res2] = await Promise.all([fetch(LAYER1_URL), fetch(LAYER2_URL)]);
+        const [data1, data2] = await Promise.all([res1.json(), res2.json()]);
+
+        map.addSource('layer1', { type: 'geojson', data: data1 });
+        map.addLayer({
+          id: 'layer1-circles',
+          type: 'circle',
+          source: 'layer1',
+          filter: ['==', '$type', 'Point'],
+          paint: {
+            'circle-radius': 7,
+            'circle-color': '#0c7c70',
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 1.5,
+            'circle-opacity': 0.85
+          }
+        });
+        addClickPopup('layer1-circles');
+
+        map.addSource('layer2', { type: 'geojson', data: data2 });
+        map.addLayer({
+          id: 'layer2-circles',
+          type: 'circle',
+          source: 'layer2',
+          filter: ['==', '$type', 'Point'],
+          paint: {
+            'circle-radius': 7,
+            'circle-color': '#c1272d',
+            'circle-stroke-color': '#fff',
+            'circle-stroke-width': 1.5,
+            'circle-opacity': 0.85
+          }
+        });
+        addClickPopup('layer2-circles');
+
+        // Fit bounds to all point features
+        const coords = [...(data1.features || []), ...(data2.features || [])]
+          .filter(f => f.geometry?.type === 'Point' && f.geometry.coordinates?.length === 2)
+          .map(f => f.geometry.coordinates);
+
+        if (coords.length > 0) {
+          const lngs = coords.map(c => c[0]);
+          const lats = coords.map(c => c[1]);
+          map.fitBounds(
+            [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]],
+            { padding: 40, maxZoom: 6, duration: 800 }
+          );
+        }
+      } catch (e) {
+        console.warn('Map layer fetch failed', e);
+      } finally {
+        const loader = document.getElementById('map-loading');
+        loader.classList.add('hidden');
+        setTimeout(() => loader.style.display = 'none', 300);
+      }
+    });
   </script>
 
 </body>
