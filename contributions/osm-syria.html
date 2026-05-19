@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSM Syria Community — Omran Najjar</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── OSM Syria theme overrides ── */
+    body {
+      background: #f0f8f7 !important;
+      --osm-dark:   #21242a;
+      --osm-teal:   #0c7c70;
+      --osm-teal2:  #006560;
+      --osm-red:    #c1272d;
+      --osm-light:  #f0f8f7;
+      --osm-text:   #1a2820;
+      --osm-mid:    #404e5e;
+    }
+
+    /* back link */
+    .back-link { color: var(--osm-teal); border-color: #c8e0de; background: #e8f5f3; }
+    .back-link:hover { background: var(--osm-teal); color: #fff; }
+
+    /* join banner */
+    .osm-syria-join { background: var(--osm-dark); }
+    .osm-syria-join-text strong { color: #a8dbd5; }
+    .osm-syria-join-text p { color: #7ab8b2; }
+    .osm-syria-join-btn { background: var(--osm-teal); color: #fff; }
+    .osm-syria-join-btn:hover { background: var(--osm-teal2); }
+
+    /* header */
+    .contribution-page .page-tag { color: var(--osm-teal); }
+    .contribution-page h1 { color: var(--osm-dark); }
+    .contribution-page .subtitle { color: var(--osm-mid); }
+    .contribution-page header { border-bottom-color: #c0deda; }
+
+    /* meta */
+    .contribution-meta { border-top: none; }
+    .meta-item label { color: var(--osm-teal2); }
+    .meta-item span, .meta-item a { color: var(--osm-dark); }
+
+    /* body headings & text */
+    .contribution-body h2 {
+      color: var(--osm-dark);
+      border-bottom-color: #c0deda;
+    }
+    .contribution-body p,
+    .contribution-body li { color: #2e4a46; }
+
+    /* pillar cards */
+    .pillar-item { background: #fff; border-color: #b8d8d4; }
+    .pillar-item strong { color: var(--osm-dark); }
+    .pillar-item p { color: #4a7068; }
+
+    /* tech tags */
+    .tech-tag { background: var(--osm-dark); color: #a8dbd5; }
+
+    /* fair-links (used for osm-syria links too) */
+    .fair-link { background: #fff; border-color: #b8d8d4; color: var(--osm-dark); }
+    .fair-link:hover { background: var(--osm-teal); border-color: var(--osm-teal); color: #fff; }
+
+    /* lang switcher */
+    .lang-switcher-wrap {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      flex-shrink: 0;
+    }
+    .lang-switcher-note {
+      font-size: .7rem;
+      color: #7a9e99;
+      max-width: 150px;
+      line-height: 1.3;
+      text-align: right;
+    }
+    body.rtl .lang-switcher-note { text-align: left; }
+    .lang-switcher {
+      display: flex;
+      gap: .4rem;
+      border: none;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .lang-switcher button {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      background: #fff;
+      border: 1.5px solid #b0d0cc;
+      border-radius: 20px;
+      padding: .3rem .7rem;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--osm-teal2);
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .lang-switcher button:hover { border-color: var(--osm-teal); color: var(--osm-teal); }
+    .lang-switcher button.active {
+      background: var(--osm-teal);
+      border-color: var(--osm-teal);
+      color: #fff;
+    }
+
+    .osm-syria-logo {
+      display: block;
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      border-radius: 10px;
+      margin: 0 0 1.5rem;
+    }
+    .lang-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 0;
+      border: 1.5px solid #d0b0b0;
+      border-radius: 20px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .lang-switcher button {
+      background: none;
+      border: none;
+      padding: .3rem .85rem;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #9a7070;
+      letter-spacing: .04em;
+      transition: background .15s, color .15s;
+    }
+    .lang-switcher button.active {
+      background: var(--teal);
+      color: var(--white);
+    }
+    .lang-ar { display: none !important; }
+    body.rtl .lang-ar { display: block !important; }
+    body.rtl span.lang-ar,
+    body.rtl strong.lang-ar,
+    body.rtl label.lang-ar { display: inline !important; }
+    body.rtl .lang-en { display: none !important; }
+    body.rtl { direction: rtl; font-family: 'Segoe UI', Tahoma, 'Arial', sans-serif; }
+    body.rtl .back-link svg { transform: scaleX(-1); }
+    body.rtl .contribution-meta { flex-direction: row-reverse; flex-wrap: wrap; }
+    body.rtl .fair-links { flex-direction: row-reverse; flex-wrap: wrap; }
+    body.rtl .contribution-body ul { margin: 0 1.2rem 1rem 0; }
+    body.rtl .osm-syria-join { flex-direction: row-reverse; }
+    body.rtl .pillar-grid { direction: rtl; }
+    body.rtl .lang-top-bar { flex-direction: row-reverse; }
+  </style>
+</head>
+<body style="background: var(--light);">
+
+  <div class="contribution-page">
+
+    <div class="lang-top-bar">
+      <a href="../index.html#contributions" class="back-link" style="margin-bottom:0;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span class="lang-en">Back to main page</span>
+        <span class="lang-ar">العودة إلى الصفحة الرئيسية</span>
+      </a>
+      <div class="lang-switcher-wrap">
+        <span class="lang-switcher-note">
+          <span class="lang-en">Only certain pages are available in multiple languages</span>
+          <span class="lang-ar">بعض الصفحات فقط متوفرة بأكثر من لغة</span>
+        </span>
+        <div class="lang-switcher">
+          <button id="btn-en" class="active" onclick="setLang('en')"><img src="https://flagcdn.com/gb.svg" width="20" height="15" alt="English" style="border-radius:2px;display:block;"></button>
+          <button id="btn-ar" onclick="setLang('ar')"><img src="https://flagcdn.com/sy.svg" width="20" height="15" alt="Arabic" style="border-radius:2px;display:block;"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="osm-syria-join">
+      <div class="osm-syria-join-text">
+        <strong class="lang-en">Want to get involved?</strong>
+        <strong class="lang-ar">هل تريد المشاركة؟</strong>
+        <p class="lang-en">Whether you're in Syria or anywhere in the world — if you love maps, geography, or open technology, the community welcomes you. Most activities are in Arabic.</p>
+        <p class="lang-ar">سواء كنت في سوريا أو في أي مكان في العالم — إن كنت تحب الخرائط والجغرافيا أو التكنولوجيا مفتوحة المصدر، فالمجتمع يرحب بك. معظم الأنشطة باللغة العربية.</p>
+      </div>
+      <a href="https://forms.gle/M9F5hz7itZdFDDBS9" target="_blank" rel="noopener" class="osm-syria-join-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <span class="lang-en">Join OSM Syria Community</span>
+        <span class="lang-ar">انضم إلى مجتمع OSM سوريا</span>
+
+      </a>
+    </div>
+
+    <header>
+      <img src="../assets/OSM Syria logo.svg" alt="OSM Syria" class="osm-syria-logo" />
+      <div class="page-tag lang-en">Volunteering · Open Source · Community · Syria</div>
+      <div class="page-tag lang-ar">تطوع · مفتوح المصدر · مجتمع · سوريا</div>
+      <h1><span class="lang-en">OSM Syria Community</span><span class="lang-ar">مجتمع OSM سوريا</span></h1>
+      <p class="subtitle lang-en">Founding Volunteer &nbsp;·&nbsp; OpenStreetMap Syria</p>
+      <p class="subtitle lang-ar">متطوع مؤسس &nbsp;·&nbsp; OpenStreetMap سوريا</p>
+    </header>
+
+    <div class="contribution-meta">
+      <div class="meta-item">
+        <label class="lang-en">Role</label>
+        <label class="lang-ar">الدور</label>
+        <span class="lang-en">Founding Volunteer</span>
+        <span class="lang-ar">متطوع مؤسس</span>
+      </div>
+      <div class="meta-item">
+        <label class="lang-en">Community</label>
+        <label class="lang-ar">المجتمع</label>
+        <span>OpenStreetMap Syria</span>
+      </div>
+      <div class="meta-item">
+        <label class="lang-en">Active Since</label>
+        <label class="lang-ar">نشط منذ</label>
+        <span class="lang-en">December 2024</span>
+        <span class="lang-ar">ديسمبر 2024</span>
+      </div>
+    </div>
+
+    <div class="contribution-body">
+
+      <h2 class="lang-en">Overview</h2>
+      <h2 class="lang-ar">نظرة عامة</h2>
+      <p class="lang-en">
+        OSM Syria is a volunteer-run open mapping community built around OpenStreetMap — the free, editable map of the world. The community emerged in December 2024, a moment of renewed openness in Syria following significant political change, bringing together Syrians inside the country and in the diaspora around a shared love of maps, satellite imagery, and open-source technology.
+      </p>
+      <p class="lang-ar">
+        مجتمع OSM سوريا هو مجتمع تطوعي للخرائط المفتوحة المصدر مبني حول OpenStreetMap — الخريطة الحرة والقابلة للتعديل للعالم. نشأ المجتمع في ديسمبر 2024، في لحظة انفتاح متجدد في سوريا في أعقاب تغيير سياسي كبير، ليجمع السوريين داخل البلاد وفي المهجر حول حبٍّ مشترك للخرائط وصور الأقمار الصناعية والتكنولوجيا مفتوحة المصدر.
+      </p>
+      <p class="lang-en">
+        The community is deliberately flat — no hierarchy, no titles. Everyone is equal in tasks, activity, participation, and organization. What unites members is a belief that open geographic data is a public good, and that Syria deserves the same quality of map coverage that the rest of the world takes for granted.
+      </p>
+      <p class="lang-ar">
+        المجتمع متعمَّد التسطح — لا هرمية، لا ألقاب. الجميع متساوون في المهام والنشاط والمشاركة والتنظيم. ما يجمع الأعضاء هو الإيمان بأن البيانات الجغرافية المفتوحة ملك عام، وأن سوريا تستحق نفس جودة تغطية الخرائط التي يأخذها بقية العالم كأمر مسلَّم به.
+      </p>
+      <p class="lang-en">
+        Participation is open to anyone regardless of nationality or location, though most activities are conducted in Arabic. Sessions run both remotely — accessible to the global Syrian diaspora — and in-person inside Syria.
+      </p>
+      <p class="lang-ar">
+        المشاركة مفتوحة للجميع بغض النظر عن الجنسية أو الموقع، وإن كانت معظم الأنشطة تُعقد باللغة العربية. تُقام الجلسات عن بُعد — بما يتيح المشاركة للشتات السوري في أنحاء العالم — وبشكل مباشر داخل سوريا.
+      </p>
+
+      <h2 class="lang-en">Why It Matters</h2>
+      <h2 class="lang-ar">لماذا يهمّ هذا؟</h2>
+      <p class="lang-en">
+        Syria's maps are incomplete, outdated, and in many areas simply missing. After years of conflict and limited access for international mapping organizations, large parts of the country lack basic geographic data — roads, neighborhoods, hospitals, schools — that humanitarian responders, local governments, and communities depend on. Damascus is missing roads on its outskirts; Aleppo lacks residential area coverage outside the city center.
+      </p>
+      <p class="lang-ar">
+        خرائط سوريا ناقصة وقديمة، وفي مناطق كثيرة ببساطة غائبة. بعد سنوات من النزاع ومحدودية وصول منظمات الرسم الخرائطي الدولية، تفتقر أجزاء واسعة من البلاد إلى البيانات الجغرافية الأساسية — طرق وأحياء ومستشفيات ومدارس — التي يعتمد عليها المستجيبون الإنسانيون والحكومات المحلية والمجتمعات. دمشق تفتقر إلى الطرق في ضواحيها؛ وحلب تعاني من غياب تغطية المناطق السكنية خارج مركز المدينة.
+      </p>
+      <p class="lang-en">
+        Accurate, open maps are not a luxury. They are infrastructure. They determine whether aid reaches the right location, whether a family can share where they live, whether a clinic can be found. OSM Syria exists to close that gap — from within, by Syrians, for everyone.
+      </p>
+      <p class="lang-ar">
+        الخرائط الدقيقة المفتوحة ليست رفاهية. إنها بنية تحتية. تحدد ما إذا كانت المساعدات تصل إلى الموقع الصحيح، وما إذا كانت الأسرة تستطيع مشاركة مكان إقامتها، وما إذا كان يمكن العثور على عيادة. مجتمع OSM سوريا موجود لسد هذه الفجوة — من الداخل، بأيدي سوريين، لصالح الجميع.
+      </p>
+
+      <h2 class="lang-en">Community Goals</h2>
+      <h2 class="lang-ar">أهداف المجتمع</h2>
+      <ul class="lang-en">
+        <li>Help build and maintain open-source maps of Syria that support humanitarian response, connectivity, urban planning, and geographic data sharing</li>
+        <li>Expand the social network of people in Syria and the diaspora who care about maps, geography, and open technology</li>
+        <li>Organize volunteer activities and free training sessions around mapping and geospatial technology — raising the skills of participants and the community as a whole</li>
+      </ul>
+      <ul class="lang-ar">
+        <li>المساعدة في بناء وصيانة خرائط مفتوحة المصدر لسوريا تدعم الاستجابة الإنسانية والتواصل والتخطيط العمراني ومشاركة البيانات الجغرافية</li>
+        <li>توسيع الشبكة الاجتماعية للأشخاص في سوريا والمهجر الذين يهتمون بالخرائط والجغرافيا والتكنولوجيا المفتوحة</li>
+        <li>تنظيم أنشطة تطوعية ودورات تدريبية مجانية حول رسم الخرائط والتكنولوجيا الجغرافية المكانية — لرفع مستوى مهارات المشاركين والمجتمع ككل</li>
+      </ul>
+
+      <h2 class="lang-en">Activities</h2>
+      <h2 class="lang-ar">الأنشطة</h2>
+      <div class="pillar-grid">
+        <div class="pillar-item">
+          <div class="pillar-icon">🖥️</div>
+          <strong class="lang-en">Online intro sessions</strong>
+          <strong class="lang-ar">جلسات تعريفية أونلاين</strong>
+          <p class="lang-en">Introduction to the OSM community, the project, and its humanitarian and development use cases</p>
+          <p class="lang-ar">تعريف بمجتمع OSM والمشروع وحالات استخدامه الإنسانية والتنموية</p>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">🗺️</div>
+          <strong class="lang-en">Mapping sprints</strong>
+          <strong class="lang-ar">جلسات رسم الخرائط</strong>
+          <p class="lang-en">Online sessions to map specific areas — adding schools, hospitals, roads, and neighborhoods to OSM for Syria's governorates</p>
+          <p class="lang-ar">جلسات أونلاين لرسم مناطق محددة — إضافة المدارس والمستشفيات والطرق والأحياء إلى OSM لمحافظات سوريا</p>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">🤝</div>
+          <strong class="lang-en">In-person workshops</strong>
+          <strong class="lang-ar">ورشات عمل مباشرة</strong>
+          <p class="lang-en">Direct meetups and conversations inside Syria around mapping, open technology, and community building</p>
+          <p class="lang-ar">لقاءات ومحادثات مباشرة داخل سوريا حول الخرائط والتكنولوجيا المفتوحة وبناء المجتمع</p>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">🎙️</div>
+          <strong class="lang-en">Conferences</strong>
+          <strong class="lang-ar">مؤتمرات</strong>
+          <p class="lang-en">Participation in State of the Map events and potential hosting of local mapping conferences with talks, workshops, and demos</p>
+          <p class="lang-ar">المشاركة في فعاليات State of the Map واحتمال استضافة مؤتمرات محلية للخرائط مع محاضرات وورشات عمل وعروض توضيحية</p>
+        </div>
+      </div>
+
+      <h2 class="lang-en">My Role</h2>
+      <h2 class="lang-ar">دوري</h2>
+      <ul class="lang-en">
+        <li><strong>Founding volunteer:</strong> Helped establish the community from the ground up — defining its structure, values, and open invitation to Syrians everywhere</li>
+        <li><strong>Community organizing:</strong> Designed and led the community registration process, meeting documentation, and communication infrastructure (Telegram, shared drives, meeting records)</li>
+        <li><strong>Bridge to HOT:</strong> Connected the OSM Syria community to HOT's global network, tools, and expertise — bringing international open mapping resources directly to Syrian volunteers</li>
+        <li><strong>Knowledge sharing:</strong> Led sessions on OSM tools, humanitarian mapping workflows, and satellite imagery interpretation for new community members</li>
+        <li><strong>Representation:</strong> Represented the Syrian OSM community in wider OSM forums and international open mapping discussions</li>
+      </ul>
+      <ul class="lang-ar">
+        <li><strong>متطوع مؤسس:</strong> أُساهم في تأسيس المجتمع من الصفر — بتحديد هيكله وقيمه والدعوة المفتوحة للسوريين في كل مكان</li>
+        <li><strong>تنظيم المجتمع:</strong> أُصمِّم وأقود عملية تسجيل المجتمع وتوثيق الاجتماعات والبنية التحتية للتواصل (تيليغرام، الأقراص المشتركة، سجلات الاجتماعات)</li>
+        <li><strong>جسر إلى HOT:</strong> أربط مجتمع OSM سوريا بالشبكة العالمية لـ HOT وأدواتها وخبراتها — وأُوصل موارد رسم الخرائط المفتوحة الدولية مباشرة إلى المتطوعين السوريين</li>
+        <li><strong>مشاركة المعرفة:</strong> أقود جلسات حول أدوات OSM وسير عمل الرسم الخرائطي الإنساني وتفسير صور الأقمار الصناعية للأعضاء الجدد</li>
+        <li><strong>التمثيل:</strong> أُمثِّل مجتمع OSM السوري في المنتديات الأوسع لـ OSM والنقاشات الدولية للخرائط المفتوحة</li>
+      </ul>
+
+      <h2 class="lang-en">Links</h2>
+      <h2 class="lang-ar">الروابط</h2>
+      <div class="fair-links">
+        <a href="https://forms.gle/M9F5hz7itZdFDDBS9" target="_blank" rel="noopener" class="fair-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span class="lang-en">Join OSM Syria</span>
+          <span class="lang-ar">انضم إلى OSM سوريا</span>
+        </a>
+        <a href="https://wiki.openstreetmap.org/wiki/Syria" target="_blank" rel="noopener" class="fair-link">
+          <img src="https://www.openstreetmap.org/assets/favicon-32x32-99b88fcadeef736889823c8a886b89d8cada9d4423a49a27de29bacc0a6bebd1.png" width="18" height="18" alt="OSM" style="border-radius:3px;vertical-align:middle;" />
+          <span class="lang-en">OSM Syria Wiki</span>
+          <span class="lang-ar">ويكي OSM سوريا</span>
+        </a>
+        <a href="https://t.me/OSMSyira" target="_blank" rel="noopener" class="fair-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+          <span class="lang-en">Telegram Channel</span>
+          <span class="lang-ar">قناة تيليغرام</span>
+        </a>
+        <a href="https://drive.google.com/drive/folders/17T3hoYRolEoMWIaqdFQmdXLOSDU6EUu5?usp=sharing" target="_blank" rel="noopener" class="fair-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.433 22.396l4-6.929H22l-4 6.929H4.433zm3.566-6.929L2 5.533l4-6.929 6 10.393-4.001 6.87zM14 9.004L8 .075h8l6 10.392H14V9.004z"/></svg>
+          <span class="lang-en">Community Drive</span>
+          <span class="lang-ar">مجلد المجتمع</span>
+        </a>
+        <a href="https://docs.google.com/document/d/1zjavmvoauSKdO8bOZHegefcna7cGwBe2Z-xL_7MVijw/edit#heading=h.omcngg4ejt5v" target="_blank" rel="noopener" class="fair-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span class="lang-en">Meeting Notes</span>
+          <span class="lang-ar">ملاحظات الاجتماعات</span>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function setLang(lang) {
+      const isAr = lang === 'ar';
+      document.body.classList.toggle('rtl', isAr);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+      document.getElementById('btn-en').classList.toggle('active', !isAr);
+      document.getElementById('btn-ar').classList.toggle('active', isAr);
+      document.title = isAr ? 'مجتمع OSM سوريا — عمران نجار' : 'OSM Syria Community — Omran Najjar';
+      localStorage.setItem('osm-syria-lang', lang);
+    }
+
+    const saved = localStorage.getItem('osm-syria-lang');
+    if (saved === 'ar') setLang('ar');
+  </script>
+
+</body>
+</html>
