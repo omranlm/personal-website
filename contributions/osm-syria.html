@@ -200,7 +200,7 @@
   <div class="contribution-page">
 
     <div class="lang-top-bar">
-      <a href="../index.html#contributions" class="back-link" style="margin-bottom:0;">
+      <a href="../index.html#contributions" data-home-link data-home-href="../#contributions" class="back-link" style="margin-bottom:0;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         <span class="lang-en">Back to main page</span>
         <span class="lang-ar">العودة إلى الصفحة الرئيسية</span>
@@ -421,6 +421,10 @@
 
     const saved = localStorage.getItem('osm-syria-lang');
     if (saved === 'ar') setLang('ar');
+
+    if (window.location.protocol !== 'file:') {
+      document.querySelectorAll('[data-home-link]').forEach(a => a.href = a.dataset.homeHref);
+    }
 
     // ── Community map (MapLibre GL) ──
     const LAYER1_URL = 'https://umap.hotosm.org/en/datalayer/133/4e4a68af-e16d-455a-ab95-201c4f5981f1/';
