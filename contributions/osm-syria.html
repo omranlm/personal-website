@@ -143,11 +143,17 @@
 
     .osm-syria-logo {
       display: block;
-      width: 100%;
-      max-width: 360px;
+      width: auto;
+      max-width: 80px;
       height: auto;
-      border-radius: 10px;
-      margin: 0 0 1.5rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .header-title-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: .5rem 0 .25rem;
     }
     .lang-top-bar {
       display: flex;
@@ -233,10 +239,12 @@
     </div>
 
     <header>
-      <img src="../assets/OSM Syria logo.svg" alt="OSM Syria" class="osm-syria-logo" />
       <div class="page-tag lang-en">Volunteering · Open Source · Community · Syria</div>
       <div class="page-tag lang-ar">تطوع · مفتوح المصدر · مجتمع · سوريا</div>
-      <h1><span class="lang-en">OSM Syria Community</span><span class="lang-ar">مجتمع OSM سوريا</span></h1>
+      <div class="header-title-row">
+        <h1><span class="lang-en">OSM Syria Community</span><span class="lang-ar">مجتمع OSM سوريا</span></h1>
+        <img src="../assets/OSM Syria logo.svg" alt="OSM Syria" class="osm-syria-logo" />
+      </div>
       <p class="subtitle lang-en">Founding Volunteer &nbsp;·&nbsp; OpenStreetMap Syria</p>
       <p class="subtitle lang-ar">متطوع مؤسس &nbsp;·&nbsp; OpenStreetMap سوريا</p>
     </header>
@@ -316,28 +324,36 @@
       <h2 class="lang-ar">الأنشطة</h2>
       <div class="pillar-grid">
         <div class="pillar-item">
-          <div class="pillar-icon">🖥️</div>
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
           <strong class="lang-en">Online intro sessions</strong>
           <strong class="lang-ar">جلسات تعريفية أونلاين</strong>
           <p class="lang-en">Introduction to the OSM community, the project, and its humanitarian and development use cases</p>
           <p class="lang-ar">تعريف بمجتمع OSM والمشروع وحالات استخدامه الإنسانية والتنموية</p>
         </div>
         <div class="pillar-item">
-          <div class="pillar-icon">🗺️</div>
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+          </div>
           <strong class="lang-en">Mapping sprints</strong>
           <strong class="lang-ar">جلسات رسم الخرائط</strong>
           <p class="lang-en">Online sessions to map specific areas — adding schools, hospitals, roads, and neighborhoods to OSM for Syria's governorates</p>
           <p class="lang-ar">جلسات أونلاين لرسم مناطق محددة — إضافة المدارس والمستشفيات والطرق والأحياء إلى OSM لمحافظات سوريا</p>
         </div>
         <div class="pillar-item">
-          <div class="pillar-icon">🤝</div>
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
           <strong class="lang-en">In-person workshops</strong>
           <strong class="lang-ar">ورشات عمل مباشرة</strong>
           <p class="lang-en">Direct meetups and conversations inside Syria around mapping, open technology, and community building</p>
           <p class="lang-ar">لقاءات ومحادثات مباشرة داخل سوريا حول الخرائط والتكنولوجيا المفتوحة وبناء المجتمع</p>
         </div>
         <div class="pillar-item">
-          <div class="pillar-icon">🎙️</div>
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+          </div>
           <strong class="lang-en">Conferences</strong>
           <strong class="lang-ar">مؤتمرات</strong>
           <p class="lang-en">Participation in State of the Map events and potential hosting of local mapping conferences with talks, workshops, and demos</p>
@@ -364,8 +380,8 @@
 
       <h2 class="lang-en">Community Map</h2>
       <h2 class="lang-ar">خريطة المجتمع</h2>
-      <p class="lang-en" style="margin-bottom:.75rem;">Live data from the community's uMap project — members and locations across Syria and the global diaspora.</p>
-      <p class="lang-ar" style="margin-bottom:.75rem;">بيانات مباشرة من مشروع uMap للمجتمع — أعضاء ومواقع في سوريا والشتات العالمي.</p>
+      <p class="lang-en" style="margin-bottom:.75rem;">Community member locations across Syria and the global diaspora — last updated 19 May 2026.</p>
+      <p class="lang-ar" style="margin-bottom:.75rem;">مواقع أعضاء المجتمع في سوريا والشتات العالمي — آخر تحديث: 19 مايو 2026.</p>
       <div class="community-map-wrap">
         <div class="map-loading" id="map-loading">
           <span class="lang-en">Loading map data…</span>
@@ -427,8 +443,8 @@
     }
 
     // ── Community map (MapLibre GL) ──
-    const LAYER1_URL = 'https://umap.hotosm.org/en/datalayer/133/4e4a68af-e16d-455a-ab95-201c4f5981f1/';
-    const LAYER2_URL = 'https://umap.hotosm.org/en/datalayer/133/3d6af9a8-72d8-4351-b867-abe909088ece/';
+    const LAYER1_URL = '../assets/osm-syria-layer1.geojson';
+    const LAYER2_URL = '../assets/osm-syria-layer2.geojson';
 
     const map = new maplibregl.Map({
       container: 'community-map',
@@ -504,7 +520,7 @@
           filter: ['==', '$type', 'Point'],
           paint: {
             'circle-radius': 7,
-            'circle-color': '#c1272d',
+            'circle-color': '#0c7c70',
             'circle-stroke-color': '#fff',
             'circle-stroke-width': 1.5,
             'circle-opacity': 0.85

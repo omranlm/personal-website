@@ -276,28 +276,31 @@ section:nth-child(even) {
    ============================================= */
 .mission-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: .75rem;
+  margin-top: .75rem;
 }
 
 .mission-card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-top: 4px solid var(--teal);
+  border-left: 3px solid var(--teal);
   border-radius: var(--radius);
-  padding: 1.5rem;
-  box-shadow: var(--shadow);
+  padding: .85rem 1.1rem;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
 }
 
 .mission-card h3 {
-  font-size: 1rem;
+  font-size: .88rem;
   font-weight: 700;
   color: var(--navy);
-  margin-bottom: .5rem;
+  margin: 0;
 }
 
-.mission-card p { font-size: .92rem; color: #5a3e3e; }
+.mission-card p { font-size: .84rem; color: #5a3e3e; margin: 0; line-height: 1.55; }
 
 /* =============================================
    WORK EXPERIENCE — TIMELINE
@@ -465,7 +468,7 @@ section:nth-child(even) {
   color: inherit;
 }
 
-.snapshot-card-icon { font-size: 1.5rem; margin-bottom: .1rem; }
+.snapshot-card-icon { display: flex; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; margin-bottom: .35rem; color: var(--teal); }
 
 .snapshot-card-label {
   font-size: 1rem;
@@ -905,8 +908,13 @@ section:nth-child(even) {
 }
 
 .pillar-icon {
-  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
   margin-bottom: .4rem;
+  color: var(--teal);
 }
 
 .pillar-item strong {
