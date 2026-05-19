@@ -12,7 +12,7 @@
 
   <!-- NAVIGATION -->
   <nav class="nav">
-    <span class="nav-brand">Omran Najjar</span>
+    <a href="index.html" data-home-link data-home-href="./" class="nav-brand">Omran Najjar</a>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -62,7 +62,7 @@
   <!-- MISSION / VALUES -->
   <section id="mission">
     <div class="section-inner">
-      <h2 class="section-title">Mission &amp; Values</h2>
+      <h2 class="section-title">Values</h2>
       <div class="mission-grid fade-in">
         <div class="mission-card">
           <h3>Ethical &amp; Responsible AI</h3>
@@ -208,5 +208,10 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    if (window.location.protocol !== 'file:') {
+      document.querySelectorAll('[data-home-link]').forEach(a => a.href = a.dataset.homeHref);
+    }
+  </script>
 </body>
 </html>
