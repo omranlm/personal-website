@@ -205,6 +205,95 @@
       margin: .15rem 0;
     }
 
+    /* ── nav tutorial ── */
+    .nav-tutorial {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 20;
+      background: rgba(14,12,11,.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 1.1rem 1.4rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .85rem;
+      min-width: 300px;
+      max-width: 92vw;
+      transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .45s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .nav-tutorial.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    .nav-tutorial-title {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.35);
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+    .nav-tips {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .nav-tip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: .65rem .8rem;
+      min-width: 72px;
+    }
+    .nav-tip-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(12,124,112,.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4ecdc4;
+    }
+    .nav-tip-action {
+      font-size: .65rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.8);
+      text-align: center;
+      line-height: 1.2;
+    }
+    .nav-tip-label {
+      font-size: .6rem;
+      color: rgba(255,255,255,.35);
+      text-align: center;
+      line-height: 1.2;
+    }
+    .nav-tutorial-dismiss {
+      background: #0c7c70;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: .4rem 1.4rem;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      letter-spacing: .02em;
+    }
+    .nav-tutorial-dismiss:hover { background: #006560; }
+
     /* ── hint bar ── */
     .hint {
       position: absolute;
@@ -316,6 +405,42 @@
     </button>
   </div>
 
+  <!-- Navigation tutorial -->
+  <div class="nav-tutorial" id="nav-tutorial">
+    <div class="nav-tutorial-title">How to navigate</div>
+    <div class="nav-tips">
+      <div class="nav-tip">
+        <div class="nav-tip-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2v6a2 2 0 0 1-4 0V4a2 2 0 0 1 2-2z"/><path d="M18 8a6 6 0 0 1-12 0"/><path d="M12 14v8"/></svg>
+        </div>
+        <div class="nav-tip-action">Left drag</div>
+        <div class="nav-tip-label">Rotate</div>
+      </div>
+      <div class="nav-tip">
+        <div class="nav-tip-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 5 19 12"/></svg>
+        </div>
+        <div class="nav-tip-action">Scroll wheel</div>
+        <div class="nav-tip-label">Zoom in / out</div>
+      </div>
+      <div class="nav-tip">
+        <div class="nav-tip-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+        </div>
+        <div class="nav-tip-action">Right drag</div>
+        <div class="nav-tip-label">Pan</div>
+      </div>
+      <div class="nav-tip">
+        <div class="nav-tip-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div class="nav-tip-action">Two fingers</div>
+        <div class="nav-tip-label">Pinch to zoom</div>
+      </div>
+    </div>
+    <button class="nav-tutorial-dismiss" id="nav-tutorial-dismiss">Got it</button>
+  </div>
+
   <!-- Hint -->
   <div class="hint">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
@@ -351,12 +476,24 @@
       fillEl.style.strokeDashoffset = circumference * (1 - e.detail.totalProgress);
     });
 
+    const tutorial = document.getElementById('nav-tutorial');
+    const tutorialDismiss = document.getElementById('nav-tutorial-dismiss');
+
+    function hideTutorial() {
+      tutorial.classList.remove('visible');
+    }
+    tutorialDismiss.addEventListener('click', hideTutorial);
+    model.addEventListener('camera-change', hideTutorial, { once: true });
+
     model.addEventListener('load', () => {
       pctEl.textContent = '100%';
       fillEl.style.strokeDashoffset = 0;
       setTimeout(() => {
         loader.classList.add('hidden');
-        setTimeout(() => loader.style.display = 'none', 500);
+        setTimeout(() => {
+          loader.style.display = 'none';
+          tutorial.classList.add('visible');
+        }, 500);
       }, 300);
     });
 
