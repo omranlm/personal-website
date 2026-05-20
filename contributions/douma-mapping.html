@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Douma, Syria — Mapping for Reconstruction — Omran NAJJAR</title>
+  <meta name="description" content="A community-led drone mapping initiative in Douma, Syria — providing geo-referenced infrastructure maps to support post-conflict reconstruction planning." />
+  <meta name="keywords" content="Douma, Syria, drone mapping, reconstruction, OpenStreetMap, OpenDroneMap, humanitarian mapping, Omran NAJJAR, HOT" />
+  <meta name="author" content="Omran NAJJAR" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://najjar.biz/contributions/douma-mapping.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://najjar.biz/contributions/douma-mapping.html" />
+  <meta property="og:title" content="Douma, Syria — Mapping for Reconstruction" />
+  <meta property="og:description" content="Community-led drone mapping initiative providing local councils with geo-referenced infrastructure maps to support post-conflict reconstruction in Douma, Syria." />
+  <meta property="og:image" content="https://najjar.biz/assets/profile.jpg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@OmranNajjar" />
+  <meta name="twitter:title" content="Douma, Syria — Mapping for Reconstruction" />
+  <meta name="twitter:description" content="Community-led drone mapping initiative providing local councils with geo-referenced infrastructure maps to support post-conflict reconstruction in Douma, Syria." />
+  <meta name="twitter:image" content="https://najjar.biz/assets/profile.jpg" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Douma Mapping theme (mirrors OSM Syria) ── */
+    body {
+      background: #f0f8f7 !important;
+      --osm-dark:   #21242a;
+      --osm-teal:   #0c7c70;
+      --osm-teal2:  #006560;
+      --osm-light:  #f0f8f7;
+      --osm-text:   #1a2820;
+      --osm-mid:    #404e5e;
+    }
+
+    .back-link { color: var(--osm-teal); border-color: #c8e0de; background: #e8f5f3; }
+    .back-link:hover { background: var(--osm-teal); color: #fff; }
+
+    .contribution-page .page-tag { color: var(--osm-teal); }
+    .contribution-page h1 { color: var(--osm-dark); }
+    .contribution-page .subtitle { color: var(--osm-mid); }
+    .contribution-page header { border-bottom-color: #c0deda; }
+
+    .contribution-meta { border-top: none; }
+    .meta-item label { color: var(--osm-teal2); }
+    .meta-item span, .meta-item a { color: var(--osm-dark); }
+
+    .contribution-body h2 {
+      color: var(--osm-dark);
+      border-bottom-color: #c0deda;
+    }
+    .contribution-body p,
+    .contribution-body li { color: #2e4a46; }
+
+    .pillar-item { background: #fff; border-color: #b8d8d4; }
+    .pillar-item strong { color: var(--osm-dark); }
+    .pillar-item p { color: #4a7068; }
+
+    .tech-tag { background: var(--osm-dark); color: #a8dbd5; }
+
+    .fair-link { background: #fff; border-color: #b8d8d4; color: var(--osm-dark); }
+    .fair-link:hover { background: var(--osm-teal); border-color: var(--osm-teal); color: #fff; }
+
+    /* lang switcher */
+    .lang-switcher-wrap {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      flex-shrink: 0;
+    }
+    .lang-switcher-note {
+      font-size: .7rem;
+      color: #7a9e99;
+      max-width: 150px;
+      line-height: 1.3;
+      text-align: right;
+    }
+    body.rtl .lang-switcher-note { text-align: left; }
+    .lang-switcher {
+      display: flex;
+      gap: 0;
+      border: 1.5px solid #d0b0b0;
+      border-radius: 20px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .lang-switcher button {
+      background: none;
+      border: none;
+      padding: .3rem .85rem;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #9a7070;
+      letter-spacing: .04em;
+      transition: background .15s, color .15s;
+    }
+    .lang-switcher button.active {
+      background: var(--teal);
+      color: var(--white);
+    }
+    .lang-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    /* bilingual show/hide */
+    .lang-ar { display: none !important; }
+    body.rtl .lang-ar { display: block !important; }
+    body.rtl span.lang-ar,
+    body.rtl strong.lang-ar,
+    body.rtl label.lang-ar { display: inline !important; }
+    body.rtl .lang-en { display: none !important; }
+    body.rtl { direction: rtl; font-family: 'Segoe UI', Tahoma, 'Arial', sans-serif; }
+    body.rtl .back-link svg { transform: scaleX(-1); }
+    body.rtl .contribution-meta { flex-direction: row-reverse; flex-wrap: wrap; direction: rtl; text-align: right; }
+    body.rtl .fair-links { flex-direction: row-reverse; flex-wrap: wrap; }
+    body.rtl .contribution-body ul { margin: 0 1.2rem 1rem 0; }
+    body.rtl .pillar-grid { direction: rtl; }
+    body.rtl .lang-top-bar { flex-direction: row-reverse; }
+  </style>
+</head>
+<body>
+
+  <div class="contribution-page">
+
+    <div class="lang-top-bar">
+      <a href="../index.html#contributions" data-home-link data-home-href="../#contributions" class="back-link" style="margin-bottom:0;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span class="lang-en">Back to main page</span>
+        <span class="lang-ar">العودة إلى الصفحة الرئيسية</span>
+      </a>
+      <div class="lang-switcher-wrap">
+        <span class="lang-switcher-note">
+          <span class="lang-en">Only certain pages are available in multiple languages</span>
+          <span class="lang-ar">بعض الصفحات فقط متوفرة بأكثر من لغة</span>
+        </span>
+        <div class="lang-switcher">
+          <button id="btn-en" class="active" onclick="setLang('en')"><img src="https://flagcdn.com/gb.svg" width="20" height="15" alt="English" style="border-radius:2px;display:block;"></button>
+          <button id="btn-ar" onclick="setLang('ar')"><img src="https://flagcdn.com/sy.svg" width="20" height="15" alt="Arabic" style="border-radius:2px;display:block;"></button>
+        </div>
+      </div>
+    </div>
+
+    <header>
+      <div class="page-tag lang-en">Volunteering · Humanitarian Mapping · Reconstruction · Syria</div>
+      <div class="page-tag lang-ar">تطوع · خرائط إنسانية · إعادة الإعمار · سوريا</div>
+      <h1>
+        <span class="lang-en">Douma, Syria — Mapping for Reconstruction</span>
+        <span class="lang-ar">دوما، سوريا — الخرائط لإعادة الإعمار</span>
+      </h1>
+      <p class="subtitle lang-en">Founding Volunteer &nbsp;·&nbsp; Humanitarian OpenStreetMap Team</p>
+      <p class="subtitle lang-ar">متطوع مؤسس &nbsp;·&nbsp; فريق OpenStreetMap الإنساني</p>
+    </header>
+
+    <div class="contribution-meta">
+      <div class="meta-item">
+        <label class="lang-en">Role</label>
+        <label class="lang-ar">الدور</label>
+        <span class="lang-en">Founding Volunteer</span>
+        <span class="lang-ar">متطوع مؤسس</span>
+      </div>
+      <div class="meta-item">
+        <label class="lang-en">Location</label>
+        <label class="lang-ar">الموقع</label>
+        <span class="lang-en">Douma, Syria (~13 km²)</span>
+        <span class="lang-ar">دوما، سوريا (~13 كم²)</span>
+      </div>
+      <div class="meta-item">
+        <label class="lang-en">Pilot</label>
+        <label class="lang-ar">الطيران التجريبي</label>
+        <span class="lang-en">December 2025</span>
+        <span class="lang-ar">ديسمبر 2025</span>
+      </div>
+      <div class="meta-item">
+        <label class="lang-en">Type</label>
+        <label class="lang-ar">النوع</label>
+        <span class="lang-en">Concept Note · Community Initiative</span>
+        <span class="lang-ar">ملاحظة مفهوم · مبادرة مجتمعية</span>
+      </div>
+    </div>
+
+    <div class="contribution-body">
+
+      <h2 class="lang-en">The Problem</h2>
+      <h2 class="lang-ar">المشكلة</h2>
+      <p class="lang-en">
+        Local councils in post-conflict Syrian cities face a critical gap: the absence of accurate, geo-referenced maps for infrastructure reconstruction and damage assessment. Without reliable spatial data, planning repairs to roads, buildings, and utilities is largely guesswork — slowing recovery and misallocating scarce resources.
+      </p>
+      <p class="lang-ar">
+        تواجه المجالس المحلية في المدن السورية المتضررة من النزاع فجوةً حرجة: غياب الخرائط الجغرافية المرجعية الدقيقة اللازمة لتخطيط إعادة البناء وتقييم الأضرار. بدون بيانات مكانية موثوقة، يصبح التخطيط لإصلاح الطرق والمباني والمرافق ضرباً من ضروب التخمين — مما يُبطئ التعافي ويُهدر الموارد الشحيحة.
+      </p>
+
+      <h2 class="lang-en">The Approach</h2>
+      <h2 class="lang-ar">النهج</h2>
+      <p class="lang-en">
+        This initiative equips local councils with the capacity and open-source tools to conduct drone mapping activities independently — producing up-to-date city maps they can maintain and reuse every six months. The methodology is deliberately people-first: low-cost, community-run, and built entirely on open tools so no proprietary licensing stands in the way of access.
+      </p>
+      <p class="lang-ar">
+        تُزوِّد هذه المبادرة المجالس المحلية بالقدرات والأدوات مفتوحة المصدر لإجراء أنشطة رسم الخرائط بالطائرات المسيَّرة باستقلالية تامة — منتجةً خرائط محدَّثة للمدن يمكن صيانتها وإعادة استخدامها كل ستة أشهر. تُعطي المنهجية الأولوية للإنسان: منخفضة التكلفة، مُدارة من المجتمع، ومبنية كلياً على أدوات مفتوحة المصدر.
+      </p>
+      <div class="pillar-grid">
+        <div class="pillar-item">
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <strong class="lang-en">Drone Imagery</strong>
+          <strong class="lang-ar">تصوير بالطائرات المسيّرة</strong>
+          <p class="lang-en">Consumer-grade drones collecting aerial data at centimetre-level resolution — affordable and deployable by local teams (e.g. DJI Mini 4 Pro)</p>
+          <p class="lang-ar">طائرات مسيَّرة للمستهلكين تجمع بيانات جوية بدقة على مستوى السنتيمتر — ميسورة التكلفة وقابلة للنشر من قبل الفرق المحلية (مثال: DJI Mini 4 Pro)</p>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <strong class="lang-en">Open Processing</strong>
+          <strong class="lang-ar">معالجة مفتوحة</strong>
+          <p class="lang-en">OpenDroneMap and OpenAerialMap to process, host, and share imagery openly with no licensing barriers</p>
+          <p class="lang-ar">OpenDroneMap و OpenAerialMap لمعالجة الصور واستضافتها ومشاركتها بشكل مفتوح دون قيود ترخيص</p>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+          </div>
+          <strong class="lang-en">OpenStreetMap &amp; QGIS</strong>
+          <strong class="lang-ar">OpenStreetMap و QGIS</strong>
+          <p class="lang-en">Digitized buildings, roads, and infrastructure fed back into OSM for free use by anyone in the world</p>
+          <p class="lang-ar">تُرقمَن المباني والطرق والبنية التحتية وتُضاف إلى OSM للاستخدام المجاني من قبل أي شخص في العالم</p>
+        </div>
+      </div>
+
+      <h2 class="lang-en">Proof of Concept — December 2025</h2>
+      <h2 class="lang-ar">إثبات المفهوم — ديسمبر 2025</h2>
+      <p class="lang-en">
+        A pilot flight over 15 hectares of Douma produced orthogonal imagery at <strong>3 cm resolution</strong>, generating digitized maps of buildings, roads, and key infrastructure — plus a <strong>3D model</strong> of the area for deeper spatial analysis. The 3 cm resolution is a deliberate privacy-preserving choice: high enough for infrastructure assessment, low enough to protect individuals on the ground.
+      </p>
+      <p class="lang-ar">
+        أسفرت رحلة تجريبية فوق 15 هكتاراً من دوما عن صور عمودية بدقة <strong>3 سم</strong>، مُنتِجةً خرائط مُرقمَنة للمباني والطرق والبنية التحتية الرئيسية — إضافةً إلى <strong>نموذج ثلاثي الأبعاد</strong> للمنطقة لتحليل مكاني أعمق. دقة الـ 3 سم هي خيار متعمَّد لحماية الخصوصية: مرتفعة بما يكفي لتقييم البنية التحتية، منخفضة بما يكفي لحماية الأفراد على الأرض.
+      </p>
+
+      <h2 class="lang-en">3D Model</h2>
+      <h2 class="lang-ar">النموذج ثلاثي الأبعاد</h2>
+      <p class="lang-en">
+        The December 2025 pilot produced a textured 3D model of the surveyed area — capturing building volumes, roof structures, and street geometry at centimetre-level detail. Use it to explore the terrain interactively or assess structural conditions from any angle.
+      </p>
+      <p class="lang-ar">
+        أنتج الطيران التجريبي في ديسمبر 2025 نموذجاً ثلاثي الأبعاد مُنسَّجاً للمنطقة المسحوحة — يلتقط أحجام المباني وهياكل الأسطح وهندسة الشوارع بدقة على مستوى السنتيمتر. استكشف التضاريس بشكل تفاعلي أو قيِّم الأوضاع الهيكلية من أي زاوية.
+      </p>
+      <div style="margin: 1rem 0 1.5rem;">
+        <a href="douma-3d-model.html" class="fair-link" style="display:inline-flex; align-items:center; gap:.5rem; text-decoration:none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="lang-en">Open full 3D viewer →</span>
+          <span class="lang-ar">فتح العارض ثلاثي الأبعاد الكامل ←</span>
+        </a>
+      </div>
+
+      <h2 class="lang-en">Safety &amp; Security</h2>
+      <h2 class="lang-ar">السلامة والأمان</h2>
+      <p class="lang-en">
+        Operating in a post-conflict environment requires careful attention to safety, community trust, and data sensitivity. Several principles guide how this initiative is conducted:
+      </p>
+      <p class="lang-ar">
+        العمل في بيئة ما بعد النزاع يتطلب اهتماماً دقيقاً بالسلامة وثقة المجتمع وحساسية البيانات. تحكم هذه المبادرة عدة مبادئ:
+      </p>
+      <ul class="lang-en">
+        <li><strong>Community transparency:</strong> Local communities and councils are informed and involved before any flight activity. No drone operations take place without local awareness and consent.</li>
+        <li><strong>Privacy by design:</strong> A deliberate choice of 3 cm resolution provides sufficient detail for infrastructure assessment while avoiding imagery that could identify individuals or sensitive personal spaces.</li>
+        <li><strong>Data sensitivity:</strong> Collected imagery and maps are reviewed before publication. Locations of a sensitive nature are excluded from openly shared datasets.</li>
+        <li><strong>Operator safety:</strong> Flight planning accounts for local conditions, avoids restricted or hazardous areas, and follows safe operating procedures appropriate to post-conflict environments.</li>
+        <li><strong>No military use:</strong> All data produced is strictly for civilian reconstruction, humanitarian planning, and community benefit — with no military or surveillance application.</li>
+      </ul>
+      <ul class="lang-ar">
+        <li><strong>الشفافية مع المجتمع:</strong> يُبلَّغ السكان المحليون والمجالس ويُشرَكون قبل أي نشاط تحليق. لا تجري أي عمليات طيران دون وعي المجتمع وموافقته.</li>
+        <li><strong>الخصوصية بالتصميم:</strong> يُعدّ اختيار دقة 3 سم قراراً متعمَّداً يوفر تفاصيل كافية لتقييم البنية التحتية مع تجنب الصور التي قد تُعرِّف الأفراد أو الأماكن الحساسة.</li>
+        <li><strong>حساسية البيانات:</strong> تُراجَع الصور والخرائط المجمَّعة قبل نشرها. تُستثنى المواقع ذات الطابع الحساس من مجموعات البيانات المشتركة علناً.</li>
+        <li><strong>سلامة المشغِّل:</strong> يأخذ تخطيط الرحلات في الاعتبار الظروف المحلية، ويتجنب المناطق المقيَّدة أو الخطرة، ويتبع إجراءات التشغيل الآمن المناسبة لبيئات ما بعد النزاع.</li>
+        <li><strong>لا استخدام عسكري:</strong> جميع البيانات المُنتَجة مخصصة حصراً لإعادة الإعمار المدني والتخطيط الإنساني وخدمة المجتمع — دون أي تطبيق عسكري أو للمراقبة.</li>
+      </ul>
+
+      <h2 class="lang-en">Technologies</h2>
+      <h2 class="lang-ar">التقنيات</h2>
+      <div class="tech-tags">
+        <span class="tech-tag">DJI Mini 4 Pro</span>
+        <span class="tech-tag">OpenDroneMap</span>
+        <span class="tech-tag">OpenAerialMap</span>
+        <span class="tech-tag">OpenStreetMap</span>
+        <span class="tech-tag">QGIS</span>
+        <span class="tech-tag">Drone Photogrammetry</span>
+        <span class="tech-tag">3D Modelling</span>
+      </div>
+
+      <h2 class="lang-en">Links</h2>
+      <h2 class="lang-ar">الروابط</h2>
+      <div class="fair-links">
+        <a href="https://docs.google.com/document/d/1ix2MyW3a5rwUPCXQeo9t3bZabmMtWeQHmMvN7v42Y_4/edit" target="_blank" rel="noopener" class="fair-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span class="lang-en">Douma, Syria - Mapping for Reconstruction Concept Note</span>
+          <span class="lang-ar">مذكرة مفاهيمية حول رسم الخرائط من أجل إعادة الإعمار - دوما، سوريا</span>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function setLang(lang) {
+      const isAr = lang === 'ar';
+      document.body.classList.toggle('rtl', isAr);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+      document.getElementById('btn-en').classList.toggle('active', !isAr);
+      document.getElementById('btn-ar').classList.toggle('active', isAr);
+      document.title = isAr
+        ? 'دوما، سوريا — الخرائط لإعادة الإعمار — عمران نجار'
+        : 'Douma, Syria — Mapping for Reconstruction — Omran NAJJAR';
+      localStorage.setItem('douma-mapping-lang', lang);
+    }
+
+    const saved = localStorage.getItem('douma-mapping-lang');
+    if (saved === 'ar') setLang('ar');
+
+    if (window.location.protocol !== 'file:') {
+      document.querySelectorAll('[data-home-link]').forEach(a => a.href = a.dataset.homeHref);
+    }
+  </script>
+
+</body>
+</html>
