@@ -62,11 +62,22 @@
       position: absolute;
       inset: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: .15rem;
+    }
+    #loader-pct-val {
       font-size: 1.15rem;
       font-weight: 700;
       color: #fff;
+      line-height: 1;
+    }
+    #loader-size {
+      font-size: .62rem;
+      color: rgba(255,255,255,.4);
+      letter-spacing: .03em;
+      line-height: 1;
     }
     .loader-label {
       font-size: .82rem;
@@ -185,7 +196,10 @@
         <circle class="spinner-track" cx="48" cy="48" r="42"/>
         <circle class="spinner-fill" id="spinner-fill" cx="48" cy="48" r="42"/>
       </svg>
-      <div class="loader-pct" id="loader-pct">0%</div>
+      <div class="loader-pct" id="loader-pct">
+        <span id="loader-pct-val">0%</span>
+        <span id="loader-size"></span>
+      </div>
     </div>
     <div class="loader-label">Loading 3D model…</div>
   </div>
@@ -268,13 +282,33 @@
     const model = document.getElementById('model');
 
     // ── src based on protocol ──
-    model.src = window.location.protocol === 'file:'
+    const glbSrc = window.location.protocol === 'file:'
       ? 'https://najjar.biz/assets/odm_textured_model_geo.glb'
       : '../assets/odm_textured_model_geo.glb';
 
+    // Inject a <link rel="preload"> so the browser starts fetching the GLB
+    // before model-viewer's own fetch kicks in
+    const preload = document.createElement('link');
+    preload.rel         = 'preload';
+    preload.as          = 'fetch';
+    preload.href        = glbSrc;
+    preload.crossOrigin = 'anonymous';
+    document.head.appendChild(preload);
+
+    // Fetch file size from Content-Length header via HEAD request
+    const sizeEl = document.getElementById('loader-size');
+    fetch(glbSrc, { method: 'HEAD' })
+      .then(r => {
+        const bytes = parseInt(r.headers.get('content-length'), 10);
+        if (bytes) sizeEl.textContent = (bytes / 1048576).toFixed(1) + ' MB';
+      })
+      .catch(() => {});
+
+    model.src = glbSrc;
+
     // ── loading progress ──
     const loader   = document.getElementById('loader');
-    const pctEl    = document.getElementById('loader-pct');
+    const pctEl    = document.getElementById('loader-pct-val');
     const fillEl   = document.getElementById('spinner-fill');
     const circumference = 2 * Math.PI * 42; // r=42
 
