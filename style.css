@@ -1106,7 +1106,7 @@ footer {
     border-top: 1px solid rgba(255,255,255,.08);
   }
 
-  .nav-links.open { display: flex; }
+  .nav-links.open { display: flex; background: var(--navy); }
 
   .nav-links li { width: 100%; }
 
