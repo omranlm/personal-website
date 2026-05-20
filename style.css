@@ -1092,9 +1092,8 @@ footer {
 @media (max-width: 700px) {
   /* nav: switch to hamburger */
   .nav {
-    flex-wrap: wrap;
+    position: relative;
     justify-content: space-between;
-    height: auto;
     min-height: 56px;
     padding: 0 1.25rem;
     gap: 0;
@@ -1114,7 +1113,18 @@ footer {
     border-top: 1px solid rgba(255,255,255,.08);
   }
 
-  .nav-links.open { display: flex; background: var(--navy); }
+  .nav-links.open {
+    display: flex;
+    background: rgba(31, 20, 18, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    box-shadow: 0 8px 20px rgba(0,0,0,.45);
+  }
 
   .nav-links li { width: 100%; }
 
