@@ -207,6 +207,8 @@
     id="model"
     alt="3D model of Douma, Syria — drone survey December 2025"
     camera-controls
+    min-field-of-view="2deg"
+    max-field-of-view="90deg"
     auto-rotate
     auto-rotate-delay="2000"
     rotation-per-second="8deg"
@@ -293,7 +295,7 @@
 
     // ── controls ──
     const FOV_STEP = 5;
-    const MIN_FOV  = 10;
+    const MIN_FOV  = 2;
     const MAX_FOV  = 90;
 
     document.getElementById('btn-reset').addEventListener('click', () => {
