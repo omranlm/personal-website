@@ -228,6 +228,14 @@ section:nth-child(even) {
 
 .hero-text h1 span { color: var(--teal); }
 
+.hero-full-name {
+  font-size: .72rem;
+  color: rgba(255,255,255,.38);
+  letter-spacing: .08em;
+  margin: -.3rem 0 .6rem;
+  font-weight: 400;
+}
+
 .hero-subtitle {
   font-size: 1.15rem;
   color: #c49898;
