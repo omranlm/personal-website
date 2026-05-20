@@ -84,6 +84,22 @@
       color: rgba(255,255,255,.45);
       letter-spacing: .04em;
     }
+    .loader-note {
+      font-size: .72rem;
+      color: rgba(255,255,255,.25);
+      letter-spacing: .02em;
+      text-align: center;
+      max-width: 300px;
+      line-height: 1.5;
+    }
+    .loader-preview {
+      width: 100%;
+      max-width: 640px;
+      border-radius: 8px;
+      opacity: .45;
+      border: 1px solid rgba(255,255,255,.1);
+      margin-top: .25rem;
+    }
 
     /* ── top bar ── */
     .top-bar {
@@ -202,6 +218,11 @@
       </div>
     </div>
     <div class="loader-label">Loading 3D model…</div>
+    <div class="loader-note">
+      ~110 MB — a fast &amp; stable connection is recommended.<br>
+      On a slow connection this may take a while — you can leave this tab open and come back. Once loaded, it will look like this:
+    </div>
+    <img src="../assets/douma-3d-model.png" alt="Preview of the loaded 3D model" class="loader-preview" />
   </div>
 
   <!-- Top bar -->
