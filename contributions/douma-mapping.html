@@ -166,6 +166,21 @@
     body.rtl .contribution-body ul { margin: 0 1.2rem 1rem 0; }
     body.rtl .pillar-grid { direction: rtl; }
     body.rtl .lang-top-bar { flex-direction: row-reverse; }
+
+    .osm-syria-logo {
+      display: block;
+      width: auto;
+      max-width: 160px;
+      height: auto;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .header-title-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: .5rem 0 .25rem;
+    }
   </style>
 </head>
 <body>
@@ -193,10 +208,13 @@
     <header>
       <div class="page-tag lang-en">Volunteering · Humanitarian Mapping · Reconstruction · Syria</div>
       <div class="page-tag lang-ar">تطوع · خرائط إنسانية · إعادة الإعمار · سوريا</div>
-      <h1>
-        <span class="lang-en">Douma, Syria — Mapping for Reconstruction</span>
-        <span class="lang-ar">دوما، سوريا — الخرائط لإعادة الإعمار</span>
-      </h1>
+      <div class="header-title-row">
+        <h1>
+          <span class="lang-en">Douma, Syria — Mapping for Reconstruction</span>
+          <span class="lang-ar">دوما، سوريا — الخرائط لإعادة الإعمار</span>
+        </h1>
+        <img src="../assets/OSM Syria logo.svg" alt="OSM Syria" class="osm-syria-logo" />
+      </div>
       <p class="subtitle lang-en">Founding Volunteer &nbsp;·&nbsp; Humanitarian OpenStreetMap Team</p>
       <p class="subtitle lang-ar">متطوع مؤسس &nbsp;·&nbsp; فريق OpenStreetMap الإنساني</p>
     </header>
