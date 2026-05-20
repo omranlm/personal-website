@@ -63,6 +63,41 @@
     .fair-link { background: #fff; border-color: #b8d8d4; color: var(--osm-dark); }
     .fair-link:hover { background: var(--osm-teal); border-color: var(--osm-teal); color: #fff; }
 
+    /* status notice */
+    .status-notice {
+      background: #fffbea;
+      border: 1.5px solid #e6c84a;
+      border-left: 4px solid #e6c84a;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+    body.rtl .status-notice { border-left: 1.5px solid #e6c84a; border-right: 4px solid #e6c84a; }
+    .status-notice .status-title {
+      font-weight: 700;
+      font-size: .9rem;
+      color: #7a5c00;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .status-notice ul {
+      margin: .4rem 0 0 1.1rem;
+      padding: 0;
+    }
+    body.rtl .status-notice ul { margin: .4rem 1.1rem 0 0; }
+    .status-notice li {
+      font-size: .85rem;
+      color: #7a5c00;
+      margin-bottom: .2rem;
+    }
+    .status-notice p {
+      font-size: .85rem;
+      color: #7a5c00 !important;
+      margin-bottom: .3rem;
+    }
+
     /* lang switcher */
     .lang-switcher-wrap {
       display: flex;
@@ -181,14 +216,39 @@
         <label class="lang-en">Type</label>
         <label class="lang-ar">النوع</label>
         <span class="lang-en">Concept Note · Community Initiative</span>
-        <span class="lang-ar">ملاحظة مفهوم · مبادرة مجتمعية</span>
+        <span class="lang-ar">مبادرة مجتمعية</span>
       </div>
     </div>
 
     <div class="contribution-body">
 
+      <div class="status-notice">
+        <div class="status-title lang-en">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Current Status — May 2026
+        </div>
+        <div class="status-title lang-ar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          الوضع الحالي — مايو 2026
+        </div>
+        <p class="lang-en">This initiative remains a <strong>concept note</strong>. A proof-of-concept pilot was conducted in December 2025, but the project has not yet advanced to full implementation. The following are still missing:</p>
+        <p class="lang-ar">لا تزال هذه المبادرة في مرحلة <strong>مذكرة مفاهيمية</strong>. أُجري طيران تجريبي في ديسمبر 2025، غير أن المشروع لم ينتقل بعد إلى مرحلة التنفيذ الكاملة. ما يزال غائباً حتى الآن:</p>
+        <ul class="lang-en">
+          <li>Activities implementation plan</li>
+          <li>Project timeframe and milestones</li>
+          <li>Roles and responsibilities</li>
+          <li>Budget allocation</li>
+        </ul>
+        <ul class="lang-ar">
+          <li>خطة تنفيذ الأنشطة</li>
+          <li>الإطار الزمني للمشروع والمراحل الرئيسية</li>
+          <li>الأدوار والمسؤوليات</li>
+          <li>تخصيص الميزانية</li>
+        </ul>
+      </div>
+
       <h2 class="lang-en">The Problem</h2>
-      <h2 class="lang-ar">المشكلة</h2>
+      <h2 class="lang-ar">المشكلة التي نحاول حلها</h2>
       <p class="lang-en">
         Local councils in post-conflict Syrian cities face a critical gap: the absence of accurate, geo-referenced maps for infrastructure reconstruction and damage assessment. Without reliable spatial data, planning repairs to roads, buildings, and utilities is largely guesswork — slowing recovery and misallocating scarce resources.
       </p>
@@ -197,7 +257,7 @@
       </p>
 
       <h2 class="lang-en">The Approach</h2>
-      <h2 class="lang-ar">النهج</h2>
+      <h2 class="lang-ar">النهج والمقاربة</h2>
       <p class="lang-en">
         This initiative equips local councils with the capacity and open-source tools to conduct drone mapping activities independently — producing up-to-date city maps they can maintain and reuse every six months. The methodology is deliberately people-first: low-cost, community-run, and built entirely on open tools so no proprietary licensing stands in the way of access.
       </p>
