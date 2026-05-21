@@ -440,6 +440,23 @@
       width: 100%;
     }
     .yt-expand-btn:hover { background: rgba(230,168,23,.22); }
+    .load-giveup-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+      background: rgba(220,60,60,.15);
+      border: 1px solid rgba(220,60,60,.4);
+      border-radius: 8px;
+      color: #e05c5c;
+      font-size: .8rem;
+      font-weight: 600;
+      padding: .55rem .9rem;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .load-giveup-btn:hover { background: rgba(220,60,60,.28); }
+    .load-giveup-btn.visible { display: flex; }
     .load-warning-timer-total {
       font-size: 1rem;
       color: rgba(255,255,255,.22);
@@ -495,6 +512,10 @@
         <div class="load-warning-timer-total">/ 4:00</div>
       </div>
     </div>
+    <a href="douma-mapping.html" class="load-giveup-btn" id="load-giveup-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Give up &amp; go back to Douma Mapping
+    </a>
     <div class="load-warning-youtube" id="load-youtube">
       <div class="load-warning-youtube-label">Watch the 3D model preview while you wait:</div>
       <div id="yt-iframe"></div>
@@ -649,6 +670,7 @@
     const ytExpandBtn  = document.getElementById('yt-expand-btn');
     const ytExpandIcon = document.getElementById('yt-expand-icon');
     const ytExpandLbl  = document.getElementById('yt-expand-label');
+    const giveupBtn    = document.getElementById('load-giveup-btn');
     let elapsed = 0;
     const MAX_ELAPSED = 240;
     const timerInterval = setInterval(() => {
@@ -660,6 +682,7 @@
         clearInterval(timerInterval);
         timerEl.classList.add('expired');
         loadWarning.classList.add('time-up');
+        giveupBtn.classList.add('visible');
       }
     }, 1000);
 
