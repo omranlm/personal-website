@@ -366,7 +366,7 @@
       flex-direction: column;
       gap: .9rem;
       opacity: 0;
-      animation: warningFadeIn .5s 3s forwards;
+      animation: warningFadeIn .5s 0s forwards;
       transition: opacity .4s ease, width .35s cubic-bezier(.22,1,.36,1),
                   left .35s cubic-bezier(.22,1,.36,1),
                   transform .35s cubic-bezier(.22,1,.36,1),
@@ -469,23 +469,34 @@
       width: 100%;
     }
     .yt-expand-btn:hover { background: rgba(230,168,23,.22); }
-    .load-giveup-btn {
+    .load-giveup-btn,
+    .load-report-btn {
       display: none;
       align-items: center;
       justify-content: center;
       gap: .45rem;
-      background: rgba(220,60,60,.15);
-      border: 1px solid rgba(220,60,60,.4);
       border-radius: 8px;
-      color: #e05c5c;
       font-size: .8rem;
       font-weight: 600;
       padding: .55rem .9rem;
       text-decoration: none;
       transition: background .15s;
+      width: 100%;
+    }
+    .load-giveup-btn {
+      background: rgba(220,60,60,.15);
+      border: 1px solid rgba(220,60,60,.4);
+      color: #e05c5c;
     }
     .load-giveup-btn:hover { background: rgba(220,60,60,.28); }
-    .load-giveup-btn.visible { display: flex; }
+    .load-report-btn {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.7);
+    }
+    .load-report-btn:hover { background: rgba(255,255,255,.13); color: #fff; }
+    .load-giveup-btn.visible,
+    .load-report-btn.visible { display: flex; }
     .load-warning-timer-total {
       font-size: 1rem;
       color: rgba(255,255,255,.22);
@@ -544,17 +555,21 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       Heads up
     </div>
-    <p class="load-warning-note">Some users have reported loading issues due to the large file size (~110 MB) and slow internet connections — it can take around 4 minutes sometimes to load. In the meantime, you can watch the video below until the map is loaded.</p>
+    <p class="load-warning-note">Some users have reported loading issues due to the large file size and slow internet connections — it can take around 2 minutes sometimes to load. In the meantime, you can watch the video below until the map is loaded.</p>
     <div class="load-warning-timer-row">
       <div class="load-warning-timer-label">Time elapsed</div>
       <div style="display:flex;align-items:baseline;gap:.35rem;flex-shrink:0;">
         <div class="load-warning-timer" id="load-timer">0:00</div>
-        <div class="load-warning-timer-total">/ 4:00</div>
+        <div class="load-warning-timer-total">/ 2:00</div>
       </div>
     </div>
     <a href="douma-mapping.html" class="load-giveup-btn" id="load-giveup-btn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Give up &amp; go back to Douma Mapping
+    </a>
+    <a class="load-report-btn" id="load-report-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Report loading issue
     </a>
     <div class="load-warning-youtube" id="load-youtube">
       <div class="load-warning-youtube-label">Watch the 3D model preview while you wait:</div>
@@ -728,8 +743,29 @@
     const ytExpandIcon = document.getElementById('yt-expand-icon');
     const ytExpandLbl  = document.getElementById('yt-expand-label');
     const giveupBtn    = document.getElementById('load-giveup-btn');
+    const reportBtn    = document.getElementById('load-report-btn');
+
+    function detectBrowser() {
+      const ua = navigator.userAgent;
+      if (ua.includes('Firefox'))                          return 'Firefox';
+      if (ua.includes('Edg'))                              return 'Microsoft Edge';
+      if (ua.includes('OPR') || ua.includes('Opera'))     return 'Opera';
+      if (ua.includes('Chrome'))                           return 'Chrome';
+      if (ua.includes('Safari'))                           return 'Safari';
+      return 'Unknown browser';
+    }
+    function detectOS() {
+      const ua = navigator.userAgent;
+      if (/iphone|ipad|ipod/i.test(ua))  return 'iOS';
+      if (/android/i.test(ua))           return 'Android';
+      if (ua.includes('Windows'))        return 'Windows';
+      if (ua.includes('Mac OS'))         return 'macOS';
+      if (ua.includes('Linux'))          return 'Linux';
+      return 'Unknown OS';
+    }
+
     let elapsed = 0;
-    const MAX_ELAPSED = 240;
+    const MAX_ELAPSED = 120;
     const timerInterval = setInterval(() => {
       elapsed++;
       const m = Math.floor(elapsed / 60);
@@ -740,6 +776,23 @@
         timerEl.classList.add('expired');
         loadWarning.classList.add('time-up');
         giveupBtn.classList.add('visible');
+        const browser = detectBrowser();
+        const os      = detectOS();
+        const subject = encodeURIComponent('issue loading douma 3d model');
+        const body    = encodeURIComponent(
+          'Hello,\n\n' +
+          'I tried to view the Douma 3D model but it took more than 2 minutes to load and did not complete.\n\n' +
+          'Auto-detected device info:\n' +
+          '- Browser: ' + browser + '\n' +
+          '- Operating System: ' + os + '\n\n' +
+          'Please fill in the following:\n' +
+          '- Internet speed: \n' +
+          '- Browser version (if known): \n' +
+          '- Any additional notes: \n\n' +
+          'Thank you'
+        );
+        reportBtn.href = 'mailto:omran@najjar.biz?subject=' + subject + '&body=' + body;
+        reportBtn.classList.add('visible');
       }
     }, 1000);
 
@@ -762,6 +815,7 @@
     model.addEventListener('camera-change', hideTutorial, { once: true });
 
     model.addEventListener('load', () => {
+      modelLoaded = true;
       clearInterval(timerInterval);
       if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
       loadWarning.classList.add('hidden');
@@ -831,6 +885,7 @@
 
     // ── YouTube IFrame API ──
     let ytPlayer = null;
+    let modelLoaded = false;
     window.onYouTubeIframeAPIReady = function() {
       ytPlayer = new YT.Player('yt-iframe', {
         videoId: 'BGvUulE2iao',
@@ -838,9 +893,11 @@
         events: {
           onReady: function(e) {
             setTimeout(() => {
-              e.target.unMute();
-              e.target.setVolume(50);
-              e.target.playVideo();
+              if (!modelLoaded) {
+                e.target.unMute();
+                e.target.setVolume(50);
+                e.target.playVideo();
+              }
             }, 5000);
           }
         }
