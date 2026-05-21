@@ -515,6 +515,39 @@
       align-self: flex-end;
       margin-bottom: .25rem;
     }
+    /* ── popup mini spinner (mobile only) ── */
+    .popup-spinner-wrap {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255,255,255,.04);
+      border-radius: 10px;
+      padding: .65rem .9rem;
+    }
+    .popup-spinner-svg {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      transform: rotate(-90deg);
+    }
+    .popup-spinner-track {
+      fill: none;
+      stroke: rgba(255,255,255,.08);
+      stroke-width: 5;
+    }
+    .popup-spinner-fill {
+      fill: none;
+      stroke: #0c7c70;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 175.9;
+      stroke-dashoffset: 175.9;
+      transition: stroke-dashoffset .25s ease;
+    }
+    .popup-spinner-info { display: flex; flex-direction: column; gap: .2rem; }
+    .popup-spinner-pct  { font-size: 1.3rem; font-weight: 700; color: #fff; line-height: 1; }
+    .popup-spinner-lbl  { font-size: .7rem; color: rgba(255,255,255,.4); letter-spacing: .04em; }
+
     @media (max-width: 600px) {
       .load-warning {
         left: 50%;
@@ -523,6 +556,7 @@
         transform: translateX(-50%);
         width: min(420px, 94vw);
       }
+      .popup-spinner-wrap { display: flex; }
     }
   </style>
 </head>
@@ -565,6 +599,16 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       Heads up
     </div>
+    <div class="popup-spinner-wrap" id="popup-spinner-wrap">
+      <svg class="popup-spinner-svg" viewBox="0 0 64 64">
+        <circle class="popup-spinner-track" cx="32" cy="32" r="28"/>
+        <circle class="popup-spinner-fill" id="popup-spinner-fill" cx="32" cy="32" r="28"/>
+      </svg>
+      <div class="popup-spinner-info">
+        <span class="popup-spinner-pct" id="popup-spinner-pct">0%</span>
+        <span class="popup-spinner-lbl">Loading 3D model…</span>
+      </div>
+    </div>
     <p class="load-warning-note">Some users have reported loading issues due to the large file size and slow internet connections — it can take around 2 minutes sometimes to load. In the meantime, you can watch the video below until the map is loaded.</p>
     <div class="load-warning-timer-row">
       <div class="load-warning-timer-label">Time elapsed</div>
@@ -595,7 +639,7 @@
   <div class="top-bar">
     <a href="douma-mapping.html" class="back-btn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Back to Douma Mapping
+      Back to more details about Douma city mapping for reconstruction
     </a>
     <div class="title-block">
       <h1>Douma, Syria — 3D Model</h1>
@@ -718,6 +762,11 @@
     const loaderError = document.getElementById('loader-error');
     const circumference = 2 * Math.PI * 42;
 
+    const popupFill        = document.getElementById('popup-spinner-fill');
+    const popupPctEl       = document.getElementById('popup-spinner-pct');
+    const popupSpinnerWrap = document.getElementById('popup-spinner-wrap');
+    const popupCircumference = 2 * Math.PI * 28; // ≈ 175.9, matches stroke-dasharray
+
     // ── iOS / mobile early warning ──
     const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -730,6 +779,8 @@
       const pct = Math.round(e.detail.totalProgress * 100);
       pctEl.textContent = pct + '%';
       fillEl.style.strokeDashoffset = circumference * (1 - e.detail.totalProgress);
+      popupFill.style.strokeDashoffset = popupCircumference * (1 - e.detail.totalProgress);
+      popupPctEl.textContent = pct + '%';
     });
 
     model.addEventListener('error', () => {
@@ -833,6 +884,7 @@
       clearInterval(timerInterval);
       if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
       loadWarning.classList.add('hidden');
+      popupSpinnerWrap.style.display = 'none';
       pctEl.textContent = '100%';
       fillEl.style.strokeDashoffset = 0;
       setTimeout(() => {
