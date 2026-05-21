@@ -532,7 +532,7 @@
     </div>
     <div class="loader-label">Loading 3D model…</div>
     <div class="loader-note">
-      ~110 MB — a fast &amp; stable connection is recommended.<br>
+      ~25 MB — a fast &amp; stable connection is recommended.<br>
       On a slow connection this may take a while, it is recommended to use a computer/laptop rather than a phone. There has been some users who reported that they can't see the 3D model from inside Syria. — you can leave this tab open and come back. Once loaded, it will look like this:
     </div>
     <img src="../assets/douma-3d-model.png" alt="Preview of the loaded 3D model" class="loader-preview" />
@@ -540,7 +540,7 @@
       <div class="loader-error-title">Unable to load 3D model</div>
       <div class="loader-error-msg">
         This is most likely due to a memory or compatibility limitation on your device.<br><br>
-        iOS devices and phones in general may struggle with this 110 MB file. Try opening this page on a computer or laptop for the best experience.
+        iOS devices and phones in general may struggle with this ~25 MB file. Try opening this page on a computer or laptop for the best experience.
       </div>
       <a href="douma-mapping.html" class="loader-error-back">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -718,7 +718,7 @@
                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     if (isIOS) {
       document.querySelector('.loader-note').innerHTML +=
-        '<br><br><strong style="color:#e6a817;">Note:</strong> iOS devices may struggle to load this 110 MB file due to memory limits. A computer or laptop is strongly recommended.';
+        '<br><br><strong style="color:#e6a817;">Note:</strong> iOS devices may struggle to load this ~25 MB file due to memory limits. A computer or laptop is strongly recommended.';
     }
 
     model.addEventListener('progress', e => {
