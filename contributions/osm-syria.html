@@ -22,13 +22,13 @@
   <meta property="og:url" content="https://najjar.biz/contributions/osm-syria.html" />
   <meta property="og:title" content="OSM Syria Community" />
   <meta property="og:description" content="Bringing together Syrians inside the country and in the diaspora to build open geographic data for humanitarian response, urban planning, and local development." />
-  <meta property="og:image" content="https://najjar.biz/assets/OSM Syria logo.svg" />
+  <meta property="og:image" content="https://najjar.biz/assets/osm-syria-logo.svg" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@OmranNajjar" />
   <meta name="twitter:title" content="OSM Syria Community" />
   <meta name="twitter:description" content="Bringing together Syrians inside the country and in the diaspora to build open geographic data for humanitarian response, urban planning, and local development." />
-  <meta name="twitter:image" content="https://najjar.biz/assets/OSM Syria logo.svg" />
+  <meta name="twitter:image" content="https://najjar.biz/assets/osm-syria-logo.svg" />
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" />
@@ -169,7 +169,7 @@
     .osm-syria-logo {
       display: block;
       width: auto;
-      max-width: 80px;
+      max-width: 160px;
       height: auto;
       border-radius: 6px;
       flex-shrink: 0;
@@ -177,6 +177,7 @@
     .header-title-row {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 1rem;
       margin: .5rem 0 .25rem;
     }
@@ -214,6 +215,7 @@
     body.rtl .lang-ar { display: block !important; }
     body.rtl span.lang-ar,
     body.rtl strong.lang-ar,
+    body.rtl a.lang-ar,
     body.rtl label.lang-ar { display: inline !important; }
     body.rtl .lang-en { display: none !important; }
     body.rtl { direction: rtl; font-family: 'Segoe UI', Tahoma, 'Arial', sans-serif; }
@@ -221,7 +223,7 @@
     body.rtl .contribution-meta { flex-direction: row-reverse; flex-wrap: wrap; }
     body.rtl .fair-links { flex-direction: row-reverse; flex-wrap: wrap; }
     body.rtl .contribution-body ul { margin: 0 1.2rem 1rem 0; }
-    body.rtl .osm-syria-join { flex-direction: row-reverse; }
+    body.rtl .osm-syria-join { direction: rtl; }
     body.rtl .pillar-grid { direction: rtl; }
     body.rtl .lang-top-bar { flex-direction: row-reverse; }
   </style>
@@ -268,7 +270,7 @@
       <div class="page-tag lang-ar">تطوع · مفتوح المصدر · مجتمع · سوريا</div>
       <div class="header-title-row">
         <h1><span class="lang-en">OSM Syria Community</span><span class="lang-ar">مجتمع OSM سوريا</span></h1>
-        <img src="../assets/OSM Syria logo.svg" alt="OSM Syria" class="osm-syria-logo" />
+        <img src="../assets/osm-syria-logo.svg" alt="OSM Syria" class="osm-syria-logo" />
       </div>
       <p class="subtitle lang-en">Founding Volunteer &nbsp;·&nbsp; OpenStreetMap Syria</p>
       <p class="subtitle lang-ar">متطوع مؤسس &nbsp;·&nbsp; OpenStreetMap سوريا</p>

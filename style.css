@@ -985,6 +985,7 @@ section:nth-child(even) {
 /* OSM Syria join banner */
 .osm-syria-join {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
@@ -992,6 +993,10 @@ section:nth-child(even) {
   border-radius: var(--radius);
   padding: 1.4rem 1.6rem;
   margin: 2rem 0 2.5rem;
+}
+.osm-syria-join-text {
+  flex: 1;
+  min-width: 0;
 }
 
 .osm-syria-join-text strong {
