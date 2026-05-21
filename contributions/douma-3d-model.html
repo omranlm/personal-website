@@ -31,6 +31,7 @@
   <meta name="twitter:image" content="https://najjar.biz/assets/douma-3d-model.png" />
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -315,6 +316,147 @@
       animation: fadeout 4s 2s forwards;
     }
     @keyframes fadeout { to { opacity: 0; } }
+
+    /* ── load warning popup ── */
+    .load-warning {
+      position: fixed;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 101;
+      width: 420px;
+      max-height: 90dvh;
+      overflow-y: auto;
+      background: rgba(18,14,12,.95);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(230,168,23,.25);
+      border-left: 4px solid #e6a817;
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+      opacity: 0;
+      animation: warningFadeIn .5s 3s forwards;
+      transition: opacity .4s ease, width .35s cubic-bezier(.22,1,.36,1),
+                  left .35s cubic-bezier(.22,1,.36,1),
+                  transform .35s cubic-bezier(.22,1,.36,1),
+                  max-height .35s cubic-bezier(.22,1,.36,1);
+    }
+    .load-warning.expanded {
+      width: 50vw;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      max-height: 85dvh;
+    }
+    .load-warning.hidden { opacity: 0 !important; pointer-events: none; animation: none; }
+    .load-warning.time-up {
+      border-color: rgba(220,60,60,.35);
+      border-left-color: #dc3c3c;
+      transition: opacity .4s ease, width .35s cubic-bezier(.22,1,.36,1),
+                  left .35s cubic-bezier(.22,1,.36,1),
+                  transform .35s cubic-bezier(.22,1,.36,1),
+                  max-height .35s cubic-bezier(.22,1,.36,1),
+                  border-color .5s ease;
+    }
+    .load-warning.time-up .load-warning-header { color: #e05c5c; }
+    .load-warning.time-up .load-warning-timer  { color: #e05c5c; }
+    .load-warning.time-up .yt-expand-btn {
+      background: rgba(220,60,60,.12);
+      border-color: rgba(220,60,60,.35);
+      color: #e05c5c;
+    }
+    .load-warning.time-up .yt-expand-btn:hover { background: rgba(220,60,60,.22); }
+    @keyframes warningFadeIn { to { opacity: 1; } }
+    .load-warning-header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .95rem;
+      font-weight: 700;
+      color: #e6a817;
+    }
+    .load-warning-note {
+      font-size: .8rem;
+      color: rgba(255,255,255,.5);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .load-warning-timer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,.05);
+      border-radius: 8px;
+      padding: .5rem .75rem;
+    }
+    .load-warning-timer-label {
+      font-size: .78rem;
+      color: rgba(255,255,255,.4);
+      line-height: 1.3;
+      max-width: 160px;
+    }
+    .load-warning-timer {
+      font-size: 2rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: #e6a817;
+      letter-spacing: .02em;
+      flex-shrink: 0;
+    }
+    .load-warning-timer.expired { color: #e05c5c; }
+    .load-warning-youtube {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .load-warning-youtube-label {
+      font-size: .78rem;
+      color: rgba(255,255,255,.45);
+      line-height: 1.4;
+    }
+    .load-warning-youtube #yt-iframe,
+    .load-warning-youtube #yt-iframe iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .yt-expand-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      background: rgba(230,168,23,.12);
+      border: 1px solid rgba(230,168,23,.3);
+      border-radius: 8px;
+      color: #e6a817;
+      font-size: .75rem;
+      font-weight: 600;
+      padding: .4rem .75rem;
+      cursor: pointer;
+      transition: background .15s;
+      width: 100%;
+    }
+    .yt-expand-btn:hover { background: rgba(230,168,23,.22); }
+    .load-warning-timer-total {
+      font-size: 1rem;
+      color: rgba(255,255,255,.22);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      align-self: flex-end;
+      margin-bottom: .25rem;
+    }
+    @media (max-width: 600px) {
+      .load-warning {
+        left: 50%;
+        top: auto;
+        bottom: 1rem;
+        transform: translateX(-50%);
+        width: min(420px, 94vw);
+      }
+    }
   </style>
 </head>
 <body>
@@ -337,6 +479,30 @@
       On a slow connection this may take a while, it is recommended to use a computer/laptop rather than a phone. There has been some users who reported that they can't see the 3D model from inside Syria. — you can leave this tab open and come back. Once loaded, it will look like this:
     </div>
     <img src="../assets/douma-3d-model.png" alt="Preview of the loaded 3D model" class="loader-preview" />
+  </div>
+
+  <!-- Load warning popup -->
+  <div class="load-warning" id="load-warning">
+    <div class="load-warning-header">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Heads up
+    </div>
+    <p class="load-warning-note">Some users have reported loading issues due to the large file size (~110 MB) and slow internet connections — it can take around 4 minutes sometimes to load. In the meantime, you can watch the video below until the map is loaded.</p>
+    <div class="load-warning-timer-row">
+      <div class="load-warning-timer-label">Time elapsed</div>
+      <div style="display:flex;align-items:baseline;gap:.35rem;flex-shrink:0;">
+        <div class="load-warning-timer" id="load-timer">0:00</div>
+        <div class="load-warning-timer-total">/ 4:00</div>
+      </div>
+    </div>
+    <div class="load-warning-youtube" id="load-youtube">
+      <div class="load-warning-youtube-label">Watch the 3D model preview while you wait:</div>
+      <div id="yt-iframe"></div>
+      <button class="yt-expand-btn" id="yt-expand-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="yt-expand-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+        <span id="yt-expand-label">Expand video</span>
+      </button>
+    </div>
   </div>
 
   <!-- Top bar -->
@@ -476,6 +642,36 @@
       fillEl.style.strokeDashoffset = circumference * (1 - e.detail.totalProgress);
     });
 
+    // ── load warning timer (counts up to 4:00) ──
+    const loadWarning  = document.getElementById('load-warning');
+    const timerEl      = document.getElementById('load-timer');
+    const ytIframe     = document.getElementById('yt-iframe');
+    const ytExpandBtn  = document.getElementById('yt-expand-btn');
+    const ytExpandIcon = document.getElementById('yt-expand-icon');
+    const ytExpandLbl  = document.getElementById('yt-expand-label');
+    let elapsed = 0;
+    const MAX_ELAPSED = 240;
+    const timerInterval = setInterval(() => {
+      elapsed++;
+      const m = Math.floor(elapsed / 60);
+      const s = elapsed % 60;
+      timerEl.textContent = m + ':' + String(s).padStart(2, '0');
+      if (elapsed >= MAX_ELAPSED) {
+        clearInterval(timerInterval);
+        timerEl.classList.add('expired');
+        loadWarning.classList.add('time-up');
+      }
+    }, 1000);
+
+    // ── expand / collapse popup ──
+    const collapseIcon = `<path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/>`;
+    const expandIcon   = `<path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3"/>`;
+    ytExpandBtn.addEventListener('click', () => {
+      const isExpanded = loadWarning.classList.toggle('expanded');
+      ytExpandIcon.innerHTML = isExpanded ? expandIcon : collapseIcon;
+      ytExpandLbl.textContent = isExpanded ? 'Collapse video' : 'Expand video';
+    });
+
     const tutorial = document.getElementById('nav-tutorial');
     const tutorialDismiss = document.getElementById('nav-tutorial-dismiss');
 
@@ -486,6 +682,9 @@
     model.addEventListener('camera-change', hideTutorial, { once: true });
 
     model.addEventListener('load', () => {
+      clearInterval(timerInterval);
+      if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
+      loadWarning.classList.add('hidden');
       pctEl.textContent = '100%';
       fillEl.style.strokeDashoffset = 0;
       setTimeout(() => {
@@ -549,6 +748,24 @@
       btnFs.innerHTML = isFs ? fsCollapse : fsExpand;
       btnFs.classList.toggle('active', isFs);
     });
+
+    // ── YouTube IFrame API ──
+    let ytPlayer = null;
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('yt-iframe', {
+        videoId: 'BGvUulE2iao',
+        playerVars: { autoplay: 0, mute: 1, rel: 0, modestbranding: 1 },
+        events: {
+          onReady: function(e) {
+            setTimeout(() => {
+              e.target.unMute();
+              e.target.setVolume(50);
+              e.target.playVideo();
+            }, 5000);
+          }
+        }
+      });
+    };
   </script>
 </body>
 </html>
