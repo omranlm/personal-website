@@ -695,12 +695,6 @@
       <span class="ctrl-label">Full</span>
     </button>
 
-    <div class="ctrl-divider"></div>
-
-    <button class="ctrl-btn" id="btn-othernav" title="Other navigation">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>
-      <span class="ctrl-label">Other nav</span>
-    </button>
   </div>
 
   <!-- Navigation tutorial -->
@@ -912,22 +906,6 @@
       model.cameraOrbit  = 'auto auto auto';
       model.cameraTarget = 'auto auto auto';
       model.fieldOfView  = 'auto';
-      model.setAttribute('orientation', '0deg 0deg 0deg');
-      otherNavActive = false;
-      document.getElementById('btn-othernav').classList.remove('active');
-    });
-
-    let otherNavActive = false;
-    document.getElementById('btn-othernav').addEventListener('click', () => {
-      otherNavActive = !otherNavActive;
-      document.getElementById('btn-othernav').classList.toggle('active', otherNavActive);
-      if (otherNavActive) {
-        model.cameraTarget = '0m -1.63m 1.2m';
-        model.setAttribute('orientation', '-90deg 0deg 0deg');
-      } else {
-        model.cameraTarget = 'auto auto auto';
-        model.setAttribute('orientation', '0deg 0deg 0deg');
-      }
     });
 
     document.getElementById('btn-zoomin').addEventListener('click', () => {
