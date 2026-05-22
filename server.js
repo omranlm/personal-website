@@ -24,8 +24,8 @@ const MIME = {
 // html → always revalidate; assets → long-lived; rest → 1 day
 const CACHE = {
   '.html':    'no-cache',
-  '.css':     'public, max-age=86400',           // 1 day
-  '.js':      'public, max-age=86400',           // 1 day
+  '.css':     'no-cache',
+  '.js':      'no-cache',
   '.json':    'public, max-age=86400',           // 1 day
   '.geojson': 'public, max-age=86400',           // 1 day
   '.svg':     'public, max-age=604800',          // 1 week

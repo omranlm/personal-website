@@ -43,7 +43,7 @@
     <ul class="nav-links">
       <li><a href="#about">Profile</a></li>
       <li><a href="#contributions">Contributions</a></li>
-      <li><a href="#talks">Talks</a></li>
+      <li><a href="#talks">Talks & Events</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -182,18 +182,412 @@
   <!-- TALKS & ARTICLES -->
   <section id="talks">
     <div class="section-inner">
-      <h2 class="section-title">Talks &amp; Articles</h2>
-      <div class="talks-list fade-in">
+      <h2 class="section-title">Talks, Events &amp; Articles</h2>
+      <div class="talks-carousel-wrap fade-in" id="carousel-wrap">
 
-        <div class="talk-item">
-          <div class="talk-year">—</div>
-          <div>
-            <h3>More content coming soon</h3>
-            <p>Articles, talks, and conference presentations will be listed here.</p>
-          </div>
+        <button class="carousel-btn carousel-btn-prev disabled" id="carousel-prev" aria-label="Previous">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-btn carousel-btn-next" id="carousel-next" aria-label="Next">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+
+        <div class="talks-carousel" id="talks-carousel">
+
+          <!-- 1 — Dec 25, 2025 -->
+          <a href="talks/osm-syria-damascus-2025.html" class="talk-card tag-event">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-event">Event</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>OSM Syria — In-person Meeting, Damascus</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Damascus, Syria</span>
+              <span class="talk-card-role">Organizer &amp; Facilitator</span>
+            </div>
+            <p class="talk-card-desc">Organized and facilitated the 3rd OSM Syria community meeting — the first in-person gathering in Damascus (Hotel Al-Sham), bringing together 8 members to plan community activities and mapping initiatives.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 2 — Nov 2025 -->
+          <a href="talks/hits25.html" class="talk-card tag-event">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-event">Event</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>Humanitarian Demining Innovation &amp; Technology Summit — HITS25</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Kraków, Poland</span>
+              <span class="talk-card-role">Attendee</span>
+            </div>
+            <p class="talk-card-desc">Attended HITS25, Minesight's summit on innovation and technology for humanitarian demining — exploring practical roadmaps for deploying AI and geospatial data in mine action operations.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 3 — Dec 2025 -->
+          <a href="talks/fair-training-nairobi-2025.html" class="talk-card tag-training">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-training">Training</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>fAIr Training Workshop — OSM Kenya Mappers</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Nairobi, Kenya</span>
+              <span class="talk-card-role">Trainer &amp; Facilitator</span>
+            </div>
+            <p class="talk-card-desc">Two-day hands-on training with 12 OSM Kenya mappers on fAIr's training workflow — testing AI models, refining datasets, and generating building data for Mozambique from satellite imagery.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 4 — Nov 21, 2025 -->
+          <a href="talks/foss4g-2025.html" class="talk-card tag-talk">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-talk">Talk</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>FOSS4G Global 2025 — Free &amp; Open Source AI Assisted Mapping</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Auckland, New Zealand</span>
+              <span class="talk-card-role">Speaker</span>
+            </div>
+            <p class="talk-card-desc">Presented "Free and Open Source AI Assisted Mapping: fAIr" at FOSS4G Global 2025 alongside Kshitij Raj Sharma and Leen D'hondt at Auckland University of Technology.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 5 — Oct 4, 2025 -->
+          <a href="talks/sotm-2025-fairswipe.html" class="talk-card tag-talk">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-talk">Talk</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>State of the Map 2025 — fAIrSwipe</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Manila, Philippines</span>
+              <span class="talk-card-role">Speaker</span>
+            </div>
+            <p class="talk-card-desc">30-minute solo talk merging fAIr AI building predictions with MapSwipe crowdsourced validation to automate OSM data upload — a full pipeline from AI prediction to validated map data.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 6 — Jul 16, 2025 -->
+          <a href="talks/foss4g-europe-2025.html" class="talk-card tag-talk">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-talk">Talk</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>FOSS4G Europe 2025 — fAIr Community AI Mapping Roadmap</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Mostar, Bosnia-Herzegovina</span>
+              <span class="talk-card-role">Speaker</span>
+            </div>
+            <p class="talk-card-desc">Presented the fAIr Community AI Assisted Mapping Roadmap at FOSS4G Europe 2025 alongside Petya Kangalova and Kshitij Raj Sharma.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 7 — Jun 2, 2025 -->
+          <a href="talks/osm-syria-meeting-1-2025.html" class="talk-card tag-event">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-event">Event</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>OSM Syria Community — 1st Meeting</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Online</span>
+              <span class="talk-card-role">Facilitator &amp; Organizer</span>
+            </div>
+            <p class="talk-card-desc">Facilitated the inaugural OSM Syria community meeting — introducing OpenStreetMap, demonstrating use cases in damage assessment and reconstruction, with a guest speaker from OSM Lebanon.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 8 — Feb 10-11, 2025 -->
+          <a href="talks/ai-action-summit-2025.html" class="talk-card tag-talk">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-talk">Talk</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>AI Action Summit 2025 — Paris Peace Forum</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Grand Palais, Paris</span>
+              <span class="talk-card-role">Presenter &amp; Exhibitor</span>
+            </div>
+            <p class="talk-card-desc">Co-presented HOT's fAIr at an action station alongside Petya Kangalova — one of 10 projects selected to pitch on stage at the AI Action Summit, Grand Palais, Paris.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 9 — Feb 4-5, 2025 -->
+          <a href="talks/geoai-hack-2025.html" class="talk-card tag-event">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-event">Event</span>
+              <span class="talk-card-year">2025</span>
+            </div>
+            <h3>GeoAI Hack 2025 — Desert Locust Crisis Hackathon</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Paris, France</span>
+              <span class="talk-card-role">Judge</span>
+            </div>
+            <p class="talk-card-desc">Served as judge at GeoAI Hack 2025, evaluating AI-powered early warning systems for Africa's desert locust crisis built using satellite data and ML frameworks.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 10 — Jul 2024 -->
+          <a href="talks/sotm-europe-2024.html" class="talk-card tag-talk">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-talk">Talk</span>
+              <span class="talk-card-year">2024</span>
+            </div>
+            <h3>State of the Map Europe 2024 — fAIr Production Release</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Łódź, Poland</span>
+              <span class="talk-card-role">Speaker</span>
+            </div>
+            <p class="talk-card-desc">Co-presented the production release announcement for fAIr, HOT's AI-assisted mapping community service, showcasing model accuracy research and real-world deployment.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 11 — Jun 2024 -->
+          <a href="talks/ml4eo-2024.html" class="talk-card tag-event">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-event">Event</span>
+              <span class="talk-card-year">2024</span>
+            </div>
+            <h3>ML4EO 2024 — Machine Learning for Earth Observation</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Exeter, UK</span>
+              <span class="talk-card-role">Poster Co-author</span>
+            </div>
+            <p class="talk-card-desc">Academic poster co-author at ML4EO 2024 (University of Edinburgh) with Anna Zanchetta — presenting HOT's fAIr AI-assisted mapping approach to an Earth observation research audience.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 12 — May 2024 -->
+          <a href="talks/open-mapping-guru-2024.html" class="talk-card tag-talk">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-talk">Talk</span>
+              <span class="talk-card-year">2024</span>
+            </div>
+            <h3>Open Mapping Guru Program — AI-assisted Mapping with fAIr</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Online</span>
+              <span class="talk-card-role">Speaker</span>
+            </div>
+            <p class="talk-card-desc">Presented "AI assisted Mapping in an open and ethical way — fAIr" to HOT's Asia-Pacific network of experienced OSM community leaders and trainers (200+ mappers).</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 13 — Mar 2024 -->
+          <a href="talks/changenow-2024.html" class="talk-card tag-event">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-event">Event</span>
+              <span class="talk-card-year">2024</span>
+            </div>
+            <h3>ChangeNOW 2024 Summit</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Paris, France</span>
+              <span class="talk-card-role">Attendee</span>
+            </div>
+            <p class="talk-card-desc">Attended the ChangeNOW Summit at Grand Palais Éphémère alongside the HOT team, exploring where AI mapping intersects with ethical innovation and climate action.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 14 — Aug 2023 -->
+          <a href="talks/civicus-interview-2023.html" class="talk-card tag-interview">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-interview">Interview</span>
+              <span class="talk-card-year">2023</span>
+            </div>
+            <h3>CIVICUS Interview — AI biases &amp; transparency</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Online</span>
+              <span class="talk-card-role">Interviewee</span>
+            </div>
+            <p class="talk-card-desc">"AI: The biggest challenges are the biases and lack of transparency of algorithms" — discussed AI's potential for civil society and the need for ethical, transparent AI systems.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 15 — Nov 2022 -->
+          <a href="talks/hot-tech-talk-fair-2022.html" class="talk-card tag-interview">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-interview">Interview</span>
+              <span class="talk-card-year">2022</span>
+            </div>
+            <h3>HOT Tech Talk — fAIr: AI-assisted mapping</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Online</span>
+              <span class="talk-card-role">Interviewee</span>
+            </div>
+            <p class="talk-card-desc">Behind-the-scenes interview on the fAIr AI-assisted mapping project at HOT, covering the Omdena innovation challenge and the vision for ethical AI in humanitarian mapping.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 16 — 2022 -->
+          <a href="talks/omdena-testimonial.html" class="talk-card tag-interview">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-interview">Interview</span>
+              <span class="talk-card-year">2022</span>
+            </div>
+            <h3>Omdena Client Testimonial — HOT's AI Solution</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Online</span>
+              <span class="talk-card-role">Speaker</span>
+            </div>
+            <p class="talk-card-desc">Video testimonial as HOT's Senior Product Owner on Omdena's AI solution developed during the fAIr innovation challenge for AI-assisted humanitarian mapping.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <!-- 17 — Aug 2022 -->
+          <a href="talks/sotm-2022.html" class="talk-card tag-talk">
+            <div class="talk-card-top">
+              <span class="talk-tag tag-talk">Talk</span>
+              <span class="talk-card-year">2022</span>
+            </div>
+            <h3>State of the Map 2022 — UAV imagery &amp; AI mapping paper</h3>
+            <div class="talk-card-meta">
+              <span class="talk-card-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Florence, Italy</span>
+              <span class="talk-card-role">Co-author</span>
+            </div>
+            <p class="talk-card-desc">Co-authored academic paper on investigating UAV imagery capability for AI-assisted mapping of refugee camps in East Africa, presented at the SotM 2022 Academic Track.</p>
+            <svg class="talk-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+        </div><!-- /.talks-carousel -->
+
+        <div class="carousel-progress-wrap">
+          <div class="carousel-progress-fill" id="carousel-progress"></div>
         </div>
 
-      </div>
+      </div><!-- /.talks-carousel-wrap -->
+
+      <script>
+        (function() {
+          const wrap  = document.getElementById('carousel-wrap');
+          const track = document.getElementById('talks-carousel');
+          const prev  = document.getElementById('carousel-prev');
+          const next  = document.getElementById('carousel-next');
+          const bar   = document.getElementById('carousel-progress');
+          const cards = Array.from(track.querySelectorAll('.talk-card'));
+
+          // ── helpers ──────────────────────────────
+          function cardOffsets() {
+            return cards.map(c => c.offsetLeft - track.offsetLeft);
+          }
+
+          function nearestIdx(sl) {
+            const s = sl !== undefined ? sl : track.scrollLeft;
+            const offsets = cardOffsets();
+            let best = 0, bestDist = Infinity;
+            offsets.forEach((o, i) => {
+              const d = Math.abs(o - s);
+              if (d < bestDist) { bestDist = d; best = i; }
+            });
+            return best;
+          }
+
+          function visibleCount() {
+            const offs = cardOffsets();
+            if (offs.length < 2) return 1;
+            const gap = (offs[offs.length - 1] - offs[0]) / (offs.length - 1);
+            return Math.max(1, Math.round(track.clientWidth / gap));
+          }
+
+          function snapTo(idx, smooth) {
+            const offsets = cardOffsets();
+            const target  = offsets[Math.max(0, Math.min(idx, cards.length - 1))];
+            if (smooth === false) {
+              track.scrollLeft = target;
+            } else {
+              track.style.scrollBehavior = 'smooth';
+              track.scrollLeft = target;
+            }
+          }
+
+          function updateState() {
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            const sl  = track.scrollLeft;
+            const pct = maxScroll > 0 ? (sl / maxScroll) * 100 : 0;
+            bar.style.width = Math.max(6, pct) + '%';
+            const atStart = sl <= 2;
+            const atEnd   = sl >= maxScroll - 2;
+            prev.classList.toggle('disabled', atStart);
+            next.classList.toggle('disabled', atEnd);
+            wrap.classList.toggle('at-start', atStart);
+            wrap.classList.toggle('at-end',   atEnd);
+          }
+
+          // ── button nav ───────────────────────────
+          prev.addEventListener('click', () => snapTo(nearestIdx() - visibleCount()));
+          next.addEventListener('click', () => snapTo(nearestIdx() + visibleCount()));
+
+          // ── drag / swipe ─────────────────────────
+          let dragStartX    = 0;
+          let dragStartSL   = 0;
+          let dragDelta     = 0;
+          let dragging      = false;
+          let pointerActive = false;
+          let velX          = 0;
+          let lastX         = 0;
+          let lastT         = 0;
+          const DRAG_THRESHOLD = 8;
+
+          track.addEventListener('pointerdown', e => {
+            if (e.button !== 0 && e.pointerType === 'mouse') return;
+            dragging      = false;
+            pointerActive = true;
+            dragStartX    = e.clientX;
+            dragStartSL   = track.scrollLeft;
+            dragDelta     = 0;
+            velX          = 0;
+            lastX         = e.clientX;
+            lastT         = Date.now();
+            track.style.scrollBehavior = 'auto';
+          });
+
+          // listen on document so dragging outside the track still works
+          document.addEventListener('pointermove', e => {
+            if (!pointerActive) return;
+            const dx = dragStartX - e.clientX;
+            dragDelta = dx;
+            if (!dragging && Math.abs(dx) > DRAG_THRESHOLD) {
+              dragging = true;
+              track.classList.add('is-dragging');
+            }
+            if (dragging) {
+              track.scrollLeft = dragStartSL + dx;
+              const now = Date.now();
+              const dt  = now - lastT || 1;
+              velX = (e.clientX - lastX) / dt;
+              lastX = e.clientX;
+              lastT = now;
+            }
+          });
+
+          function endDrag() {
+            if (!pointerActive) return;
+            pointerActive = false;
+            track.classList.remove('is-dragging');
+            if (!dragging) { track.style.scrollBehavior = 'smooth'; return; }
+            dragging = false;
+
+            const FRICTION = 6;
+            const projected = track.scrollLeft - velX * FRICTION * 80;
+            const idx = nearestIdx(projected);
+            track.style.scrollBehavior = 'smooth';
+            snapTo(idx);
+          }
+
+          document.addEventListener('pointerup',     endDrag);
+          document.addEventListener('pointercancel', endDrag);
+
+          // prevent card navigation only when the user actually dragged
+          track.addEventListener('click', e => {
+            if (Math.abs(dragDelta) > DRAG_THRESHOLD) e.preventDefault();
+          }, true);
+
+          // ── scroll state ─────────────────────────
+          track.addEventListener('scroll', updateState, { passive: true });
+          window.addEventListener('resize', updateState);
+          updateState();
+        })();
+      </script>
     </div>
   </section>
 
