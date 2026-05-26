@@ -333,6 +333,31 @@ section:nth-child(even) {
   position: relative;
   margin-bottom: 2.5rem;
 }
+.timeline-logo-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  border-radius: 8px;
+  transition: transform .15s, box-shadow .15s;
+}
+.timeline-logo-link:hover {
+  transform: scale(1.07);
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+.timeline-logo {
+  display: block;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.07);
+  padding: 4px;
+}
+.timeline-item:has(.timeline-logo) {
+  padding-right: 68px;
+}
 
 .timeline-item::before {
   content: '';
@@ -416,6 +441,19 @@ section:nth-child(even) {
   flex-wrap: wrap;
   gap: .35rem;
 }
+.timeline-ext-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: .6rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  opacity: .85;
+  transition: opacity .15s;
+}
+.timeline-ext-link:hover { opacity: 1; }
 
 /* =============================================
    PROFILE PAGE BANNER
@@ -623,6 +661,18 @@ section:nth-child(even) {
   color: var(--gray);
 }
 
+.education-logo {
+  flex-shrink: 0;
+  margin-left: auto;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.07);
+  padding: 4px;
+}
+
 .certifications {
   margin-top: 2rem;
   padding-top: 1.5rem;
@@ -668,12 +718,34 @@ section:nth-child(even) {
 }
 
 .volunteer-card {
+  position: relative;
   background: var(--white);
   border: 1px solid var(--border);
   border-left: 4px solid var(--teal);
   border-radius: var(--radius);
   padding: 1.25rem 1.5rem;
   box-shadow: var(--shadow);
+}
+.volunteer-card:has(.volunteer-logo) { padding-right: 5rem; }
+
+.volunteer-logo {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.07);
+  padding: 4px;
+  border-radius: 8px;
+  transition: transform .15s, box-shadow .15s;
+}
+a.volunteer-logo:hover {
+  transform: scale(1.07);
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
 }
 
 .volunteer-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); }
