@@ -36,7 +36,6 @@
         '</p>' +
         '<div class="cookie-banner__actions">' +
           '<button class="cookie-btn cookie-btn--more" type="button">More details</button>' +
-          '<button class="cookie-btn cookie-btn--decline-bar" type="button">No thanks</button>' +
           '<button class="cookie-btn cookie-btn--accept" type="button">Ok for anonymous cookies</button>' +
         '</div>' +
       '</div>' +
@@ -81,13 +80,11 @@
       });
     });
 
-    // Decline (bar button + details panel)
-    banner.querySelectorAll('.cookie-btn--decline-bar, .cookie-btn--decline-text').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        localStorage.setItem(STORAGE_KEY, 'declined');
-        updateConsent(false);
-        hideBanner(banner);
-      });
+    // Decline (details panel only)
+    banner.querySelector('.cookie-btn--decline-text').addEventListener('click', function () {
+      localStorage.setItem(STORAGE_KEY, 'declined');
+      updateConsent(false);
+      hideBanner(banner);
     });
   }
 
