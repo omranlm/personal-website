@@ -56,7 +56,7 @@
         '<p class="cookie-details__tech"><strong>Cookies set on acceptance:</strong> <code>_ga</code> (2-year expiry, distinguishes unique visits) · <code>_ga_MZ648EEXYB</code> (session state)</p>' +
         '<p class="cookie-details__withdraw">You can withdraw your consent at any time by clearing your browser cookies for this site.</p>' +
         '<div class="cookie-details__actions">' +
-          '<button class="cookie-btn cookie-btn--accept cookie-btn--accept-lg" type="button">Accept cookies</button>' +
+          '<button class="cookie-btn cookie-btn--accept cookie-btn--accept-lg" type="button">Ok for anonymous cookies</button>' +
           '<button class="cookie-btn cookie-btn--decline-text" type="button">No thanks, decline</button>' +
         '</div>' +
       '</div>';
