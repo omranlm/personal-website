@@ -1,5 +1,6 @@
 (function () {
-  var STORAGE_KEY = 'cookie_consent';
+  var STORAGE_KEY      = 'cookie_consent';
+  var STORAGE_DATE_KEY = 'cookie_consent_date';
 
   function updateConsent(granted) {
     if (typeof gtag === 'function') {
@@ -10,6 +11,10 @@
         ad_personalization: 'denied'
       });
     }
+  }
+
+  function recordDate() {
+    localStorage.setItem(STORAGE_DATE_KEY, new Date().toISOString());
   }
 
   function hideBanner(banner) {
@@ -75,6 +80,7 @@
     banner.querySelectorAll('.cookie-btn--accept').forEach(function (btn) {
       btn.addEventListener('click', function () {
         localStorage.setItem(STORAGE_KEY, 'accepted');
+        recordDate();
         updateConsent(true);
         hideBanner(banner);
       });
@@ -83,6 +89,7 @@
     // Decline (details panel only)
     banner.querySelector('.cookie-btn--decline-text').addEventListener('click', function () {
       localStorage.setItem(STORAGE_KEY, 'declined');
+      recordDate();
       updateConsent(false);
       hideBanner(banner);
     });
@@ -90,12 +97,21 @@
 
   function init() {
     var choice = localStorage.getItem(STORAGE_KEY);
-    if (choice === 'accepted') {
+    var date   = localStorage.getItem(STORAGE_DATE_KEY);
+
+    if (choice === 'accepted' && date) {
+      // Valid consent with timestamp — restore GA and skip banner
       updateConsent(true);
+    } else if (choice === 'accepted' && !date) {
+      // Legacy acceptance without timestamp — re-show banner to re-capture consent date
+      showBanner();
+    } else if (choice === 'declined' && !date) {
+      // Legacy decline without timestamp — record date silently, no banner
+      recordDate();
     } else if (!choice) {
       showBanner();
     }
-    // 'declined' — GA stays in denied mode, no banner
+    // 'declined' with date — GA stays in denied mode, no banner
   }
 
   if (document.readyState === 'loading') {
@@ -104,3 +120,4 @@
     init();
   }
 })();
+
