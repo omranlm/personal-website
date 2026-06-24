@@ -1585,6 +1585,51 @@ footer {
 }
 
 /* =============================================
+   PROFILE PAGE — STICKY SECTION LABELS
+   ============================================= */
+
+.profile-page .section-inner {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  column-gap: 3rem;
+  align-items: start;
+}
+
+.profile-page .section-title {
+  position: sticky;
+  top: 80px;
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--navy);
+  border-bottom: none;
+  border-left: 3px solid var(--teal);
+  padding-left: .7rem;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  line-height: 1.35;
+}
+
+@media (max-width: 700px) {
+  .profile-page .section-inner {
+    display: block;
+  }
+  .profile-page .section-title {
+    position: static;
+    display: inline-block;
+    font-size: 1.8rem;
+    text-transform: none;
+    letter-spacing: 0;
+    border-left: none;
+    border-bottom: 3px solid var(--teal);
+    padding-left: 0;
+    margin-bottom: 2rem;
+  }
+}
+
+/* =============================================
    LIGHTBOX
    ============================================= */
 
