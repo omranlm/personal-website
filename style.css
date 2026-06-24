@@ -1585,6 +1585,115 @@ footer {
 }
 
 /* =============================================
+   LIGHTBOX
+   ============================================= */
+
+/* Clickable hint on figure images */
+.talk-featured-img img,
+.talk-featured-gallery img {
+  cursor: zoom-in;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.talk-featured-img img:hover,
+.talk-featured-gallery img:hover {
+  opacity: .9;
+  transform: scale(1.012);
+}
+
+/* Overlay */
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(10, 8, 7, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.lb-overlay.lb-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Stage */
+.lb-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  max-width: 90vw;
+}
+
+.lb-img {
+  max-width: 90vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 8px 48px rgba(0, 0, 0, .6);
+  transition: opacity 0.12s ease;
+  display: block;
+}
+.lb-img.lb-switching { opacity: 0; }
+
+.lb-caption {
+  font-size: .82rem;
+  color: rgba(255, 255, 255, .55);
+  text-align: center;
+  max-width: 72ch;
+  line-height: 1.5;
+}
+
+/* Close button */
+.lb-close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+.lb-close svg { width: 1.1rem; height: 1.1rem; }
+.lb-close:hover { background: rgba(255, 255, 255, .18); }
+
+/* Prev / Next */
+.lb-nav {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .07);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition);
+}
+.lb-nav svg { width: 1.2rem; height: 1.2rem; }
+.lb-nav:hover { background: rgba(255, 255, 255, .18); }
+
+@media (max-width: 540px) {
+  .lb-nav { display: none !important; }
+  .lb-img { max-height: 75vh; border-radius: 4px; }
+}
+
+/* =============================================
    COOKIE CONSENT BANNER
    ============================================= */
 .cookie-banner {
