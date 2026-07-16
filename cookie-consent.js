@@ -99,6 +99,15 @@
     var choice = localStorage.getItem(STORAGE_KEY);
     var date   = localStorage.getItem(STORAGE_DATE_KEY);
 
+    // First-time visitors on mobile landing directly on the 3D model page get
+    // no banner — the page is already visually complex. They will see the banner
+    // when they navigate to any other page. GA stays denied (GDPR-safe).
+    if (!choice) {
+      var isMobile = window.innerWidth < 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+      var is3DPage = window.location.pathname.indexOf('douma-3d-model') !== -1;
+      if (isMobile && is3DPage) return;
+    }
+
     if (choice === 'accepted' && date) {
       // Valid consent with timestamp — restore GA and skip banner
       updateConsent(true);

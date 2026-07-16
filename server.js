@@ -49,6 +49,39 @@ http.createServer((req, res) => {
 
   fs.stat(filePath, (statErr, stat) => {
     if (statErr) {
+      // Clean URL fallback: /contributions/douma-mapping → douma-mapping.html
+      if (!ext) {
+        const htmlPath = filePath + '.html';
+        fs.stat(htmlPath, (htmlErr, htmlStat) => {
+          if (htmlErr) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('404 Not Found');
+            return;
+          }
+          const lastModified = htmlStat.mtime.toUTCString();
+          const etag         = `"${htmlStat.size}-${htmlStat.mtimeMs}"`;
+          if (
+            req.headers['if-none-match'] === etag ||
+            req.headers['if-modified-since'] === lastModified
+          ) {
+            res.writeHead(304, { 'Cache-Control': 'no-cache', 'ETag': etag, 'Last-Modified': lastModified });
+            res.end();
+            return;
+          }
+          fs.readFile(htmlPath, (readErr, data) => {
+            if (readErr) { res.writeHead(500); res.end('500'); return; }
+            res.writeHead(200, {
+              'Content-Type':   'text/html; charset=utf-8',
+              'Cache-Control':  'no-cache',
+              'ETag':           etag,
+              'Last-Modified':  lastModified,
+              'Content-Length': data.length,
+            });
+            res.end(data);
+          });
+        });
+        return;
+      }
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('404 Not Found');
       return;
