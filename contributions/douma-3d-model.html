@@ -253,42 +253,39 @@
     /* ── nav tutorial ── */
     .nav-tutorial {
       position: fixed;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(120%);
+      inset: 2vh 3vw;
       z-index: 20;
-      background: rgba(14,12,11,.88);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 16px;
-      padding: 1.1rem 1.4rem 1rem;
+      background: rgba(14,12,11,.45);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 20px;
+      padding: 2.5rem 2rem 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: .85rem;
-      min-width: 300px;
-      max-width: 92vw;
-      transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .45s ease;
+      justify-content: center;
+      gap: 1.5rem;
+      transform: scale(.94);
+      transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
       opacity: 0;
       pointer-events: none;
     }
     .nav-tutorial.visible {
-      transform: translateX(-50%) translateY(0);
+      transform: scale(1);
       opacity: 1;
       pointer-events: all;
     }
     .nav-tutorial-title {
-      font-size: .7rem;
+      font-size: .8rem;
       font-weight: 700;
-      letter-spacing: .1em;
-      color: rgba(255,255,255,.35);
+      letter-spacing: .12em;
+      color: rgba(255,255,255,.4);
       text-transform: uppercase;
-      align-self: flex-start;
     }
     .nav-tips {
       display: flex;
-      gap: .75rem;
+      gap: 1rem;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -296,49 +293,100 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: .4rem;
+      gap: .55rem;
       background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 10px;
-      padding: .65rem .8rem;
-      min-width: 72px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem;
+      min-width: 90px;
+      flex: 1;
+      max-width: 140px;
     }
     .nav-tip-icon {
-      width: 36px;
-      height: 36px;
-      background: rgba(12,124,112,.25);
+      width: 48px;
+      height: 48px;
+      background: rgba(12,124,112,.3);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #4ecdc4;
     }
+    .nav-tip-icon svg { width: 22px; height: 22px; }
     .nav-tip-action {
-      font-size: .65rem;
+      font-size: .78rem;
       font-weight: 700;
-      color: rgba(255,255,255,.8);
+      color: rgba(255,255,255,.88);
       text-align: center;
-      line-height: 1.2;
+      line-height: 1.3;
     }
     .nav-tip-label {
-      font-size: .6rem;
-      color: rgba(255,255,255,.35);
+      font-size: .68rem;
+      color: rgba(255,255,255,.4);
       text-align: center;
-      line-height: 1.2;
+      line-height: 1.3;
+    }
+    .nav-tutorial-skip {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      font-size: .72rem;
+      color: rgba(255,255,255,.45);
+      cursor: pointer;
+      user-select: none;
+      margin-top: .25rem;
+    }
+    .nav-tutorial-skip input { display: none; }
+    .nav-tutorial-skip__box {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid rgba(255,255,255,.3);
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .15s, background .15s;
+    }
+    .nav-tutorial-skip input:checked + .nav-tutorial-skip__box {
+      background: #0c7c70;
+      border-color: #0c7c70;
+    }
+    .nav-tutorial-skip input:checked + .nav-tutorial-skip__box::after {
+      content: '';
+      display: block;
+      width: 9px;
+      height: 5px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translateY(-1px);
     }
     .nav-tutorial-dismiss {
-      background: #0c7c70;
+      background: linear-gradient(135deg, #0fa899 0%, #0c7c70 100%);
       color: #fff;
       border: none;
-      border-radius: 20px;
-      padding: .4rem 1.4rem;
-      font-size: .8rem;
-      font-weight: 600;
+      border-radius: 32px;
+      padding: 1rem 3rem;
+      font-size: 1.05rem;
+      font-weight: 800;
       cursor: pointer;
-      transition: background .15s;
-      letter-spacing: .02em;
+      letter-spacing: .03em;
+      margin-top: 1rem;
+      box-shadow: 0 0 0 0 rgba(15,168,153,.55);
+      animation: btn-pulse 2s ease-in-out infinite;
+      transition: transform .15s, box-shadow .15s;
     }
-    .nav-tutorial-dismiss:hover { background: #006560; }
+    @keyframes btn-pulse {
+      0%   { box-shadow: 0 0 0 0   rgba(15,168,153,.55); }
+      60%  { box-shadow: 0 0 0 14px rgba(15,168,153,0); }
+      100% { box-shadow: 0 0 0 0   rgba(15,168,153,0); }
+    }
+    .nav-tutorial-dismiss:hover {
+      background: linear-gradient(135deg, #13c2b2 0%, #0a6b60 100%);
+      transform: scale(1.05);
+      animation: none;
+      box-shadow: 0 6px 24px rgba(15,168,153,.5);
+    }
 
     /* ── hint bar ── */
     .hint {
@@ -811,34 +859,43 @@
     <div class="nav-tips">
       <div class="nav-tip">
         <div class="nav-tip-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2v6a2 2 0 0 1-4 0V4a2 2 0 0 1 2-2z"/><path d="M18 8a6 6 0 0 1-12 0"/><path d="M12 14v8"/></svg>
+          <!-- Circular rotation arrow -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6"/><path d="M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
         </div>
         <div class="nav-tip-action">Left drag</div>
         <div class="nav-tip-label">Rotate</div>
       </div>
       <div class="nav-tip">
         <div class="nav-tip-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 5 19 12"/></svg>
+          <!-- Magnifying glass with + -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
         </div>
         <div class="nav-tip-action">Scroll wheel</div>
         <div class="nav-tip-label">Zoom in / out</div>
       </div>
       <div class="nav-tip">
         <div class="nav-tip-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+          <!-- Open hand / move -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
         </div>
         <div class="nav-tip-action">Right drag</div>
         <div class="nav-tip-label">Pan</div>
       </div>
       <div class="nav-tip">
         <div class="nav-tip-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <!-- Pinch / collapse arrows -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
         </div>
         <div class="nav-tip-action">Two fingers</div>
         <div class="nav-tip-label">Pinch to zoom</div>
       </div>
     </div>
-    <button class="nav-tutorial-dismiss" id="nav-tutorial-dismiss">Close</button>
+    <label class="nav-tutorial-skip">
+      <input type="checkbox" id="nav-tutorial-skip-cb">
+      <span class="nav-tutorial-skip__box"></span>
+      Don't show automatically again
+    </label>
+    <button class="nav-tutorial-dismiss" id="nav-tutorial-dismiss">Ok, let me see the map</button>
   </div>
 
   <!-- Hint -->
@@ -970,9 +1027,11 @@
       ytExpandLbl.textContent = isExpanded ? 'Collapse video' : 'Expand video';
     });
 
-    const tutorial     = document.getElementById('nav-tutorial');
+    const tutorial        = document.getElementById('nav-tutorial');
     const tutorialDismiss = document.getElementById('nav-tutorial-dismiss');
-    const btnHelp      = document.getElementById('btn-help');
+    const skipCb          = document.getElementById('nav-tutorial-skip-cb');
+    const btnHelp         = document.getElementById('btn-help');
+    const SKIP_KEY        = '3d_tutorial_skip';
 
     function hideTutorial() {
       tutorial.classList.remove('visible');
@@ -982,7 +1041,10 @@
       tutorial.classList.add('visible');
       btnHelp.classList.add('active');
     }
-    tutorialDismiss.addEventListener('click', hideTutorial);
+    tutorialDismiss.addEventListener('click', () => {
+      if (skipCb.checked) localStorage.setItem(SKIP_KEY, '1');
+      hideTutorial();
+    });
     btnHelp.addEventListener('click', () => {
       tutorial.classList.contains('visible') ? hideTutorial() : showTutorial();
     });
@@ -1000,7 +1062,7 @@
         loader.classList.add('hidden');
         setTimeout(() => {
           loader.style.display = 'none';
-          showTutorial();
+          if (localStorage.getItem(SKIP_KEY) !== '1') showTutorial();
         }, 500);
       }, 300);
     });
