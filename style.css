@@ -1134,6 +1134,18 @@ a.volunteer-logo:hover {
   .talk-featured-gallery img { height: 200px; }
 }
 
+/* Portrait photo variant — preserves natural 2:3 ratio side-by-side */
+.talk-featured-gallery--portrait img {
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+@media (max-width: 500px) {
+  .talk-featured-gallery--portrait img {
+    aspect-ratio: 4 / 5;
+  }
+}
+
 /* =============================================
    CONTACT
    ============================================= */
