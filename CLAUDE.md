@@ -16,7 +16,7 @@ node server.js          # Serves at http://localhost:3000
 
 ## Deployment
 
-Pushing to `master` triggers a GitHub Actions workflow (`.github/workflows/deploy.yml`) that FTP-deploys the entire repo to HostGator at `/najjar.biz/`. The `.htaccess` Apache rewrite rules serve clean URLs (e.g. `/talks/sotm-2022` resolves to `talks/sotm-2022.html`).
+Pushing to `master` triggers a GitHub Actions workflow (`.github/workflows/deploy.yml`) that FTP-deploys the entire repo to HostGator at `/omran.blog/`. The `.htaccess` Apache rewrite rules serve clean URLs (e.g. `/talks/sotm-2022` resolves to `talks/sotm-2022.html`) and force HTTPS.
 
 ## Architecture
 
@@ -36,7 +36,7 @@ Sub-pages use the `contribution-page` wrapper div. Talk pages additionally add t
 - Utilities: `--radius`, `--shadow`, `--transition`
 
 **Every HTML page must include:**
-- `<link rel="canonical" href="https://najjar.biz/...">` — path without `.html` extension
+- `<link rel="canonical" href="https://omran.blog/...">` — path without `.html` extension
 - Google Analytics snippet with tag `G-MZ648EEXYB`
 - Open Graph and Twitter Card meta tags
 - `<link rel="icon" type="image/svg+xml" href="[../]assets/favicon.svg">`

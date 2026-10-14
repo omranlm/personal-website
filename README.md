@@ -1,8 +1,8 @@
-# najjar.biz
+# omran.blog
 
 Personal website for **Omran Najjar** — Humanitarian and Development Technologist, based in Douma, Syria and Berlin, Germany.
 
-🌐 **[najjar.biz](https://najjar.biz)**
+🌐 **[omran.blog](https://omran.blog)**
 
 Built with plain HTML, CSS, and vanilla JavaScript. No build tools. No dependencies. No compilation step.
 
@@ -60,4 +60,4 @@ node server.js   # http://localhost:3000
 
 ## Deployment
 
-Pushing to `master` triggers a GitHub Actions workflow that FTP-deploys to HostGator at `najjar.biz`. Apache `.htaccess` rewrite rules serve clean URLs (e.g. `/talks/sotm-2022` → `talks/sotm-2022.html`).
+Pushing to `master` triggers a GitHub Actions workflow that FTP-deploys to HostGator at `omran.blog`. Apache `.htaccess` rewrite rules serve clean URLs (e.g. `/talks/sotm-2022` → `talks/sotm-2022.html`) and force HTTPS.
