@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Training Tracks</title>
+<style>
+  :root {
+    --teal: #008673; --slate: #404E5E; --charcoal: #21232A; --red: #C1272C; --grey: #CFD2D6;
+    --teal-t: #D9EDEA; --slate-t: #BCC1C7; --grey-t: #F0F1F3;
+    --bg: #ffffff; --muted: #5d6673;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--charcoal);
+    font: 15px/1.45 "Segoe UI", Tahoma, Arial, sans-serif;
+  }
+  header { border-top: 6px solid var(--teal); padding: 20px 24px 8px; display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; }
+  .lang-switch {
+    flex: none; display: inline-flex; padding: 3px; border-radius: 999px; background: var(--grey-t); border: 1px solid var(--grey);
+  }
+  .lang-switch button {
+    font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--slate);
+    padding: 5px 14px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s;
+  }
+  .lang-switch button:hover { color: var(--teal); }
+  .lang-switch button[aria-pressed="true"] { background: var(--teal); color: #fff; font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
+  h1 { margin: 0 0 4px; font-size: 22px; }
+  .sub { color: var(--muted); margin: 0; }
+  .about { margin: 10px 24px 0; padding: 14px 18px; border-radius: 10px; background: var(--grey-t); }
+  .about h2 { margin: 0 0 6px; font-size: 17px; color: var(--teal); }
+  .about p { margin: 0; max-width: 110ch; }
+  .about b { color: var(--slate); }
+  .bar { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; padding: 12px 24px; }
+  .bar label { color: var(--muted); font-size: 14px; }
+  .bar input, .bar button {
+    font: inherit; padding: 5px 10px; border: 1px solid var(--grey); border-radius: 6px; background: #fff; color: var(--charcoal);
+  }
+  .bar button { cursor: pointer; }
+  .bar button:hover { border-color: var(--teal); color: var(--teal); }
+  .wrap { padding: 0 24px 8px; overflow-x: auto; }
+  canvas { display: block; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 8px 24px 4px; font-size: 13px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 22px; height: 12px; border-radius: 3px; display: inline-block; }
+  .note { padding: 4px 24px 24px; font-size: 13px; color: var(--muted); }
+  #tip {
+    position: fixed; pointer-events: none; display: none; max-width: 300px;
+    background: var(--charcoal); color: #fff; font-size: 13px; padding: 8px 10px; border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  }
+  #tip b { color: #9fe0d5; }
+  /* "try it" instruction callout */
+  .hint {
+    margin: 14px 24px 0; display: flex; gap: 14px; align-items: center;
+    padding: 12px 16px; border-radius: 10px; border: 1px solid var(--teal); border-inline-start: 6px solid var(--teal);
+    background: linear-gradient(90deg, var(--teal-t), #ffffff 85%);
+    animation: glow 2.4s ease-in-out infinite;
+  }
+  [dir="rtl"] .hint { background: linear-gradient(270deg, var(--teal-t), #ffffff 85%); }
+  .hint .ico { font-size: 26px; animation: bounce 1.6s ease-in-out infinite; }
+  .hint strong { color: var(--teal); }
+  .hint .tag {
+    display: inline-block; background: var(--red); color: #fff; font-size: 11px; font-weight: 700;
+    padding: 1px 8px; border-radius: 999px; margin-inline-end: 6px; letter-spacing: .3px;
+  }
+  .hint.used { animation: none; }
+  .hint.used .ico { animation: none; }
+  @keyframes glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(0,134,115,.35); } 50% { box-shadow: 0 0 0 9px rgba(0,134,115,0); } }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  #start { border: 2px solid var(--teal); font-weight: 600; }
+  #start.pulse { animation: ring 1.6s ease-out infinite; }
+  @keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(193,39,44,.55); } 100% { box-shadow: 0 0 0 12px rgba(193,39,44,0); } }
+  .bar .shift { font-size: 13px; padding: 5px 9px; }
+  .bar .reset { color: var(--muted); }
+  /* key dates */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 24px 10px; }
+  .chip {
+    background: var(--grey-t); border-radius: 999px; padding: 5px 13px; font-size: 13px; color: var(--slate);
+    border: 1px solid transparent;
+  }
+  .chip b { color: var(--charcoal); margin-inline-start: 4px; }
+  .chip.k-gis { border-color: var(--teal); }
+  .chip.k-acc { border-color: var(--red); }
+  .chip.flash { animation: chipflash 1.1s ease-out; }
+  @keyframes chipflash {
+    0% { background: var(--red); color: #fff; transform: scale(1.1); }
+    40% { background: var(--teal); color: #fff; transform: scale(1.04); }
+    100% { background: var(--grey-t); transform: scale(1); }
+  }
+  .chip.flash b { animation: chipflashb 1.1s ease-out; }
+  @keyframes chipflashb { 0%, 40% { color: #fff; } 100% { color: var(--charcoal); } }
+  /* toast */
+  .note code { white-space: nowrap; background: var(--grey-t); padding: 1px 5px; border-radius: 4px; unicode-bidi: isolate; }
+  #toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 140%); opacity: 0;
+    background: var(--teal); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25); transition: transform .35s cubic-bezier(.2,1.4,.4,1), opacity .35s;
+    max-width: calc(100% - 32px); text-align: center;
+  }
+  #toast.show { transform: translate(-50%, 0); opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .hint, .hint .ico, #start.pulse, .chip.flash, .chip.flash b { animation: none; }
+  }
+  @media (max-width: 600px) {
+    header, .bar, .wrap, .legend, .note, .chips { padding-left: 16px; padding-right: 16px; }
+    .hint, .about { margin-left: 16px; margin-right: 16px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="head-text">
+    <h1 id="t-title"></h1>
+    <p class="sub" id="t-sub"></p>
+  </div>
+  <div class="lang-switch" role="group" aria-label="Language / اللغة">
+    <button data-lang="en" lang="en">English</button>
+    <button data-lang="ar" lang="ar">العربية</button>
+  </div>
+</header>
+<section class="about">
+  <h2 id="t-about-h"></h2>
+  <p id="t-about"></p>
+</section>
+<div class="hint" id="hint">
+  <span class="ico">📅</span>
+  <div id="t-hint"></div>
+</div>
+<div class="bar">
+  <label><span id="t-start"></span> <input type="date" id="start" class="pulse" value="2026-11-08"></label>
+  <button class="shift" id="wk-minus"></button>
+  <button class="shift" id="wk-plus"></button>
+  <button class="shift reset" id="reset"></button>
+</div>
+<div class="chips" id="chips"></div>
+<div class="wrap"><canvas id="cv"></canvas></div>
+<div class="legend" id="legend"></div>
+<p class="note" id="t-note"></p>
+<div id="tip"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const C = { teal:'#008673', slate:'#404E5E', charcoal:'#21232A', red:'#C1272C', grey:'#CFD2D6',
+            tealT:'#D9EDEA', slateT:'#BCC1C7', greyT:'#F0F1F3', muted:'#5d6673', white:'#ffffff', wkd:'#FBEAEA' };
+
+const T = {
+  en: {
+    dir:'ltr', other:'العربية',
+    title:'Phase 1 Training – Tracks and Schedule',
+    sub:'Damage Assessment and Recovery Department · 10 trainees · 19 training days · Al-Awad & Nabo Trading and Contracting Company',
+    aboutH:'About the training programme',
+    about:'Phase 1 builds the core skills of the Ministry of Emergency and Disaster Management’s Damage Assessment and Recovery Department to map and assess damage after disasters. <b>Ten trainees</b>, selected from 15–20 candidates, follow two tracks in sequence, each at three levels (Basic, Beginner and Intermediate): <b>GIS and mapping</b> in the training venue, with QGIS hands-on and ArcGIS presented, then <b>drones</b> in the training venue and the field, ending with a complete survey mission. Each level ends with a gate test, and the programme closes with an acceptance test before the final report.',
+    start:'Day 1 date:',
+    hint:'<span class="tag">TRY IT</span><strong>Change the Day 1 date</strong> with the date picker, or use <strong>−1 week / +1 week</strong>. The whole training schedule moves on the calendar: training days, reserve days, acceptance and the final report. Weekends (Friday and Saturday) are skipped automatically, and the new dates flash below.',
+    wkMinus:'−1 week', wkPlus:'+1 week', reset:'Reset (8 Nov)',
+    chips:[['k-gis','GIS starts',1],['k-gis','GIS ends',7],['','Drones start',8],['','Drones end',19],['k-acc','Acceptance',23],['k-acc','Final report by',28]],
+    toast:(d1,d28)=>`📅 Calendar updated · Day 1: ${d1} · Final report by ${d28}`,
+    snapped:' (moved to the next working day)',
+    note:'Working week: 5 days, weekend: 2 days. Day 1 is anticipated on 8 November 2026 (± 1 week). Hatched blocks are field days. ◆ marks a level gate (exit test). Hover over a block for details. To share this page in Arabic, add <code dir="ltr">?lang=ar</code> to the link (<code dir="ltr">?lang=en</code> for English); the chosen start date is kept in the link as well.',
+    pathway:'Training pathway', timeline:'Timeline by training day',
+    sel:'Selection test', selSub:'15–20 candidates → 10', selWhen:'within 5 days of signing',
+    gis:'GIS and mapping', dr:'Drones',
+    lanes:['GIS and mapping · all 10','Drones · Group A','Drones · Group B','Closing'],
+    basic:'Basic', beginner:'Beginner', inter:'Intermediate',
+    venue:'Training venue', field:'Field', venueField:'Venue + nearby field exercise', fieldVenue:'2 field + 1 venue',
+    days:n=>n+(n===1?' day':' days'), perGroup:' per group',
+    reserve:'Reserve', accept:'Acceptance', report:'Final report',
+    week:'Week', day:'Day', both:'Groups A + B together', all:'All 10 trainees', grpA:'Group A', grpB:'Group B',
+    gates:{gb:'Test ≥ 60%', gbe:'Practical ≥ 60% + group project', gi:'Practical ≥ 70% + A3 map',
+           db:'Theory ≥ 75%', dbe:'Flight skills test', di:'Complete mission to quality standards'},
+    reserveTip:'Reserve days (as needed, field)', acceptTip:'Acceptance: final field mission and software demonstration',
+    reportTip:'Final report to the training supervisor (by Day 28)', selTip:'Selection test: 15–20 candidates; the Department approves 10 trainees',
+    legend:[['teal','GIS – training venue'],['slateT','Drones – training venue'],['slate','Drones – field'],['grey','Reserve days'],['red','Selection and acceptance'],['wkd','Weekend (Friday–Saturday) – holiday']],
+    weekend:'Weekend · holiday', weekendTip:'Weekend holiday – no training', beforeTip:'Before Day 1 – no training',
+    wd:d=>d.toLocaleDateString('en-GB',{weekday:'short'}),
+    fmt:d=>d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),
+    fmtS:d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}),
+    gate:'Gate', level:'Level day', loc:'Location', group:'Group'
+  },
+  ar: {
+    dir:'rtl', other:'English',
+    title:'التدريب – المرحلة الأولى: المسارات والجدول الزمني',
+    sub:'إدارة تقييم الأضرار والتعافي · 10 متدربين · 19 يوماً تدريبياً · شركة العوض ونابو للتجارة والمقاولات',
+    aboutH:'عن البرنامج التدريبي',
+    about:'تبني المرحلة الأولى المهارات الأساسية لدى إدارة تقييم الأضرار والتعافي في وزارة الطوارئ وإدارة الكوارث لرسم خرائط الأضرار وتقييمها بعد الكوارث. يتابع <b>عشرة متدربين</b>، يُنتقون من 15–20 مرشحاً، مسارين متتاليين، لكل منهما ثلاثة مستويات (أساسي ومبتدئ ومتوسط): <b>نظم المعلومات الجغرافية ورسم الخرائط</b> في القاعة التدريبية، مع تطبيق عملي على QGIS وعرض لـ ArcGIS، ثم <b>الطائرات المسيّرة</b> في القاعة التدريبية والميدان، وينتهي بمهمة مسح كاملة. ينتهي كل مستوى باختبار عبور، ويُختتم البرنامج باختبار استلام قبل التقرير النهائي.',
+    start:'تاريخ اليوم الأول:',
+    hint:'<span class="tag">جرّبها</span><strong>غيّر تاريخ اليوم الأول</strong> من منتقي التاريخ، أو استخدم <strong>−أسبوع / +أسبوع</strong>. سيتحرك جدول التدريب كله على التقويم: أيام التدريب والأيام الاحتياطية والاستلام والتقرير النهائي. تُتخطى العطلة (الجمعة والسبت) تلقائياً، وتومض التواريخ الجديدة أدناه.',
+    wkMinus:'−أسبوع', wkPlus:'+أسبوع', reset:'إعادة (8 تشرين الثاني)',
+    chips:[['k-gis','بداية نظم المعلومات الجغرافية',1],['k-gis','نهاية نظم المعلومات الجغرافية',7],['','بداية الطائرات المسيّرة',8],['','نهاية الطائرات المسيّرة',19],['k-acc','الاستلام',23],['k-acc','التقرير النهائي بحلول',28]],
+    toast:(d1,d28)=>`📅 تم تحديث التقويم · اليوم الأول: ${d1} · التقرير النهائي بحلول ${d28}`,
+    snapped:' (نُقل إلى يوم العمل التالي)',
+    note:'أسبوع العمل: 5 أيام، والعطلة: يومان. يُتوقع أن يبدأ اليوم الأول في 8 تشرين الثاني 2026 (± أسبوع). الكتل المخططة أيام ميدانية. ◆ تشير إلى بوابة المستوى (اختبار الخروج). مرّر المؤشر فوق أي كتلة لعرض التفاصيل. لمشاركة الصفحة بالعربية أضف <code dir="ltr">?lang=ar</code> إلى الرابط (<code dir="ltr">?lang=en</code> للإنكليزية)، ويُحفظ تاريخ البدء المختار في الرابط أيضاً.',
+    pathway:'مسار التدريب', timeline:'الجدول الزمني حسب اليوم التدريبي',
+    sel:'اختبار الانتقاء', selSub:'15–20 مرشحاً ← 10', selWhen:'خلال 5 أيام من توقيع العقد',
+    gis:'نظم المعلومات الجغرافية ورسم الخرائط', dr:'الطائرات المسيّرة',
+    lanes:['نظم المعلومات الجغرافية · الجميع','الطائرات المسيّرة · المجموعة أ','الطائرات المسيّرة · المجموعة ب','الختام'],
+    basic:'أساسي', beginner:'مبتدئ', inter:'متوسط',
+    venue:'القاعة التدريبية', field:'الميدان', venueField:'القاعة + تمرين ميداني قريب', fieldVenue:'يومان ميدان + يوم قاعة',
+    days:n=>n===1?'يوم واحد':n===2?'يومان':n+' أيام', perGroup:' لكل مجموعة',
+    reserve:'احتياطي', accept:'الاستلام', report:'التقرير النهائي',
+    week:'الأسبوع', day:'اليوم', both:'المجموعتان أ + ب معاً', all:'جميع المتدربين العشرة', grpA:'المجموعة أ', grpB:'المجموعة ب',
+    gates:{gb:'اختبار ≥ 60%', gbe:'عملي ≥ 60% + مشروع جماعي', gi:'عملي ≥ 70% + خريطة A3',
+           db:'نظري ≥ 75%', dbe:'اختبار مهارات الطيران', di:'مهمة كاملة وفق معايير الجودة'},
+    reserveTip:'أيام احتياطية (عند الحاجة، ميدان)', acceptTip:'الاستلام: مهمة ميدانية نهائية وعرض على البرمجيات',
+    reportTip:'التقرير النهائي إلى مشرف التدريب (بحلول اليوم 28)', selTip:'اختبار الانتقاء: 15–20 مرشحاً؛ يعتمد القسم 10 متدربين',
+    legend:[['teal','نظم المعلومات الجغرافية – القاعة التدريبية'],['slateT','الطائرات المسيّرة – القاعة التدريبية'],['slate','الطائرات المسيّرة – الميدان'],['grey','أيام احتياطية'],['red','الانتقاء والاستلام'],['wkd','عطلة نهاية الأسبوع (الجمعة والسبت)']],
+    weekend:'عطلة نهاية الأسبوع', weekendTip:'عطلة نهاية الأسبوع – لا تدريب', beforeTip:'قبل اليوم الأول – لا تدريب',
+    wd:d=>['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][d.getDay()],
+    fmt:d=>d.toLocaleDateString('ar-SY-u-nu-latn',{weekday:'short',day:'numeric',month:'short'}),
+    fmtS:d=>`${d.getDate()}/${d.getMonth()+1}`,
+    gate:'البوابة', level:'يوم المستوى', loc:'المكان', group:'المجموعة'
+  }
+};
+
+// Schedule (Temp details B.3). lane: 0 GIS, 1 drones A, 2 drones B, 3 closing; span: lanes covered
+const SCHEDULE = [
+  ...[1,2].map((d,i)=>({day:d,lane:0,track:'gis',lvl:'basic',loc:'venue',grp:'all',ld:`${i+1} / 2`,gate:i===1&&'gb'})),
+  ...[3,4].map((d,i)=>({day:d,lane:0,track:'gis',lvl:'beginner',loc:'venue',grp:'all',ld:`${i+1} / 2`,gate:i===1&&'gbe'})),
+  {day:5,lane:0,track:'gis',lvl:'inter',loc:'venue',grp:'all',ld:'1 / 3'},
+  {day:6,lane:0,track:'gis',lvl:'inter',loc:'venueField',grp:'all',ld:'2 / 3'},
+  {day:7,lane:0,track:'gis',lvl:'inter',loc:'venue',grp:'all',ld:'3 / 3',gate:'gi'},
+  ...[8,9].map((d,i)=>({day:d,lane:1,span:2,track:'dr',lvl:'basic',loc:'venue',grp:'both',ld:`${i+1} / 2`,gate:i===1&&'db'})),
+  {day:10,lane:1,track:'dr',lvl:'beginner',loc:'field',grp:'grpA',ld:'1 / 2'},
+  {day:11,lane:2,track:'dr',lvl:'beginner',loc:'field',grp:'grpB',ld:'1 / 2'},
+  {day:12,lane:1,track:'dr',lvl:'beginner',loc:'field',grp:'grpA',ld:'2 / 2',gate:'dbe'},
+  {day:13,lane:2,track:'dr',lvl:'beginner',loc:'field',grp:'grpB',ld:'2 / 2',gate:'dbe'},
+  {day:14,lane:1,track:'dr',lvl:'inter',loc:'field',grp:'grpA',ld:'1 / 3'},
+  {day:15,lane:2,track:'dr',lvl:'inter',loc:'field',grp:'grpB',ld:'1 / 3'},
+  {day:16,lane:1,track:'dr',lvl:'inter',loc:'field',grp:'grpA',ld:'2 / 3'},
+  {day:17,lane:2,track:'dr',lvl:'inter',loc:'field',grp:'grpB',ld:'2 / 3'},
+  {day:18,lane:1,track:'dr',lvl:'inter',loc:'venue',grp:'grpA',ld:'3 / 3',gate:'di'},
+  {day:19,lane:2,track:'dr',lvl:'inter',loc:'venue',grp:'grpB',ld:'3 / 3',gate:'di'},
+];
+const CLOSING = [
+  {from:20,to:22,key:'reserve',tip:'reserveTip',fill:C.grey,ink:C.charcoal},
+  {from:23,to:24,key:'accept',tip:'acceptTip',fill:C.red,ink:C.white},
+  {from:28,to:28,key:'report',tip:'reportTip',fill:C.white,ink:C.red,outline:C.red},
+];
+
+// Language and start date come from the link: ?lang=ar|en&start=YYYY-MM-DD
+const DEFAULT_START = '2026-11-08';
+const params = new URLSearchParams(location.search);
+let lang = (params.get('lang') || '').toLowerCase().startsWith('ar') ? 'ar' : 'en';
+const startEl = document.getElementById('start');
+if (/^\d{4}-\d{2}-\d{2}$/.test(params.get('start') || '')) startEl.value = params.get('start');
+
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d'), tip = document.getElementById('tip');
+let W = 1100, H = 640, hits = [], flashAt = 0;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const isWeekend = d => d.getDay() === 5 || d.getDay() === 6;
+function dayDate(n) {
+  // Day n counts working days (Sun–Thu); Fri and Sat are the weekend
+  const d = new Date(startEl.value + 'T00:00:00');
+  if (isNaN(d)) return null;
+  while (isWeekend(d)) d.setDate(d.getDate() + 1);
+  let k = 1;
+  while (k < n) { d.setDate(d.getDate() + 1); if (!isWeekend(d)) k++; }
+  return d;
+}
+
+// Flash wave: each day column lights up in turn after the date changes (0..1)
+function flashAlpha(n) {
+  if (!flashAt) return 0;
+  const e = performance.now() - flashAt - n * 25;
+  return e < 0 || e > 900 ? 0 : Math.sin(Math.PI * e / 900);
+}
+
+// ---- RTL-aware drawing helpers: all layout is computed left-to-right, then mirrored for Arabic
+const rtl = () => T[lang].dir === 'rtl';
+const mx = (x, w = 0) => rtl() ? W - x - w : x;
+function rrect(x, y, w, h, r, fill, stroke) {
+  x = mx(x, w);
+  ctx.beginPath(); ctx.roundRect(x, y, w, h, r);
+  if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+  if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke(); }
+}
+function hatch(x, y, w, h, r, color) {
+  x = mx(x, w);
+  ctx.save(); ctx.beginPath(); ctx.roundRect(x, y, w, h, r); ctx.clip();
+  ctx.strokeStyle = color; ctx.lineWidth = 2;
+  for (let i = -h; i < w + h; i += 7) { ctx.beginPath(); ctx.moveTo(x + i, y + h); ctx.lineTo(x + i + h, y); ctx.stroke(); }
+  ctx.restore();
+}
+function text(s, x, y, { size = 13, weight = 400, color = C.charcoal, align = 'start', base = 'middle', maxW, ltr = false } = {}) {
+  ctx.font = `${weight} ${size}px "Segoe UI", Tahoma, Arial, sans-serif`;
+  ctx.fillStyle = color; ctx.textBaseline = base;
+  ctx.direction = rtl() && !ltr ? 'rtl' : 'ltr';
+  const map = { start: rtl() ? 'right' : 'left', end: rtl() ? 'left' : 'right', center: 'center' };
+  ctx.textAlign = map[align];
+  ctx.fillText(s, mx(x), y, maxW);
+}
+function diamond(x, y, s, fill) {
+  x = mx(x);
+  ctx.beginPath(); ctx.moveTo(x, y - s); ctx.lineTo(x + s, y); ctx.lineTo(x, y + s); ctx.lineTo(x - s, y); ctx.closePath();
+  ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = C.white; ctx.lineWidth = 1.5; ctx.stroke();
+}
+function arrow(x1, y1, x2, y2, color = C.muted) {
+  x1 = mx(x1); x2 = mx(x2);
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  const a = Math.atan2(y2 - y1, x2 - x1);
+  ctx.beginPath(); ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - 8 * Math.cos(a - 0.45), y2 - 8 * Math.sin(a - 0.45));
+  ctx.lineTo(x2 - 8 * Math.cos(a + 0.45), y2 - 8 * Math.sin(a + 0.45));
+  ctx.closePath(); ctx.fill();
+}
+function hit(x, y, w, h, html) { hits.push({ x: mx(x, w), y, w, h, html }); }
+
+function colorsFor(e) {
+  if (e.track === 'gis') return { fill: C.teal, ink: C.white, hatch: e.loc === 'venueField' ? 'rgba(255,255,255,.35)' : null };
+  if (e.loc === 'field') return { fill: C.slate, ink: C.white, hatch: 'rgba(255,255,255,.22)' };
+  return { fill: C.slateT, ink: C.charcoal, hatch: null };
+}
+
+// ---- Pathway (top): selection → GIS levels → drone levels → acceptance
+function drawPathway(t, top) {
+  text(t.pathway, 0, top + 8, { size: 15, weight: 600 });
+  const y1 = top + 34, y2 = top + 128, bh = 64;
+  const gap = 34, selW = 150;
+  const boxW = (W - selW - gap * 4) / 3;
+  // selection
+  rrect(0, y1, selW, bh, 8, C.red);
+  text(t.sel, selW / 2, y1 + 18, { size: 14, weight: 600, color: C.white, align: 'center', maxW: selW - 12 });
+  text(t.selSub, selW / 2, y1 + 37, { size: 12, color: C.white, align: 'center', maxW: selW - 12 });
+  text(t.selWhen, selW / 2, y1 + 53, { size: 11, color: '#ffd9da', align: 'center', maxW: selW - 12 });
+  hit(0, y1, selW, bh, `<b>${t.sel}</b><br>${t.selTip}<br>${t.selWhen}`);
+
+  const lv = [
+    { k: 'basic', gis: [2, 'venue', 'gb'], dr: [2, 'venue', 'db', 'both'] },
+    { k: 'beginner', gis: [2, 'venue', 'gbe'], dr: [2, 'field', 'dbe', 'pg'] },
+    { k: 'inter', gis: [3, 'venueField', 'gi'], dr: [3, 'fieldVenue', 'di', 'pg'] },
+  ];
+  const x0 = selW + gap;
+  arrow(selW + 2, y1 + bh / 2, x0 - 4, y1 + bh / 2, C.red);
+  lv.forEach((l, i) => {
+    const x = x0 + i * (boxW + gap);
+    // GIS
+    rrect(x, y1, boxW, bh, 8, C.teal);
+    text(`${t.gis} · ${t[l.k]}`, x + 12, y1 + 20, { size: 13, weight: 600, color: C.white, maxW: boxW - 24 });
+    text(`${t.days(l.gis[0])} · ${t[l.gis[1]]}`, x + 12, y1 + 42, { size: 12, color: '#e6f4f1', maxW: boxW - 24 });
+    hit(x, y1, boxW, bh, `<b>${t.gis} – ${t[l.k]}</b><br>${t.days(l.gis[0])} · ${t[l.gis[1]]}<br>${t.gate}: ${t.gates[l.gis[2]]}`);
+    // Drones
+    const field = l.dr[1] !== 'venue';
+    rrect(x, y2, boxW, bh, 8, field ? C.slate : C.slateT);
+    if (field) hatch(x, y2, boxW * (l.dr[1] === 'field' ? 1 : 0.66), bh, 8, 'rgba(255,255,255,.18)');
+    const ink = field ? C.white : C.charcoal;
+    text(`${t.dr} · ${t[l.k]}`, x + 12, y2 + 20, { size: 13, weight: 600, color: ink, maxW: boxW - 24 });
+    const dTxt = `${t.days(l.dr[0])}${l.dr[3] === 'pg' ? t.perGroup : ''} · ${t[l.dr[1]]}`;
+    text(dTxt, x + 12, y2 + 42, { size: 12, color: field ? '#e3e7eb' : C.slate, maxW: boxW - 24 });
+    hit(x, y2, boxW, bh, `<b>${t.dr} – ${t[l.k]}</b><br>${dTxt}<br>${l.dr[3] === 'both' ? t.both : t.grpA + ' / ' + t.grpB}<br>${t.gate}: ${t.gates[l.dr[2]]}`);
+    // gates and arrows
+    if (i < 2) {
+      const gx = x + boxW + gap / 2;
+      arrow(x + boxW + 2, y1 + bh / 2, x + boxW + gap - 4, y1 + bh / 2, C.teal);
+      arrow(x + boxW + 2, y2 + bh / 2, x + boxW + gap - 4, y2 + bh / 2, C.slate);
+      diamond(gx, y1 + bh / 2, 6, C.charcoal);
+      diamond(gx, y2 + bh / 2, 6, C.charcoal);
+    }
+  });
+  // GIS Intermediate → Drone Basic
+  const lastX = x0 + 2 * (boxW + gap);
+  ctx.strokeStyle = C.muted; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(mx(lastX + boxW / 2), y1 + bh); ctx.lineTo(mx(lastX + boxW / 2), y1 + bh + 15);
+  ctx.lineTo(mx(x0 + boxW / 2), y1 + bh + 15); ctx.stroke(); ctx.setLineDash([]);
+  arrow(x0 + boxW / 2, y1 + bh + 14, x0 + boxW / 2, y2 - 3);
+  diamond(lastX + boxW / 2, y1 + bh + 15, 6, C.charcoal);
+  return y2 + bh;
+}
+
+// ---- Timeline (bottom): a real calendar, Sunday to Saturday, with the weekend shown as holiday columns
+function buildColumns(avail, x0) {
+  const d1 = dayDate(1) || new Date(DEFAULT_START + 'T00:00:00');
+  const gridStart = new Date(d1); gridStart.setDate(d1.getDate() - d1.getDay());   // Sunday of Day 1's week
+  const gridEnd = new Date(dayDate(28) || d1); gridEnd.setDate(gridEnd.getDate() + (6 - gridEnd.getDay())); // Saturday
+  const cols = [], byDay = {};
+  let n = 0;
+  for (const d = new Date(gridStart); d <= gridEnd; d.setDate(d.getDate() + 1)) {
+    const we = isWeekend(d);
+    if (!we && d >= d1) n++;
+    cols.push({ date: new Date(d), we, n: !we && d >= d1 ? n : 0 });
+  }
+  const weeks = cols.length / 7, weRatio = 0.8;
+  const cw = avail / (weeks * (5 + 2 * weRatio));
+  let x = x0;
+  cols.forEach((c, i) => { c.i = i; c.x = x; c.w = c.we ? cw * weRatio : cw; x += c.w; if (c.n) byDay[c.n] = c; });
+  return { cols, byDay, weeks, cw };
+}
+
+function drawTimeline(t, top) {
+  text(t.timeline, 0, top + 8, { size: 15, weight: 600 });
+  const labW = Math.min(200, W * 0.2), preW = 54;
+  const { cols, byDay, weeks, cw } = buildColumns(W - labW - preW - 8, labW + preW + 8);
+  // header rows: week · weekday name · training day number · date
+  const hTop = top + 30, yWd = hTop + 33, yNum = hTop + 48, yDate = hTop + 63;
+  const laneTop = hTop + 74, laneH = 46, lanes = 4;
+  const bottom = laneTop + lanes * laneH;
+
+  // week headers
+  for (let w = 0; w < weeks; w++) {
+    const a = cols[w * 7], b = cols[w * 7 + 6];
+    rrect(a.x, hTop, b.x + b.w - a.x - 2, 20, 4, C.greyT);
+    text(`${t.week} ${w + 1}`, (a.x + b.x + b.w) / 2, hTop + 10, { size: 12, weight: 600, color: C.slate, align: 'center' });
+  }
+  // lane backgrounds and labels
+  t.lanes.forEach((name, i) => {
+    const y = laneTop + i * laneH;
+    if (i % 2 === 0) rrect(0, y, labW + preW, laneH, 0, '#fafbfb');
+    ctx.fillStyle = '#e6e8eb'; ctx.fillRect(0, y + laneH - 1, W, 1);
+    text(name, 6, y + laneH / 2, { size: 12.5, weight: 600, color: i === 0 ? C.teal : i < 3 ? C.slate : C.charcoal, maxW: labW - 10 });
+  });
+  // day columns
+  cols.forEach(c => {
+    const a = flashAlpha(c.i), d = c.date, cx = c.x + c.w / 2;
+    if (c.we) {
+      rrect(c.x, hTop + 24, c.w, bottom - hTop - 24, 0, C.wkd);
+      hatch(c.x, laneTop, c.w, lanes * laneH, 0, 'rgba(193,39,44,.10)');
+      hit(c.x, hTop + 24, c.w, bottom - hTop - 24, `<b>${t.fmt(d)}</b><br>${t.weekendTip}`);
+    } else if (!c.n) {
+      rrect(c.x, hTop + 24, c.w, bottom - hTop - 24, 0, C.greyT);
+      text('–', cx, yNum, { size: 12, color: C.muted, align: 'center' });
+      hit(c.x, hTop + 24, c.w, bottom - hTop - 24, `<b>${t.fmt(d)}</b><br>${t.beforeTip}`);
+    } else {
+      text(String(c.n), cx, yNum, { size: 12, weight: 600, align: 'center' });
+    }
+    text(t.wd(d), cx, yWd, { size: 9.5, weight: 600, color: c.we ? C.red : C.slate, align: 'center', maxW: c.w - 2 });
+    if (a > 0) {
+      // highlighted column sweeping across the calendar
+      ctx.globalAlpha = a * 0.16; rrect(c.x + 1, laneTop, c.w - 2, lanes * laneH, 0, C.teal); ctx.globalAlpha = 1;
+      ctx.globalAlpha = a; rrect(c.x + 1, yDate - 8, c.w - 2, 16, 4, c.we || c.n === 1 || c.n === 28 ? C.red : C.teal); ctx.globalAlpha = 1;
+    }
+    const lit = a > 0.3;
+    // narrow weekend columns show the day of the month only
+    text(c.w < 36 ? String(d.getDate()) : t.fmtS(d), cx, yDate, { size: 9.5, weight: lit ? 700 : 400, color: lit ? C.white : c.we ? C.red : C.muted, align: 'center', maxW: c.w - 2 });
+    ctx.fillStyle = '#e6e8eb'; ctx.fillRect(mx(c.x, 1), laneTop, 1, lanes * laneH);
+  });
+  // vertical "weekend" label across each Friday–Saturday pair
+  for (let w = 0; w < weeks; w++) {
+    const f = cols[w * 7 + 5], s = cols[w * 7 + 6];
+    const cx = mx((f.x + s.x + s.w) / 2), cy = laneTop + (lanes * laneH) / 2;
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-Math.PI / 2);
+    ctx.font = '600 11px "Segoe UI", Tahoma, Arial, sans-serif'; ctx.fillStyle = C.red;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = rtl() ? 'rtl' : 'ltr';
+    ctx.fillText(t.weekend, 0, 0, lanes * laneH - 10);
+    ctx.restore();
+  }
+  // selection test (before Day 1)
+  const sx = labW + 4, sy = laneTop + 6;
+  rrect(sx, sy, preW - 8, laneH - 12, 6, C.red);
+  text('T', sx + (preW - 8) / 2, sy + (laneH - 12) / 2, { size: 13, weight: 700, color: C.white, align: 'center' });
+  hit(sx, sy, preW - 8, laneH - 12, `<b>${t.sel}</b><br>${t.selTip}<br>${t.selWhen}`);
+
+  // training days
+  SCHEDULE.forEach(e => {
+    const c = byDay[e.day]; if (!c) return;
+    const x = c.x + 2, y = laneTop + e.lane * laneH + 6;
+    const w = c.w - 4, h = (e.span || 1) * laneH - 12;
+    const col = colorsFor(e);
+    const a = flashAlpha(c.i);
+    if (a > 0) { ctx.globalAlpha = a; rrect(x - 3, y - 3, w + 6, h + 6, 7, null, C.red); ctx.globalAlpha = 1; }
+    rrect(x, y, w, h, 5, col.fill);
+    if (col.hatch) hatch(x, y, w, h, 5, col.hatch);
+    const short = { basic: t.basic, beginner: t.beginner, inter: t.inter }[e.lvl];
+    ctx.save(); ctx.beginPath(); ctx.rect(mx(x, w), y, w, h); ctx.clip();
+    text(lang === 'ar' || cw > 46 ? short : short.slice(0, 3), x + w / 2, y + h / 2 - 6, { size: 10.5, weight: 600, color: col.ink, align: 'center', maxW: w - 4 });
+    text(e.ld, x + w / 2, y + h / 2 + 8, { size: 10, color: col.ink, align: 'center', maxW: w - 4, ltr: true });
+    ctx.restore();
+    if (e.gate) diamond(x + w, y + h / 2, 5.5, C.charcoal);
+    const trackName = e.track === 'gis' ? t.gis : t.dr;
+    hit(x, y, w, h,
+      `<b>${t.day} ${e.day} · ${t.fmt(c.date)}</b><br>${trackName} – ${short}<br>` +
+      `${t.level}: ${e.ld}<br>${t.group}: ${t[e.grp]}<br>${t.loc}: ${t[e.loc]}` +
+      (e.gate ? `<br>◆ ${t.gate}: ${t.gates[e.gate]}` : ''));
+  });
+
+  // closing items; a span that crosses a weekend is split into runs of consecutive working days
+  CLOSING.forEach(c => {
+    const runs = [];
+    for (let n = c.from; n <= c.to; n++) {
+      const col = byDay[n]; if (!col) continue;
+      const r = runs[runs.length - 1];
+      if (r && r.b.i === col.i - 1) r.b = col; else runs.push({ a: col, b: col });
+    }
+    if (!runs.length) return;
+    const big = runs.reduce((m, r) => (r.b.x + r.b.w - r.a.x > m.b.x + m.b.w - m.a.x ? r : m));
+    const d1 = dayDate(c.from), d2 = dayDate(c.to);
+    const range = c.from === c.to ? `${t.day} ${c.from}` : `${t.day} ${c.from}–${c.to}`;
+    runs.forEach(r => {
+      const x = r.a.x + 2, w = r.b.x + r.b.w - x - 2, y = laneTop + 3 * laneH + 6, h = laneH - 12;
+      const a = flashAlpha(r.a.i);
+      if (a > 0) { ctx.globalAlpha = a; rrect(x - 3, y - 3, w + 6, h + 6, 7, null, C.red); ctx.globalAlpha = 1; }
+      rrect(x, y, w, h, 5, c.fill, c.outline);
+      if (c.key === 'reserve') hatch(x, y, w, h, 5, 'rgba(255,255,255,.5)');
+      if (c.from === c.to) {
+        // single-day marker: label sits in the free days before it
+        text('✓', x + w / 2, y + h / 2, { size: 13, weight: 700, color: c.ink, align: 'center' });
+        text(t[c.key], x - 6, y + h / 2, { size: 11, weight: 600, color: c.ink, align: 'end' });
+      } else if (r === big) {
+        ctx.font = '600 11px "Segoe UI", Tahoma, Arial, sans-serif';
+        const label = ctx.measureText(t[c.key]).width > w - 4 && lang === 'en' ? t[c.key].slice(0, 3) + '.' : t[c.key];
+        text(label, x + w / 2, y + h / 2, { size: 11, weight: 600, color: c.ink, align: 'center', maxW: w - 4 });
+      }
+      hit(x, y, w, h, `<b>${range}${d1 ? ' · ' + t.fmtS(d1) + (c.from !== c.to ? ' – ' + t.fmtS(d2) : '') : ''}</b><br>${t[c.tip]}`);
+    });
+  });
+  return bottom;
+}
+
+function draw() {
+  const t = T[lang];
+  const wrapW = document.querySelector('.wrap').clientWidth - 48;
+  W = Math.max(940, wrapW);
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  hits = [];
+  const end = drawTimeline(t, drawPathway(t, 4) + 34);
+  if (Math.abs(end + 10 - H) > 1) { H = end + 10; return draw(); }
+}
+
+function renderChips(flash) {
+  const t = T[lang];
+  document.getElementById('chips').innerHTML = t.chips.map(([cls, label, n], i) => {
+    const d = dayDate(n);
+    return `<span class="chip ${cls} ${flash ? 'flash' : ''}" style="animation-delay:${i * 90}ms">${label}<b>${d ? t.fmt(d) : '–'}</b></span>`;
+  }).join('');
+  if (flash) document.querySelectorAll('.chip b').forEach((b, i) => b.style.animationDelay = `${i * 90}ms`);
+}
+
+function syncUrl() {
+  // keep ?lang= and ?start= in the link so it can be shared as is
+  try {
+    const u = new URL(location.href);
+    u.searchParams.set('lang', lang);
+    if (startEl.value) u.searchParams.set('start', startEl.value);
+    history.replaceState(null, '', u);
+  } catch (e) { /* some browsers block this on file:// links */ }
+}
+
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.dir = T[lang].dir; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+function animate() {
+  draw();
+  if (flashAt && performance.now() - flashAt < 50 * 25 + 950) requestAnimationFrame(animate);
+  else { flashAt = 0; draw(); }
+}
+
+function onDateChange() {
+  const t = T[lang], d1 = dayDate(1);
+  if (!d1) return;
+  const picked = new Date(startEl.value + 'T00:00:00');
+  document.getElementById('hint').classList.add('used');
+  startEl.classList.remove('pulse');
+  renderChips(!reduceMotion);
+  showToast(t.toast(t.fmt(d1), t.fmt(dayDate(28))) + (isWeekend(picked) ? t.snapped : ''));
+  syncUrl();
+  if (reduceMotion) return draw();
+  flashAt = performance.now(); requestAnimationFrame(animate);
+}
+
+function shiftStart(days) {
+  const d = new Date((startEl.value || DEFAULT_START) + 'T00:00:00');
+  d.setDate(d.getDate() + days);
+  const p = v => String(v).padStart(2, '0');
+  startEl.value = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  onDateChange();
+}
+
+function applyLang() {
+  const t = T[lang];
+  document.documentElement.lang = lang; document.documentElement.dir = t.dir;
+  document.getElementById('t-title').textContent = t.title;
+  document.getElementById('t-sub').textContent = t.sub;
+  document.getElementById('t-about-h').textContent = t.aboutH;
+  document.getElementById('t-about').innerHTML = t.about;
+  document.getElementById('t-start').textContent = t.start;
+  document.getElementById('t-hint').innerHTML = t.hint;
+  document.getElementById('wk-minus').textContent = t.wkMinus;
+  document.getElementById('wk-plus').textContent = t.wkPlus;
+  document.getElementById('reset').textContent = t.reset;
+  document.getElementById('t-note').innerHTML = t.note;
+  document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+  renderChips(false);
+  syncUrl();
+  document.getElementById('legend').innerHTML = t.legend.map(([c, l]) => {
+    const bg = c === 'slate' ? `repeating-linear-gradient(135deg, ${C.slate} 0 4px, #59667480 4px 7px)` : C[c];
+    return `<span><i class="sw" style="background:${bg}"></i>${l}</span>`;
+  }).join('') + `<span>◆ ${t.gate}</span>`;
+  draw();
+}
+
+cv.addEventListener('mousemove', ev => {
+  const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  const h = hits.find(b => x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h);
+  cv.style.cursor = h ? 'pointer' : 'default';
+  if (!h) { tip.style.display = 'none'; return; }
+  tip.innerHTML = h.html; tip.dir = T[lang].dir; tip.style.display = 'block';
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  tip.style.left = Math.min(ev.clientX + 14, innerWidth - tw - 8) + 'px';
+  tip.style.top = (ev.clientY + 16 + th > innerHeight ? ev.clientY - th - 10 : ev.clientY + 16) + 'px';
+});
+cv.addEventListener('mouseleave', () => tip.style.display = 'none');
+document.querySelectorAll('.lang-switch button').forEach(b => b.onclick = () => { if (lang !== b.dataset.lang) { lang = b.dataset.lang; applyLang(); } });
+startEl.addEventListener('change', onDateChange);
+document.getElementById('wk-minus').onclick = () => shiftStart(-7);
+document.getElementById('wk-plus').onclick = () => shiftStart(7);
+document.getElementById('reset').onclick = () => { startEl.value = DEFAULT_START; onDateChange(); };
+addEventListener('resize', draw);
+applyLang();
+// one welcome sweep so the reader sees that the calendar is live
+if (!reduceMotion) setTimeout(() => { flashAt = performance.now(); requestAnimationFrame(animate); }, 700);
+</script>
+</body>
+</html>
