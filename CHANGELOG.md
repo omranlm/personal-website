@@ -1,5 +1,24 @@
 # Personal Website Changelog
 
+## Session 3 — 2026-10-22
+
+### Custom error pages (403 / 404)
+- **`403.html`** — branded "access denied" fallback (used for any forbidden path)
+- **`404.html`** — branded "page not found" fallback
+- Both pages: `noindex, nofollow`, GA consent snippet, favicon, and **root-absolute** asset paths (`/style.css`) — required because an `ErrorDocument` is rendered at the URL that failed, so relative paths would resolve against that URL and 404
+- `.htaccess`: added `ErrorDocument 403 /403.html`, `ErrorDocument 404 /404.html`, plus `Options -Indexes` and `DirectoryIndex index.html index.htm`
+- `style.css`: new `.error-page` block (badge, heading, action buttons, footnote) with a stacked mobile layout
+
+### Fixed 403 on `/gis-training/`
+- Cause: the `gis-training/` folder contained `Training_Tracks.html` but no `index` file, so Apache returned 403 (directory listing disabled) instead of serving the page
+- Renamed `gis-training/Training_Tracks.html` → `gis-training/index.html` — `/gis-training/` now resolves through `DirectoryIndex`
+- Added the standard head boilerplate to that page: canonical `https://omran.blog/gis-training/`, description, favicon, GA snippet, OG/Twitter meta, and the consent script
+
+### Local preview parity
+- `server.js` now serves `<dir>/index.html` for directory URLs, mirroring Apache's `DirectoryIndex`
+
+---
+
 ## Session 2 — 2026-05-28
 
 ### Clean URLs

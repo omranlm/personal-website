@@ -43,11 +43,19 @@ http.createServer((req, res) => {
   if (urlPath === '/') urlPath = '/index.html';
 
   const filePath = path.join(__dirname, urlPath);
-  const ext      = path.extname(filePath).toLowerCase();
-  const mime     = MIME[ext]  || 'application/octet-stream';
-  const cache    = CACHE[ext] || 'public, max-age=3600';
 
-  fs.stat(filePath, (statErr, stat) => {
+  // Directory → serve its index.html (mirrors Apache's DirectoryIndex,
+  // so /gis-training/ behaves the same locally and on HostGator)
+  let target = filePath;
+  try {
+    if (fs.statSync(target).isDirectory()) target = path.join(target, 'index.html');
+  } catch (_) { /* not a directory — fall through */ }
+
+  const ext   = path.extname(target).toLowerCase();
+  const mime  = MIME[ext]  || 'application/octet-stream';
+  const cache = CACHE[ext] || 'public, max-age=3600';
+
+  fs.stat(target, (statErr, stat) => {
     if (statErr) {
       // Clean URL fallback: /contributions/douma-mapping → douma-mapping.html
       if (!ext) {
@@ -104,7 +112,7 @@ http.createServer((req, res) => {
       return;
     }
 
-    fs.readFile(filePath, (readErr, data) => {
+    fs.readFile(target, (readErr, data) => {
       if (readErr) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
         res.end('500 Internal Server Error');

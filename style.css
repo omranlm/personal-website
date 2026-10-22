@@ -1944,3 +1944,62 @@ footer {
   .cookie-details__actions { flex-direction: column; align-items: flex-start; }
   .cookie-btn--accept-lg { width: 100%; text-align: center; }
 }
+
+/* =============================================
+   ERROR PAGES (403 / 404)
+   ============================================= */
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: var(--light);
+}
+
+.error-code {
+  font-size: clamp(4rem, 14vw, 7.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--teal);
+  margin-bottom: .25rem;
+}
+
+.error-page h1 {
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: .75rem;
+}
+
+.error-text {
+  max-width: 34rem;
+  color: var(--gray);
+  margin-bottom: 2rem;
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .75rem;
+  margin-bottom: 2rem;
+}
+
+.error-note {
+  max-width: 32rem;
+  font-size: .85rem;
+  line-height: 1.6;
+  color: var(--gray);
+}
+
+.error-note a { font-weight: 600; }
+
+@media (max-width: 540px) {
+  .error-page { padding: 2.5rem 1.25rem; }
+  .error-actions { flex-direction: column; width: 100%; }
+  .error-actions .btn { justify-content: center; }
+}

@@ -1,5 +1,12 @@
 # Clean URLs — serve .html files without the extension
 Options -MultiViews
+
+# Never list directory contents. A folder without an index file
+# (e.g. /gis-training/ before it had index.html) would otherwise
+# return a 403 Forbidden instead of the site's custom error page.
+Options -Indexes
+DirectoryIndex index.html index.htm
+
 RewriteEngine On
 
 # Force HTTPS (301 — redirect any plain HTTP request to HTTPS)
@@ -15,3 +22,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+?)/?$ $1.html [L]
+
+# Custom error pages
+# The status code is still sent (403/404) — only the body changes.
+# Paths are root-absolute on purpose: an ErrorDocument is served
+# from the URL that failed, so relative paths would break.
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
