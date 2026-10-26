@@ -1,5 +1,14 @@
 # Personal Website Changelog
 
+## Session 4 — 2026-10-26
+
+### OSM Syria website is now live
+- [contributions/osm-syria.html](contributions/osm-syria.html) — `openstreetmap.sy` no longer described as a "coming soon" placeholder
+- Header badge: "Coming soon" / "قريباً" → "Official website" / "الموقع الرسمي"
+- Overview paragraph (EN + AR) rewritten: the domain is now the official community website, volunteer-built and maintained
+
+---
+
 ## Session 3 — 2026-10-22
 
 ### Custom error pages (403 / 404)
