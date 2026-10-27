@@ -37,6 +37,10 @@
       <code>.html</code> extension are handled automatically, so a broken link usually means
       the page was renamed or removed.
     </p>
+    <p class="error-redirect" id="redirect-note">
+      Redirecting to the homepage in <strong id="redirect-count">10</strong>s&hellip;
+      <button type="button" id="redirect-cancel">Cancel</button>
+    </p>
     <div class="error-actions">
       <a href="/" class="btn btn-primary">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -52,5 +56,28 @@
   </main>
 
   <script src="/cookie-consent.js"></script>
+  <script>
+    (function () {
+      var seconds = 10;
+      var countEl = document.getElementById('redirect-count');
+      var noteEl  = document.getElementById('redirect-note');
+      var cancelBtn = document.getElementById('redirect-cancel');
+
+      var timer = setInterval(function () {
+        seconds -= 1;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          window.location.href = '/';
+          return;
+        }
+        countEl.textContent = seconds;
+      }, 1000);
+
+      cancelBtn.addEventListener('click', function () {
+        clearInterval(timer);
+        noteEl.remove();
+      });
+    })();
+  </script>
 </body>
 </html>

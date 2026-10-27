@@ -87,7 +87,7 @@
     }
     .spinner-fill {
       fill: none;
-      stroke: #ce1126;
+      stroke: #007a3d;
       stroke-width: 6;
       stroke-linecap: round;
       stroke-dasharray: 263.9;
@@ -233,8 +233,8 @@
       cursor: pointer;
       transition: background .15s, color .15s, border-color .15s;
     }
-    .ctrl-btn:hover { background: rgba(206,17,38,.8); color: #fff; border-color: #ce1126; }
-    .ctrl-btn.active { background: #ce1126; color: #fff; border-color: #ce1126; }
+    .ctrl-btn:hover { background: rgba(0,122,61,.8); color: #fff; border-color: #007a3d; }
+    .ctrl-btn.active { background: #007a3d; color: #fff; border-color: #007a3d; }
     .ctrl-label {
       font-size: .52rem;
       font-weight: 600;
@@ -305,12 +305,12 @@
     .nav-tip-icon {
       width: 48px;
       height: 48px;
-      background: rgba(206,17,38,.2);
+      background: rgba(0,122,61,.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ff8a95;
+      color: #7fe0ab;
     }
     .nav-tip-icon svg { width: 22px; height: 22px; }
     .nav-tip-action {
@@ -349,8 +349,8 @@
       transition: border-color .15s, background .15s;
     }
     .nav-tutorial-skip input:checked + .nav-tutorial-skip__box {
-      background: #ce1126;
-      border-color: #ce1126;
+      background: #007a3d;
+      border-color: #007a3d;
     }
     .nav-tutorial-skip input:checked + .nav-tutorial-skip__box::after {
       content: '';
@@ -362,7 +362,7 @@
       transform: rotate(-45deg) translateY(-1px);
     }
     .nav-tutorial-dismiss {
-      background: linear-gradient(135deg, #e8243a 0%, #ce1126 100%);
+      background: linear-gradient(135deg, #0d9c58 0%, #007a3d 100%);
       color: #fff;
       border: none;
       border-radius: 32px;
@@ -372,20 +372,20 @@
       cursor: pointer;
       letter-spacing: .03em;
       margin-top: 1rem;
-      box-shadow: 0 0 0 0 rgba(15,168,153,.55);
+      box-shadow: 0 0 0 0 rgba(0,122,61,.55);
       animation: btn-pulse 2s ease-in-out infinite;
       transition: transform .15s, box-shadow .15s;
     }
     @keyframes btn-pulse {
-      0%   { box-shadow: 0 0 0 0   rgba(15,168,153,.55); }
-      60%  { box-shadow: 0 0 0 14px rgba(15,168,153,0); }
-      100% { box-shadow: 0 0 0 0   rgba(15,168,153,0); }
+      0%   { box-shadow: 0 0 0 0   rgba(0,122,61,.55); }
+      60%  { box-shadow: 0 0 0 14px rgba(0,122,61,0); }
+      100% { box-shadow: 0 0 0 0   rgba(0,122,61,0); }
     }
     .nav-tutorial-dismiss:hover {
-      background: linear-gradient(135deg, #13c2b2 0%, #0a6b60 100%);
+      background: linear-gradient(135deg, #0a6b3a 0%, #00592c 100%);
       transform: scale(1.05);
       animation: none;
-      box-shadow: 0 6px 24px rgba(15,168,153,.5);
+      box-shadow: 0 6px 24px rgba(0,122,61,.5);
     }
 
     /* ── hint bar ── */
@@ -594,7 +594,7 @@
     }
     .popup-spinner-fill {
       fill: none;
-      stroke: #ce1126;
+      stroke: #007a3d;
       stroke-width: 5;
       stroke-linecap: round;
       stroke-dasharray: 175.9;

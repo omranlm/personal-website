@@ -76,8 +76,10 @@ img { max-width: 100%; display: block; }
   left: 0;
   right: 0;
   bottom: 0;
-  height: 3px;
-  background: linear-gradient(to right, var(--green) 0%, var(--green) 33%, #ffffff 33%, #ffffff 66%, #000000 66%, #000000 100%);
+  height: 4px;
+  background-image: url('assets/flag-stripe-nav.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .nav-brand {
@@ -2036,8 +2038,36 @@ footer {
 .error-text {
   max-width: 34rem;
   color: var(--gray);
+  margin-bottom: 1.25rem;
+}
+
+.error-redirect {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .85rem;
+  color: var(--gray);
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: .45rem 1rem;
   margin-bottom: 2rem;
 }
+
+.error-redirect strong { color: var(--navy); }
+
+#redirect-cancel {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--teal);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#redirect-cancel:hover { color: var(--green); }
 
 .error-actions {
   display: flex;

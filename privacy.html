@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Omran NAJJAR</title>
+  <meta name="description" content="What data this site collects through cookies, why, and how to enable or disable analytics consent." />
+  <meta name="author" content="Omran NAJJAR" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://omran.blog/privacy" />
+  <!-- Google Analytics (Consent Mode v2) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      wait_for_update: 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MZ648EEXYB"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-MZ648EEXYB');
+  </script>
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://omran.blog/privacy" />
+  <meta property="og:title" content="Privacy Policy — Omran NAJJAR" />
+  <meta property="og:description" content="What data this site collects through cookies, why, and how to enable or disable analytics consent." />
+  <meta property="og:image" content="https://omran.blog/assets/profile.jpg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@OmranNajjar" />
+  <meta name="twitter:title" content="Privacy Policy — Omran NAJJAR" />
+  <meta name="twitter:description" content="What data this site collects through cookies, why, and how to enable or disable analytics consent." />
+  <meta name="twitter:image" content="https://omran.blog/assets/profile.jpg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .cookie-meta label { text-transform: none; font-family: monospace; font-size: .8rem; }
+
+    .consent-pill {
+      display: inline-block;
+      font-weight: 700;
+      font-size: .85rem;
+      padding: .2rem .7rem;
+      border-radius: 20px;
+      background: var(--border);
+      color: var(--navy);
+    }
+    .consent-pill--on  { background: rgba(0,122,61,.15); color: var(--green); }
+    .consent-pill--off { background: rgba(206,17,38,.1); color: var(--teal); }
+
+    .consent-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin: 1rem 0;
+    }
+    .consent-btn-enable { border-color: var(--green); color: var(--green); }
+    .consent-btn-enable:hover { background: var(--green); color: var(--white); }
+    .consent-btn-disable { border-color: var(--gray); color: var(--gray); }
+    .consent-btn-disable:hover { background: var(--gray); color: var(--white); }
+
+    .consent-note { font-size: .82rem; color: var(--gray); }
+    .consent-note code { background: var(--light); padding: .1rem .35rem; border-radius: 4px; }
+  </style>
+</head>
+<body style="background: var(--light);">
+
+  <div class="contribution-page">
+
+    <a href="/" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to homepage
+    </a>
+
+    <header>
+      <div class="page-tag">Legal · Privacy</div>
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">Last updated: October 2026</p>
+    </header>
+
+    <div class="contribution-body">
+
+      <h2>Overview</h2>
+      <p>
+        This site is a personal portfolio with no user accounts, no logins, and no forms that collect personal information for marketing purposes. The only data processed is a small, anonymous set of usage statistics gathered through Google Analytics, described in full below — and you control whether that happens at all.
+      </p>
+
+      <h2>What We Collect</h2>
+      <p>When analytics is enabled, Google Analytics 4 records anonymous, aggregated information such as:</p>
+      <ul>
+        <li>Which pages are viewed and for how long</li>
+        <li>Approximate location (country/city level, derived from IP — the IP address itself is not stored)</li>
+        <li>Device, browser, and screen type</li>
+        <li>How you arrived at the site (e.g. search engine, direct link, social media)</li>
+      </ul>
+      <p>We deliberately do <strong>not</strong> collect:</p>
+      <ul>
+        <li>Your name, email address, or any other personally identifying information</li>
+        <li>Your full IP address</li>
+        <li>Any data used for advertising or cross-site tracking</li>
+      </ul>
+      <p>
+        Analytics data stays within Google Analytics and is never sold, shared with other third parties, or combined with data from other sites.
+      </p>
+
+      <h2>Cookies We Use</h2>
+      <p>Cookies are only set if you accept analytics below (or via the banner shown on your first visit). We use exactly two:</p>
+      <div class="contribution-meta cookie-meta">
+        <div class="meta-item">
+          <label>_ga</label>
+          <span>Distinguishes unique visitors · expires after 2 years</span>
+        </div>
+        <div class="meta-item">
+          <label>_ga_MZ648EEXYB</label>
+          <span>Persists session state for this GA4 property · expires after 2 years</span>
+        </div>
+      </div>
+      <p>
+        No advertising cookies, no social-media tracking pixels, and no third-party cookies are ever set by this site.
+      </p>
+
+      <h2>Manage Your Consent</h2>
+      <p>
+        Your current preference: <span id="consent-status" class="consent-pill">Checking&hellip;</span>
+      </p>
+      <div class="consent-actions">
+        <button type="button" id="enable-consent" class="pill-btn consent-btn-enable">Enable analytics cookies</button>
+        <button type="button" id="disable-consent" class="pill-btn consent-btn-disable">Disable analytics cookies</button>
+      </div>
+      <p class="consent-note">
+        Disabling immediately stops future data collection <em>and</em> deletes any <code>_ga</code> cookies already stored in your browser for this site. Your choice is saved in your browser only (<code>localStorage</code>) — it isn't sent anywhere.
+      </p>
+
+      <h2>Changes to This Policy</h2>
+      <p>
+        If what this site collects ever changes, this page will be updated to reflect it. Checking back periodically is the only way to stay informed, as no notifications are sent.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        For anything else about privacy on this site, reach out via the <a href="/#contact">contact section</a> on the homepage.
+      </p>
+
+    </div>
+
+  </div>
+
+  <script src="/cookie-consent.js"></script>
+  <script>
+    (function () {
+      var STORAGE_KEY = 'cookie_consent';
+      var DATE_KEY    = 'cookie_consent_date';
+
+      var statusEl  = document.getElementById('consent-status');
+      var enableBtn = document.getElementById('enable-consent');
+      var disableBtn = document.getElementById('disable-consent');
+
+      function deleteCookie(name) {
+        document.cookie = name + '=; Max-Age=0; path=/';
+        document.cookie = name + '=; Max-Age=0; path=/; domain=' + location.hostname;
+      }
+
+      function deleteAnalyticsCookies() {
+        document.cookie.split(';').forEach(function (entry) {
+          var name = entry.split('=')[0].trim();
+          if (/^_ga/.test(name)) deleteCookie(name);
+        });
+      }
+
+      function renderStatus() {
+        var choice = localStorage.getItem(STORAGE_KEY);
+        if (choice === 'accepted') {
+          statusEl.textContent = 'Enabled';
+          statusEl.className = 'consent-pill consent-pill--on';
+        } else if (choice === 'declined') {
+          statusEl.textContent = 'Disabled';
+          statusEl.className = 'consent-pill consent-pill--off';
+        } else {
+          statusEl.textContent = 'Not yet decided';
+          statusEl.className = 'consent-pill';
+        }
+      }
+
+      function setConsent(granted) {
+        localStorage.setItem(STORAGE_KEY, granted ? 'accepted' : 'declined');
+        localStorage.setItem(DATE_KEY, new Date().toISOString());
+        if (typeof gtag === 'function') {
+          gtag('consent', 'update', {
+            analytics_storage: granted ? 'granted' : 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied'
+          });
+        }
+        if (!granted) deleteAnalyticsCookies();
+        renderStatus();
+      }
+
+      enableBtn.addEventListener('click', function () { setConsent(true); });
+      disableBtn.addEventListener('click', function () { setConsent(false); });
+
+      renderStatus();
+    })();
+  </script>
+</body>
+</html>
