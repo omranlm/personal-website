@@ -6,8 +6,8 @@
 :root {
   --navy:       #111111;
   --teal:       #ce1126;
-  --teal-light: #e8243a;
   --green:      #007a3d;
+  --panel-dark: #042010;
   --gray:       #888888;
   --light:      #f5f5f5;
   --white:      #ffffff;
@@ -25,10 +25,25 @@ body {
   color: var(--text);
   background: var(--white);
   line-height: 1.7;
+  position: relative;
+}
+
+/* Syrian flag watermark — fixed, low-opacity, home page only */
+body.home::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url('assets/syria-flag.webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(1100px, 80vw) auto;
+  opacity: .045;
+  pointer-events: none;
 }
 
 a { color: var(--teal); text-decoration: none; }
-a:hover { color: var(--teal-light); }
+a:hover { color: var(--green); }
 
 img { max-width: 100%; display: block; }
 
@@ -39,7 +54,7 @@ img { max-width: 100%; display: block; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--navy);
+  background: var(--panel-dark);
   padding: 0 2rem;
   display: flex;
   align-items: center;
@@ -55,8 +70,18 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 2px 12px rgba(0,0,0,.45);
 }
 
+.nav::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--green) 0%, var(--green) 33%, #ffffff 33%, #ffffff 66%, #000000 66%, #000000 100%);
+}
+
 .nav-brand {
-  color: var(--teal);
+  color: var(--white);
   font-weight: 700;
   font-size: 1.1rem;
   letter-spacing: .5px;
@@ -112,8 +137,8 @@ img { max-width: 100%; display: block; }
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--teal);
-  border-bottom-color: var(--teal);
+  color: var(--white);
+  border-bottom-color: var(--white);
 }
 
 /* =============================================
@@ -124,7 +149,7 @@ section {
 }
 
 section:nth-child(even) {
-  background: var(--light);
+  background: rgba(245, 245, 245, .9);
 }
 
 .section-inner {
@@ -133,13 +158,25 @@ section:nth-child(even) {
 }
 
 .section-title {
+  position: relative;
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--navy);
   margin-bottom: 2rem;
   padding-bottom: .6rem;
-  border-bottom: 3px solid var(--teal);
   display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background-image: url('assets/flag-stripe.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /* fade-in on scroll */
@@ -272,7 +309,7 @@ section:nth-child(even) {
   background: var(--teal);
   color: var(--white);
 }
-.btn-primary:hover { background: var(--teal-light); color: var(--white); }
+.btn-primary:hover { background: var(--green); color: var(--white); }
 
 .btn-outline {
   border: 2px solid var(--teal);
@@ -1041,7 +1078,7 @@ a.volunteer-logo:hover {
   transition: background var(--transition);
   margin-top: .5rem;
 }
-.talk-page-source:hover { background: var(--teal-light); color: #fff; }
+.talk-page-source:hover { background: var(--green); color: #fff; }
 
 .talk-featured-img {
   margin: 1.5rem 0;
@@ -1149,7 +1186,7 @@ a.volunteer-logo:hover {
 /* =============================================
    CONTACT
    ============================================= */
-#contact { background: var(--navy); color: var(--white); }
+#contact { background: var(--panel-dark); color: var(--white); }
 
 #contact .section-title { color: var(--white); }
 
@@ -1168,7 +1205,7 @@ a.volunteer-logo:hover {
   transition: color var(--transition);
 }
 
-.contact-link:hover { color: var(--teal); }
+.contact-link:hover { color: var(--white); }
 
 .contact-link svg { flex-shrink: 0; }
 
@@ -1181,23 +1218,26 @@ a.volunteer-logo:hover {
   padding: 2rem;
 }
 
-.back-link {
+.back-link,
+.pill-btn {
   display: inline-flex;
   align-items: center;
   gap: .4rem;
   color: var(--teal);
   font-size: .9rem;
   font-weight: 600;
-  margin-bottom: 2rem;
   padding: .4rem .8rem;
   border: 1px solid var(--teal);
   border-radius: 20px;
   transition: background var(--transition), color var(--transition);
 }
 
-.back-link:hover {
+.back-link { margin-bottom: 2rem; }
+
+.back-link:hover,
+.pill-btn:hover {
   background: var(--teal);
-  color: var(--navy);
+  color: var(--white);
 }
 
 .contribution-page header {
@@ -1465,7 +1505,7 @@ a.volunteer-logo:hover {
 }
 
 .osm-syria-join-btn:hover {
-  background: var(--teal-light);
+  background: var(--green);
 }
 
 @media (max-width: 560px) {
@@ -1519,7 +1559,7 @@ a.volunteer-logo:hover {
    FOOTER
    ============================================= */
 footer {
-  background: var(--navy);
+  background: var(--panel-dark);
   color: var(--gray);
   text-align: center;
   padding: 1.5rem;
@@ -1555,7 +1595,7 @@ footer {
 
   .nav-links.open {
     display: flex;
-    background: rgba(10,10,10,.88);
+    background: rgba(4,32,16,.92);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     position: absolute;
@@ -1581,7 +1621,7 @@ footer {
   .nav-links a:hover,
   .nav-links a.active {
     border-bottom-color: transparent;
-    border-left-color: var(--teal);
+    border-left-color: var(--white);
   }
 
   /* hero */
@@ -1618,11 +1658,20 @@ footer {
   text-transform: uppercase;
   color: var(--navy);
   border-bottom: none;
-  border-left: 3px solid var(--teal);
   padding-left: .7rem;
   padding-bottom: 0;
   margin-bottom: 0;
   line-height: 1.35;
+}
+
+.profile-page .section-title::after {
+  left: 0;
+  right: auto;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  height: auto;
+  background-image: url('assets/flag-stripe-vertical.svg');
 }
 
 @media (max-width: 700px) {
@@ -1630,15 +1679,24 @@ footer {
     display: block;
   }
   .profile-page .section-title {
-    position: static;
+    position: relative;
     display: inline-block;
     font-size: 1.8rem;
     text-transform: none;
     letter-spacing: 0;
     border-left: none;
-    border-bottom: 3px solid var(--teal);
     padding-left: 0;
+    padding-bottom: .6rem;
     margin-bottom: 2rem;
+  }
+  .profile-page .section-title::after {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    height: 6px;
+    background-image: url('assets/flag-stripe.svg');
   }
 }
 

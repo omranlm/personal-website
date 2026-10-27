@@ -32,7 +32,7 @@ Sub-pages use the `contribution-page` wrapper div. Talk pages additionally add t
 ## Conventions
 
 **CSS variables** (defined in `:root` in `style.css`):
-- Colors: `--navy`, `--teal`, `--teal-light`, `--gray`, `--light`, `--white`, `--text`, `--border`
+- Colors: `--navy`, `--teal` (flag red), `--green` (flag green), `--gray`, `--light`, `--white`, `--text`, `--border`
 - Utilities: `--radius`, `--shadow`, `--transition`
 
 **Every HTML page must include:**
