@@ -37,7 +37,6 @@ Sub-pages use the `contribution-page` wrapper div. Talk pages additionally add t
 
 **Every HTML page must include:**
 - `<link rel="canonical" href="https://omran.blog/...">` — path without `.html` extension
-- Google Analytics snippet with tag `G-MZ648EEXYB`
 - Open Graph and Twitter Card meta tags
 - `<link rel="icon" type="image/svg+xml" href="[../]assets/favicon.svg">`
 

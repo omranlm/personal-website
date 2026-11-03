@@ -248,7 +248,7 @@ the work happened.
 - `profile.html` — full CV: work experience timeline, technical skills, education, certifications, volunteering
 - Single `style.css` with CSS custom properties; `script.js` for sticky nav, hamburger, scroll-shrink and fade-ins
 - `assets/` — favicon, profile and banner images, logos, CV PDF
-- Google Analytics snippet, `robots`/OG/Twitter meta on every page, © and GitHub link in the footer
+- `robots`/OG/Twitter meta on every page, © and GitHub link in the footer
 
 ### Contribution pages
 - `contributions/fair.html` — HOT's fAIr platform
