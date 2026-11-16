@@ -128,7 +128,7 @@
   <div id="t-hint"></div>
 </div>
 <div class="bar">
-  <label><span id="t-start"></span> <input type="date" id="start" class="pulse" value="2026-11-08"></label>
+  <label><span id="t-start"></span> <input type="date" id="start" class="pulse" value="2026-12-01"></label>
   <button class="shift" id="wk-minus"></button>
   <button class="shift" id="wk-plus"></button>
   <button class="shift reset" id="reset"></button>
@@ -147,101 +147,105 @@ const C = { teal:'#008673', slate:'#404E5E', charcoal:'#21232A', red:'#C1272C', 
 const T = {
   en: {
     dir:'ltr', other:'العربية',
-    title:'Phase 1 Training – Tracks and Schedule',
-    sub:'Damage Assessment and Recovery Department · 10 trainees · 19 training days · Al-Awad & Nabo Trading and Contracting Company',
+    title:'GIS, Mapping and Drone Training – Tracks and Schedule',
+    sub:'Damage Assessment and Recovery Department · 10 GIS trainees and up to 5 drone trainees · 10.5 working days · Al-Awad & Nabo Trading and Contracting Company',
     aboutH:'About the training programme',
-    about:'Phase 1 builds the core skills of the Ministry of Emergency and Disaster Management’s Damage Assessment and Recovery Department to map and assess damage after disasters. <b>Ten trainees</b>, selected from 15–20 candidates, follow two tracks in sequence, each at three levels (Basic, Beginner and Intermediate): <b>GIS and mapping</b> in the training venue, with QGIS hands-on and ArcGIS presented, then <b>drones</b> in the training venue and the field, ending with a complete survey mission. Each level ends with a gate test, and the programme closes with an acceptance test before the final report.',
+    about:'The training builds the core skills of the Ministry of Emergency and Disaster Management’s Damage Assessment and Recovery Department to map and assess damage after disasters. <b>Ten trainees</b>, selected from 15–20 candidates by a selection test, follow the <b>GIS and mapping</b> track (Basic 1 day, Beginner 1 day, Intermediate 3 days) in the training venue, with QGIS hands-on and ArcGIS for familiarisation. Up to <b>five</b> of those who pass then follow the <b>drone</b> track (Basic 1 day, Beginner 2 days, Intermediate 2 days) in the training venue and the field; coordination is under way with the Douma City Council to identify the field work area in Douma. Each level ends with a gate test, with a second chance if the trainers and the training supervisor approve. Acceptance takes place during drone Intermediate (field mission on Day 9, software demonstration on Day 10), followed by the final report and two months of remote technical support.',
     start:'Day 1 date:',
-    hint:'<span class="tag">TRY IT</span><strong>Change the Day 1 date</strong> with the date picker, or use <strong>−1 week / +1 week</strong>. The whole training schedule moves on the calendar: training days, reserve days, acceptance and the final report. Weekends (Friday and Saturday) and the public holidays on 8 and 25 December 2026 are skipped automatically, and the new dates flash below.',
-    wkMinus:'−1 week', wkPlus:'+1 week', reset:'Reset (8 Nov)',
-    chips:[['k-gis','GIS starts',1],['k-gis','GIS ends',7],['','Drones start',8],['','Drones end',19],['k-acc','Acceptance',23],['k-acc','Final report by',28]],
-    toast:(d1,d28)=>`📅 Calendar updated · Day 1: ${d1} · Final report by ${d28}`,
+    hint:'<span class="tag">TRY IT</span><strong>Change the Day 1 date</strong> with the date picker, or use <strong>−1 week / +1 week</strong>. The whole training schedule moves on the calendar: training days, progress reports, acceptance and the final report. Weekends (Friday and Saturday) and the public holidays on 8 and 25 December 2026 are skipped automatically, and the new dates flash below.',
+    wkMinus:'−1 week', wkPlus:'+1 week', reset:'Reset (1 Dec)',
+    chips:[['k-gis','GIS starts',1],['k-gis','GIS ends',5],['','Drones start',6],['k-acc','Acceptance mission',9],['','Drones end',10],['k-acc','Final report by',15]],
+    toast:(d1,dEnd)=>`📅 Calendar updated · Day 1: ${d1} · Final report by ${dEnd}`,
     snapped:' (moved to the next working day)',
-    note:'Working week: 5 days, weekend: 2 days. 8 and 25 December 2026 are public holidays with no training. Day 1 is anticipated on 8 November 2026 (± 1 week). Hatched blocks are field days. ◆ marks a level gate (exit test). Hover over a block for details. To share this page in Arabic, add <code dir="ltr">?lang=ar</code> to the link (<code dir="ltr">?lang=en</code> for English); the chosen start date is kept in the link as well.',
+    note:'Working week: 5 days, weekend: 2 days. 8 and 25 December 2026 are public holidays with no training. Day 1 is assumed on 1 December 2026; the start date is agreed with the training supervisor after contracting. The selection test is held before Day 1, after the work plan is approved. Hatched blocks are field days. ◆ marks a level gate (exit test). Hover over a block for details. To share this page in Arabic, add <code dir="ltr">?lang=ar</code> to the link (<code dir="ltr">?lang=en</code> for English); the chosen start date is kept in the link as well.',
     pathway:'Training pathway', timeline:'Timeline by training day',
-    sel:'Selection test', selSub:'15–20 candidates → 10', selWhen:'within 5 days of signing',
+    sel:'Selection test', selSub:'15–20 candidates → 10', selWhen:'after work plan approval, before Day 1',
     gis:'GIS and mapping', dr:'Drones',
-    lanes:['GIS and mapping · all 10','Drones · Group A','Drones · Group B','Closing'],
+    lanes:['GIS and mapping · 10 trainees','Drones · up to 5 trainees','Acceptance','Reports'],
     basic:'Basic', beginner:'Beginner', inter:'Intermediate',
-    venue:'Training venue', field:'Field', venueField:'Venue + nearby field visit (last day)', fieldVenue:'2 field + 1 venue',
-    days:n=>n+(n===1?' day':' days'), perGroup:' per group',
-    reserve:'Reserve', accept:'Acceptance', report:'Final report',
-    week:'Week', day:'Day', both:'Groups A + B together', all:'All 10 trainees', grpA:'Group A', grpB:'Group B',
-    gates:{gb:'Test ≥ 60%', gbe:'Practical ≥ 60% + group project', gi:'Practical ≥ 70% + A3 map',
-           db:'Theory ≥ 75%', dbe:'Flight skills test', di:'Complete mission to quality standards'},
-    reserveTip:'Reserve days (as needed, field)', acceptTip:'Acceptance: final field mission and software demonstration',
-    reportTip:'Final report to the training supervisor (by Day 28)', selTip:'Selection test: 15–20 candidates; the Department approves 10 trainees',
-    legend:[['teal','GIS – training venue'],['slateT','Drones – training venue'],['slate','Drones – field'],['grey','Reserve days'],['red','Selection and acceptance'],['wkd','Weekend (Friday–Saturday) – holiday'],['hol','Public holidays – 8 and 25 Dec 2026']],
+    venue:'Training venue', field:'Field', venueField:'Venue + short nearby field visit (last day)', fieldVenue:'1 field + 1 venue',
+    days:n=>n+(n===1?' day':' days'),
+    accept:'Acceptance', gisRep:'GIS progress report', drRep:'Drone progress report', report:'Final report',
+    week:'Week', day:'Day', all:'All 10 trainees', dr5:'Up to 5 trainees',
+    gates:{gb:'Test ≥ 70%', gbe:'Practical ≥ 70% + group project', gi:'Practical ≥ 80% + A3 map',
+           db:'Theory ≥ 70%', dbe:'Flight skills test', di:'Complete mission meeting quality standards'},
+    acceptTip:'Acceptance with the committee: final field mission (Day 9) and software demonstration (Day 10)',
+    gisRepTip:'GIS track progress report and recommended list for the drone track (within 1 working day of Day 5)',
+    drRepTip:'Drone track progress report (within 1 working day of Day 10)',
+    reportTip:'Final report to the training supervisor (within 5 working days of Day 10), followed by 2 months of remote technical support',
+    selTip:'Selection test (also the pre-test): 15–20 candidates; the Department approves 10 trainees',
+    legend:[['teal','GIS – training venue'],['slateT','Drones – training venue'],['slate','Drones – field'],['red','Selection and acceptance'],['wkd','Weekend (Friday–Saturday) – holiday'],['hol','Public holidays – 8 and 25 Dec 2026']],
     weekend:'Weekend · holiday', weekendTip:'Weekend holiday – no training', beforeTip:'Before Day 1 – no training',
     holiday:'Holiday', holidayTip:'Public holiday – no training', weekendHolTip:'Public holiday (on the weekend) – no training',
     wd:d=>d.toLocaleDateString('en-GB',{weekday:'short'}),
     fmt:d=>d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),
     fmtS:d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}),
-    gate:'Gate', level:'Level day', loc:'Location', group:'Group'
+    gate:'Gate', level:'Level day', loc:'Location', group:'Group',
+    rowWd:'Weekday', rowDay:'Training day no.', rowDate:'Calendar date'
   },
   ar: {
     dir:'rtl', other:'English',
-    title:'التدريب – المرحلة الأولى: المسارات والجدول الزمني',
-    sub:'إدارة تقييم الأضرار والتعافي · 10 متدربين · 19 يوماً تدريبياً · شركة العوض ونابو للتجارة والمقاولات',
+    title:'التدريب على نظم المعلومات الجغرافية ورسم الخرائط والطائرات المسيّرة: المسارات والجدول الزمني',
+    sub:'إدارة تقييم الأضرار والتعافي · 10 متدربين في نظم المعلومات الجغرافية وحتى 5 في الطائرات المسيّرة · 10.5 أيام عمل · شركة العوض ونابو للتجارة والمقاولات',
     aboutH:'عن البرنامج التدريبي',
-    about:'تبني المرحلة الأولى المهارات الأساسية لدى إدارة تقييم الأضرار والتعافي في وزارة الطوارئ وإدارة الكوارث لرسم خرائط الأضرار وتقييمها بعد الكوارث. يتابع <b>عشرة متدربين</b>، يُنتقون من 15–20 مرشحاً، مسارين متتاليين، لكل منهما ثلاثة مستويات (أساسي ومبتدئ ومتوسط): <b>نظم المعلومات الجغرافية ورسم الخرائط</b> في القاعة التدريبية، مع تطبيق عملي على QGIS وعرض لـ ArcGIS، ثم <b>الطائرات المسيّرة</b> في القاعة التدريبية والميدان، وينتهي بمهمة مسح كاملة. ينتهي كل مستوى باختبار عبور، ويُختتم البرنامج باختبار استلام قبل التقرير النهائي.',
+    about:'يبني هذا التدريب المهارات الأساسية لدى إدارة تقييم الأضرار والتعافي في وزارة الطوارئ وإدارة الكوارث لرسم خرائط الأضرار وتقييمها بعد الكوارث. يتابع <b>عشرة متدربين</b>، يُنتقون من 15–20 مرشحاً عبر اختبار الانتقاء، مسار <b>نظم المعلومات الجغرافية ورسم الخرائط</b> (أساسي يوم واحد، ومبتدئ يوم واحد، ومتوسط 3 أيام) في القاعة التدريبية، مع تطبيق عملي على QGIS وتعريف بـ ArcGIS. ثم يتابع <b>خمسة</b> على الأكثر ممن اجتازوه مسار <b>الطائرات المسيّرة</b> (أساسي يوم واحد، ومبتدئ يومان، ومتوسط يومان) في القاعة التدريبية والميدان، ويجري التنسيق مع مجلس مدينة دوما لتحديد منطقة العمل الميداني في دوما. ينتهي كل مستوى باختبار عبور، مع فرصة ثانية بموافقة المدربين ومشرف التدريب. ويجري الاستلام خلال المستوى المتوسط للطائرات المسيّرة (مهمة ميدانية في اليوم 9، وعرض على البرمجيات في اليوم 10)، يليه التقرير الختامي ودعم فني عن بعد لمدة شهرين.',
     start:'تاريخ اليوم الأول:',
-    hint:'<span class="tag">جرّبها</span><strong>غيّر تاريخ اليوم الأول</strong> من منتقي التاريخ، أو استخدم <strong>−أسبوع / +أسبوع</strong>. سيتحرك جدول التدريب كله على التقويم: أيام التدريب والأيام الاحتياطية والاستلام والتقرير النهائي. تُتخطى عطلة نهاية الأسبوع (الجمعة والسبت) والعطلتين الرسميتين في 8 و25 كانون الأول 2026 تلقائياً، وتومض التواريخ الجديدة أدناه.',
-    wkMinus:'−أسبوع', wkPlus:'+أسبوع', reset:'إعادة (8 تشرين الثاني)',
-    chips:[['k-gis','بداية نظم المعلومات الجغرافية',1],['k-gis','نهاية نظم المعلومات الجغرافية',7],['','بداية الطائرات المسيّرة',8],['','نهاية الطائرات المسيّرة',19],['k-acc','الاستلام',23],['k-acc','التقرير النهائي بحلول',28]],
-    toast:(d1,d28)=>`📅 تم تحديث التقويم · اليوم الأول: ${d1} · التقرير النهائي بحلول ${d28}`,
+    hint:'<span class="tag">جرّبها</span><strong>غيّر تاريخ اليوم الأول</strong> من منتقي التاريخ، أو استخدم <strong>−أسبوع / +أسبوع</strong>. سيتحرك جدول التدريب كله على التقويم: أيام التدريب والتقارير المرحلية والاستلام والتقرير الختامي. تُتخطى عطلة نهاية الأسبوع (الجمعة والسبت) والعطلتين الرسميتين في 8 و25 كانون الأول 2026 تلقائياً، وتومض التواريخ الجديدة أدناه.',
+    wkMinus:'−أسبوع', wkPlus:'+أسبوع', reset:'إعادة (1 كانون الأول)',
+    chips:[['k-gis','بداية نظم المعلومات الجغرافية',1],['k-gis','نهاية نظم المعلومات الجغرافية',5],['','بداية الطائرات المسيّرة',6],['k-acc','مهمة الاستلام الميدانية',9],['','نهاية الطائرات المسيّرة',10],['k-acc','التقرير الختامي بحلول',15]],
+    toast:(d1,dEnd)=>`📅 تم تحديث التقويم · اليوم الأول: ${d1} · التقرير الختامي بحلول ${dEnd}`,
     snapped:' (نُقل إلى يوم العمل التالي)',
-    note:'أسبوع العمل: 5 أيام، والعطلة: يومان. ويوما 8 و25 كانون الأول 2026 عطلتان رسميتان لا تدريب فيهما. يُتوقع أن يبدأ اليوم الأول في 8 تشرين الثاني 2026 (± أسبوع). الكتل المخططة أيام ميدانية. ◆ تشير إلى بوابة المستوى (اختبار الخروج). مرّر المؤشر فوق أي كتلة لعرض التفاصيل. لمشاركة الصفحة بالعربية أضف <code dir="ltr">?lang=ar</code> إلى الرابط (<code dir="ltr">?lang=en</code> للإنكليزية)، ويُحفظ تاريخ البدء المختار في الرابط أيضاً.',
+    note:'أسبوع العمل: 5 أيام، والعطلة: يومان. ويوما 8 و25 كانون الأول 2026 عطلتان رسميتان لا تدريب فيهما. يُفترض أن يبدأ اليوم الأول في 1 كانون الأول 2026، ويُتفق على تاريخ البدء مع مشرف التدريب بعد التعاقد. يُعقد اختبار الانتقاء قبل اليوم الأول بعد اعتماد خطة العمل. الكتل المخططة أيام ميدانية. ◆ تشير إلى بوابة المستوى (اختبار الخروج). مرّر المؤشر فوق أي كتلة لعرض التفاصيل. لمشاركة الصفحة بالعربية أضف <code dir="ltr">?lang=ar</code> إلى الرابط (<code dir="ltr">?lang=en</code> للإنكليزية)، ويُحفظ تاريخ البدء المختار في الرابط أيضاً.',
     pathway:'مسار التدريب', timeline:'الجدول الزمني حسب اليوم التدريبي',
-    sel:'اختبار الانتقاء', selSub:'15–20 مرشحاً ← 10', selWhen:'خلال 5 أيام من توقيع العقد',
+    sel:'اختبار الانتقاء', selSub:'15–20 مرشحاً ← 10', selWhen:'بعد اعتماد خطة العمل، قبل اليوم الأول',
     gis:'نظم المعلومات الجغرافية ورسم الخرائط', dr:'الطائرات المسيّرة',
-    lanes:['نظم المعلومات الجغرافية · الجميع','الطائرات المسيّرة · المجموعة أ','الطائرات المسيّرة · المجموعة ب','الختام'],
+    lanes:['نظم المعلومات الجغرافية · 10 متدربين','الطائرات المسيّرة · حتى 5 متدربين','الاستلام','التقارير'],
     basic:'أساسي', beginner:'مبتدئ', inter:'متوسط',
-    venue:'القاعة التدريبية', field:'الميدان', venueField:'القاعة + زيارة ميدانية قريبة (اليوم الأخير)', fieldVenue:'يومان ميدان + يوم قاعة',
-    days:n=>n===1?'يوم واحد':n===2?'يومان':n+' أيام', perGroup:' لكل مجموعة',
-    reserve:'احتياطي', accept:'الاستلام', report:'التقرير النهائي',
-    week:'الأسبوع', day:'اليوم', both:'المجموعتان أ + ب معاً', all:'جميع المتدربين العشرة', grpA:'المجموعة أ', grpB:'المجموعة ب',
-    gates:{gb:'اختبار ≥ 60%', gbe:'عملي ≥ 60% + مشروع جماعي', gi:'عملي ≥ 70% + خريطة A3',
-           db:'نظري ≥ 75%', dbe:'اختبار مهارات الطيران', di:'مهمة كاملة وفق معايير الجودة'},
-    reserveTip:'أيام احتياطية (عند الحاجة، ميدان)', acceptTip:'الاستلام: مهمة ميدانية نهائية وعرض على البرمجيات',
-    reportTip:'التقرير النهائي إلى مشرف التدريب (بحلول اليوم 28)', selTip:'اختبار الانتقاء: 15–20 مرشحاً؛ يعتمد القسم 10 متدربين',
-    legend:[['teal','نظم المعلومات الجغرافية – القاعة التدريبية'],['slateT','الطائرات المسيّرة – القاعة التدريبية'],['slate','الطائرات المسيّرة – الميدان'],['grey','أيام احتياطية'],['red','الانتقاء والاستلام'],['wkd','عطلة نهاية الأسبوع (الجمعة والسبت)'],['hol','عطلتان رسميتان – 8 و25 كانون الأول 2026']],
+    venue:'القاعة التدريبية', field:'الميدان', venueField:'القاعة + زيارة ميدانية قصيرة قريبة (اليوم الأخير)', fieldVenue:'يوم ميدان + يوم قاعة',
+    days:n=>n===1?'يوم واحد':n===2?'يومان':n+' أيام',
+    accept:'الاستلام', gisRep:'التقرير المرحلي لنظم المعلومات', drRep:'التقرير المرحلي للطائرات', report:'التقرير الختامي',
+    week:'الأسبوع', day:'اليوم', all:'جميع المتدربين العشرة', dr5:'حتى 5 متدربين',
+    gates:{gb:'اختبار ≥ 70%', gbe:'عملي ≥ 70% + مشروع جماعي', gi:'عملي ≥ 80% + خريطة A3',
+           db:'نظري ≥ 70%', dbe:'اختبار مهارات الطيران', di:'مهمة كاملة وفق معايير الجودة'},
+    acceptTip:'الاستلام بحضور اللجنة: مهمة ميدانية نهائية (اليوم 9) وعرض على البرمجيات (اليوم 10)',
+    gisRepTip:'التقرير المرحلي لمسار نظم المعلومات الجغرافية وقائمة المتدربين الموصى بهم لمسار الطائرات المسيّرة (خلال يوم عمل واحد من اليوم 5)',
+    drRepTip:'التقرير المرحلي لمسار الطائرات المسيّرة (خلال يوم عمل واحد من اليوم 10)',
+    reportTip:'التقرير الختامي إلى مشرف التدريب (خلال 5 أيام عمل من اليوم 10)، يليه دعم فني عن بعد لمدة شهرين',
+    selTip:'اختبار الانتقاء (وهو الاختبار القبلي): 15–20 مرشحاً؛ تعتمد الإدارة 10 متدربين',
+    legend:[['teal','نظم المعلومات الجغرافية – القاعة التدريبية'],['slateT','الطائرات المسيّرة – القاعة التدريبية'],['slate','الطائرات المسيّرة – الميدان'],['red','الانتقاء والاستلام'],['wkd','عطلة نهاية الأسبوع (الجمعة والسبت)'],['hol','عطلتان رسميتان – 8 و25 كانون الأول 2026']],
     weekend:'عطلة نهاية الأسبوع', weekendTip:'عطلة نهاية الأسبوع – لا تدريب', beforeTip:'قبل اليوم الأول – لا تدريب',
     holiday:'عطلة رسمية', holidayTip:'عطلة رسمية – لا تدريب', weekendHolTip:'عطلة رسمية (في عطلة نهاية الأسبوع) – لا تدريب',
     wd:d=>['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][d.getDay()],
     fmt:d=>d.toLocaleDateString('ar-SY-u-nu-latn',{weekday:'short',day:'numeric',month:'short'}),
     fmtS:d=>`${d.getDate()}/${d.getMonth()+1}`,
-    gate:'البوابة', level:'يوم المستوى', loc:'المكان', group:'المجموعة'
+    gate:'البوابة', level:'يوم المستوى', loc:'المكان', group:'المجموعة',
+    rowWd:'يوم الأسبوع', rowDay:'رقم اليوم التدريبي', rowDate:'التاريخ'
   }
 };
 
-// Schedule (Proposal Section 6.4.2). lane: 0 GIS, 1 drones A, 2 drones B, 3 closing; span: lanes covered
+// Schedule (proposal Section 6.4.2). lane: 0 GIS, 1 drones, 2 acceptance, 3 reports
+const LAST_DAY = 15; // final report: within 5 working days of Day 10
 const SCHEDULE = [
-  ...[1,2].map((d,i)=>({day:d,lane:0,track:'gis',lvl:'basic',loc:'venue',grp:'all',ld:`${i+1} / 2`,gate:i===1&&'gb'})),
-  ...[3,4].map((d,i)=>({day:d,lane:0,track:'gis',lvl:'beginner',loc:'venue',grp:'all',ld:`${i+1} / 2`,gate:i===1&&'gbe'})),
-  {day:5,lane:0,track:'gis',lvl:'inter',loc:'venue',grp:'all',ld:'1 / 3'},
-  {day:6,lane:0,track:'gis',lvl:'inter',loc:'venue',grp:'all',ld:'2 / 3'},
-  {day:7,lane:0,track:'gis',lvl:'inter',loc:'venueField',grp:'all',ld:'3 / 3',gate:'gi'},
-  ...[8,9].map((d,i)=>({day:d,lane:1,span:2,track:'dr',lvl:'basic',loc:'venue',grp:'both',ld:`${i+1} / 2`,gate:i===1&&'db'})),
-  {day:10,lane:1,track:'dr',lvl:'beginner',loc:'field',grp:'grpA',ld:'1 / 2'},
-  {day:11,lane:2,track:'dr',lvl:'beginner',loc:'field',grp:'grpB',ld:'1 / 2'},
-  {day:12,lane:1,track:'dr',lvl:'beginner',loc:'field',grp:'grpA',ld:'2 / 2',gate:'dbe'},
-  {day:13,lane:2,track:'dr',lvl:'beginner',loc:'field',grp:'grpB',ld:'2 / 2',gate:'dbe'},
-  {day:14,lane:1,track:'dr',lvl:'inter',loc:'field',grp:'grpA',ld:'1 / 3'},
-  {day:15,lane:2,track:'dr',lvl:'inter',loc:'field',grp:'grpB',ld:'1 / 3'},
-  {day:16,lane:1,track:'dr',lvl:'inter',loc:'field',grp:'grpA',ld:'2 / 3'},
-  {day:17,lane:2,track:'dr',lvl:'inter',loc:'field',grp:'grpB',ld:'2 / 3'},
-  {day:18,lane:1,track:'dr',lvl:'inter',loc:'venue',grp:'grpA',ld:'3 / 3',gate:'di'},
-  {day:19,lane:2,track:'dr',lvl:'inter',loc:'venue',grp:'grpB',ld:'3 / 3',gate:'di'},
+  {day:1,lane:0,track:'gis',lvl:'basic',loc:'venue',grp:'all',ld:'1 / 1',gate:'gb'},
+  {day:2,lane:0,track:'gis',lvl:'beginner',loc:'venue',grp:'all',ld:'1 / 1',gate:'gbe'},
+  {day:3,lane:0,track:'gis',lvl:'inter',loc:'venue',grp:'all',ld:'1 / 3'},
+  {day:4,lane:0,track:'gis',lvl:'inter',loc:'venue',grp:'all',ld:'2 / 3'},
+  {day:5,lane:0,track:'gis',lvl:'inter',loc:'venueField',grp:'all',ld:'3 / 3',gate:'gi'},
+  {day:6,lane:1,track:'dr',lvl:'basic',loc:'venue',grp:'dr5',ld:'1 / 1',gate:'db'},
+  {day:7,lane:1,track:'dr',lvl:'beginner',loc:'field',grp:'dr5',ld:'1 / 2'},
+  {day:8,lane:1,track:'dr',lvl:'beginner',loc:'field',grp:'dr5',ld:'2 / 2',gate:'dbe'},
+  {day:9,lane:1,track:'dr',lvl:'inter',loc:'field',grp:'dr5',ld:'1 / 2'},
+  {day:10,lane:1,track:'dr',lvl:'inter',loc:'venue',grp:'dr5',ld:'2 / 2',gate:'di'},
 ];
 const CLOSING = [
-  {from:20,to:22,key:'reserve',tip:'reserveTip',fill:C.grey,ink:C.charcoal},
-  {from:23,to:24,key:'accept',tip:'acceptTip',fill:C.red,ink:C.white},
-  {from:28,to:28,key:'report',tip:'reportTip',fill:C.white,ink:C.red,outline:C.red},
+  {from:9,to:10,lane:2,key:'accept',tip:'acceptTip',fill:C.red,ink:C.white},
+  {from:6,to:6,lane:3,key:'gisRep',tip:'gisRepTip',fill:C.white,ink:C.teal,outline:C.teal},
+  {from:11,to:11,lane:3,key:'drRep',tip:'drRepTip',fill:C.white,ink:C.slate,outline:C.slate},
+  {from:LAST_DAY,to:LAST_DAY,lane:3,key:'report',tip:'reportTip',fill:C.white,ink:C.red,outline:C.red},
 ];
 
 // Language and start date come from the link: ?lang=ar|en&start=YYYY-MM-DD
-const DEFAULT_START = '2026-11-08';
+const DEFAULT_START = '2026-12-01';
 const params = new URLSearchParams(location.search);
 let lang = (params.get('lang') || '').toLowerCase().startsWith('ar') ? 'ar' : 'en';
 const startEl = document.getElementById('start');
@@ -335,9 +339,9 @@ function drawPathway(t, top) {
   hit(0, y1, selW, bh, `<b>${t.sel}</b><br>${t.selTip}<br>${t.selWhen}`);
 
   const lv = [
-    { k: 'basic', gis: [2, 'venue', 'gb'], dr: [2, 'venue', 'db', 'both'] },
-    { k: 'beginner', gis: [2, 'venue', 'gbe'], dr: [2, 'field', 'dbe', 'pg'] },
-    { k: 'inter', gis: [3, 'venueField', 'gi'], dr: [3, 'fieldVenue', 'di', 'pg'] },
+    { k: 'basic', gis: [1, 'venue', 'gb'], dr: [1, 'venue', 'db'] },
+    { k: 'beginner', gis: [1, 'venue', 'gbe'], dr: [2, 'field', 'dbe'] },
+    { k: 'inter', gis: [3, 'venueField', 'gi'], dr: [2, 'fieldVenue', 'di'] },
   ];
   const x0 = selW + gap;
   arrow(selW + 2, y1 + bh / 2, x0 - 4, y1 + bh / 2, C.red);
@@ -351,12 +355,12 @@ function drawPathway(t, top) {
     // Drones
     const field = l.dr[1] !== 'venue';
     rrect(x, y2, boxW, bh, 8, field ? C.slate : C.slateT);
-    if (field) hatch(x, y2, boxW * (l.dr[1] === 'field' ? 1 : 0.66), bh, 8, 'rgba(255,255,255,.18)');
+    if (field) hatch(x, y2, boxW * (l.dr[1] === 'field' ? 1 : 0.5), bh, 8, 'rgba(255,255,255,.18)');
     const ink = field ? C.white : C.charcoal;
     text(`${t.dr} · ${t[l.k]}`, x + 12, y2 + 20, { size: 13, weight: 600, color: ink, maxW: boxW - 24 });
-    const dTxt = `${t.days(l.dr[0])}${l.dr[3] === 'pg' ? t.perGroup : ''} · ${t[l.dr[1]]}`;
+    const dTxt = `${t.days(l.dr[0])} · ${t[l.dr[1]]}`;
     text(dTxt, x + 12, y2 + 42, { size: 12, color: field ? '#e3e7eb' : C.slate, maxW: boxW - 24 });
-    hit(x, y2, boxW, bh, `<b>${t.dr} – ${t[l.k]}</b><br>${dTxt}<br>${l.dr[3] === 'both' ? t.both : t.grpA + ' / ' + t.grpB}<br>${t.gate}: ${t.gates[l.dr[2]]}`);
+    hit(x, y2, boxW, bh, `<b>${t.dr} – ${t[l.k]}</b><br>${dTxt}<br>${t.dr5}<br>${t.gate}: ${t.gates[l.dr[2]]}`);
     // gates and arrows
     if (i < 2) {
       const gx = x + boxW + gap / 2;
@@ -381,7 +385,7 @@ function drawPathway(t, top) {
 function buildColumns(avail, x0) {
   const d1 = dayDate(1) || new Date(DEFAULT_START + 'T00:00:00');
   const gridStart = new Date(d1); gridStart.setDate(d1.getDate() - d1.getDay());   // Sunday of Day 1's week
-  const gridEnd = new Date(dayDate(28) || d1); gridEnd.setDate(gridEnd.getDate() + (6 - gridEnd.getDay())); // Saturday
+  const gridEnd = new Date(dayDate(LAST_DAY) || d1); gridEnd.setDate(gridEnd.getDate() + (6 - gridEnd.getDay())); // Saturday
   const cols = [], byDay = {};
   let n = 0;
   for (const d = new Date(gridStart); d <= gridEnd; d.setDate(d.getDate() + 1)) {
@@ -411,12 +415,17 @@ function drawTimeline(t, top) {
     rrect(a.x, hTop, b.x + b.w - a.x - 2, 20, 4, C.greyT);
     text(`${t.week} ${w + 1}`, (a.x + b.x + b.w) / 2, hTop + 10, { size: 12, weight: 600, color: C.slate, align: 'center' });
   }
+  // header row labels: weekday · training day number · calendar date
+  rrect(0, yNum - 8, labW + preW, 16, 4, C.tealT);
+  text(t.rowWd + (rtl() ? ' ←' : ' →'), 6, yWd, { size: 10.5, weight: 600, color: C.slate, maxW: labW + preW - 12 });
+  text(t.rowDay + (rtl() ? ' ←' : ' →'), 6, yNum, { size: 11, weight: 700, color: C.teal, maxW: labW + preW - 12 });
+  text(t.rowDate + (rtl() ? ' ←' : ' →'), 6, yDate, { size: 10.5, weight: 600, color: C.muted, maxW: labW + preW - 12 });
   // lane backgrounds and labels
   t.lanes.forEach((name, i) => {
     const y = laneTop + i * laneH;
     if (i % 2 === 0) rrect(0, y, labW + preW, laneH, 0, '#fafbfb');
     ctx.fillStyle = '#e6e8eb'; ctx.fillRect(0, y + laneH - 1, W, 1);
-    text(name, 6, y + laneH / 2, { size: 12.5, weight: 600, color: i === 0 ? C.teal : i < 3 ? C.slate : C.charcoal, maxW: labW - 10 });
+    text(name, 6, y + laneH / 2, { size: 12.5, weight: 600, color: i === 0 ? C.teal : i === 1 ? C.slate : C.charcoal, maxW: labW - 10 });
   });
   // day columns
   cols.forEach(c => {
@@ -443,7 +452,7 @@ function drawTimeline(t, top) {
     if (a > 0) {
       // highlighted column sweeping across the calendar
       ctx.globalAlpha = a * 0.16; rrect(c.x + 1, laneTop, c.w - 2, lanes * laneH, 0, C.teal); ctx.globalAlpha = 1;
-      ctx.globalAlpha = a; rrect(c.x + 1, yDate - 8, c.w - 2, 16, 4, c.we || c.hol || c.n === 1 || c.n === 28 ? C.red : C.teal); ctx.globalAlpha = 1;
+      ctx.globalAlpha = a; rrect(c.x + 1, yDate - 8, c.w - 2, 16, 4, c.we || c.hol || c.n === 1 || c.n === LAST_DAY ? C.red : C.teal); ctx.globalAlpha = 1;
     }
     const lit = a > 0.3;
     // narrow weekend columns show the day of the month only
@@ -509,11 +518,10 @@ function drawTimeline(t, top) {
     const d1 = dayDate(c.from), d2 = dayDate(c.to);
     const range = c.from === c.to ? `${t.day} ${c.from}` : `${t.day} ${c.from}–${c.to}`;
     runs.forEach(r => {
-      const x = r.a.x + 2, w = r.b.x + r.b.w - x - 2, y = laneTop + 3 * laneH + 6, h = laneH - 12;
+      const x = r.a.x + 2, w = r.b.x + r.b.w - x - 2, y = laneTop + c.lane * laneH + 6, h = laneH - 12;
       const a = flashAlpha(r.a.i);
       if (a > 0) { ctx.globalAlpha = a; rrect(x - 3, y - 3, w + 6, h + 6, 7, null, C.red); ctx.globalAlpha = 1; }
       rrect(x, y, w, h, 5, c.fill, c.outline);
-      if (c.key === 'reserve') hatch(x, y, w, h, 5, 'rgba(255,255,255,.5)');
       if (c.from === c.to) {
         // single-day marker: label sits in the free days before it
         text('✓', x + w / 2, y + h / 2, { size: 13, weight: 700, color: c.ink, align: 'center' });
@@ -582,7 +590,7 @@ function onDateChange() {
   document.getElementById('hint').classList.add('used');
   startEl.classList.remove('pulse');
   renderChips(!reduceMotion);
-  showToast(t.toast(t.fmt(d1), t.fmt(dayDate(28))) + (isOff(picked) ? t.snapped : ''));
+  showToast(t.toast(t.fmt(d1), t.fmt(dayDate(LAST_DAY))) + (isOff(picked) ? t.snapped : ''));
   syncUrl();
   if (reduceMotion) return draw();
   flashAt = performance.now(); requestAnimationFrame(animate);
