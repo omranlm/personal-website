@@ -99,6 +99,7 @@ img { max-width: 100%; display: block; }
   height: 26px;
   border-radius: 6px;
   flex-shrink: 0;
+  vertical-align: middle;
 }
 
 /* hamburger button — hidden on desktop */
