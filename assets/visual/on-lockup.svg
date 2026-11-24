@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120">
+  <defs>
+    <linearGradient id="lockupBgGrad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0c7c70"/>
+      <stop offset="1" stop-color="#042010"/>
+    </linearGradient>
+    <linearGradient id="lockupRingGrad" x1="54" y1="46" x2="146" y2="138" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0c7c70"/>
+      <stop offset="1" stop-color="#007a3d"/>
+    </linearGradient>
+    <clipPath id="lockupStripeClip">
+      <rect x="30" y="160" width="140" height="20" rx="10"/>
+    </clipPath>
+  </defs>
+
+  <g transform="scale(0.6)">
+    <rect width="200" height="200" rx="40" fill="url(#lockupBgGrad)"/>
+    <circle cx="100" cy="92" r="46" fill="none" stroke="url(#lockupRingGrad)" stroke-width="20"/>
+    <g fill="#ffffff">
+      <rect x="73"  y="64" width="10" height="56"/>
+      <rect x="117" y="64" width="10" height="56"/>
+      <line x1="83" y1="64" x2="117" y2="120" stroke="#ffffff" stroke-width="10" stroke-linecap="butt"/>
+    </g>
+    <g clip-path="url(#lockupStripeClip)">
+      <rect x="30"     y="160" width="46.67" height="20" fill="#007a3d"/>
+      <rect x="76.67"  y="160" width="46.66" height="20" fill="#ffffff"/>
+      <rect x="123.33" y="160" width="46.67" height="20" fill="#111111"/>
+    </g>
+    <g fill="#ce1126">
+      <circle cx="90"  cy="170" r="4.5"/>
+      <circle cx="100" cy="170" r="4.5"/>
+      <circle cx="110" cy="170" r="4.5"/>
+    </g>
+  </g>
+
+  <text x="140" y="60" font-family="'Segoe UI', system-ui, sans-serif" font-size="40" font-weight="800" letter-spacing="2" fill="#111111">OMRAN</text>
+  <text x="140" y="100" font-family="'Segoe UI', system-ui, sans-serif" font-size="40" font-weight="800" letter-spacing="2" fill="#111111">NAJJAR</text>
+</svg>
