@@ -83,12 +83,22 @@ img { max-width: 100%; display: block; }
 }
 
 .nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
   color: var(--white);
   font-weight: 700;
   font-size: 1.1rem;
   letter-spacing: .5px;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.nav-brand img {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 /* hamburger button — hidden on desktop */
