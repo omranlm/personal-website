@@ -8,15 +8,90 @@
   body { margin: 0; background: #f5f5f5; font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a1a; }
   a { color: #007a3d; }
   a:hover { color: #042010; }
-  code { background: #e9e9e9; padding: 1px 6px; border-radius: 4px; }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .toolbar-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #888;
+    margin-right: 4px;
+  }
+  .export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .export-btn:hover { background: #007a3d; border-color: #007a3d; color: #ffffff; }
+
+  .canvas-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 0 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 1px solid #e0e0e0;
+    overflow-x: auto;
+  }
+  .canvas-tab {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: #888;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 16px 16px 13px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .canvas-tab:hover { color: #042010; }
+  .canvas-tab[aria-selected="true"] { color: #042010; border-bottom-color: #007a3d; }
+
+  .canvas-panel[hidden] { display: none; }
+
+  @media print {
+    .toolbar, .canvas-tabs { display: none; }
+    .canvas-panel[hidden] { display: block; }
+    .canvas-panel { break-inside: avoid; page-break-after: always; }
+  }
 </style>
 </head>
 <body>
 
-<div style="width: 100%; max-width: 1100px; margin: 0 auto; padding: 56px 24px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 64px;">
+<div class="toolbar">
+  <span class="toolbar-label">Export</span>
+  <a class="export-btn" href="on-mark-primary.svg" download>Primary .svg</a>
+  <a class="export-btn" href="on-mark-mono.svg" download>Mono .svg</a>
+  <a class="export-btn" href="on-lockup.svg" download>Lockup .svg</a>
+  <button type="button" class="export-btn" id="export-pdf">Save as PDF</button>
+</div>
 
-  <!-- Hero -->
-  <section style="display: flex; flex-wrap: wrap; align-items: center; gap: 36px;">
+<div style="width: 100%; max-width: 1100px; margin: 0 auto; padding: 32px 24px 0; box-sizing: border-box;">
+  <!-- Hero (shown above every canvas) -->
+  <section style="display: flex; flex-wrap: wrap; align-items: center; gap: 36px; padding-bottom: 40px;">
     <img src="on-mark-primary.svg" alt="O N monogram mark on a teal-to-green gradient badge, with a green, white and black stripe and three red dots at the base" width="140" height="140" style="flex-shrink: 0; border-radius: 28px;">
     <div style="display: flex; flex-direction: column; gap: 8px; min-width: 280px;">
       <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #ce1126;">Personal Visual Identity</span>
@@ -26,149 +101,195 @@
       </p>
     </div>
   </section>
+</div>
 
-  <!-- Construction -->
-  <section style="display: flex; flex-direction: column; gap: 16px;">
-    <h2 style="margin: 0; font-size: 24px; font-weight: 800;">How it's built</h2>
-    <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #444; max-width: 72ch;">
-      The ring is the <strong>O</strong>; a bold letterform nested inside it is the <strong>N</strong> — two
-      verticals and a diagonal, scaled to sit clear of the ring rather than cross it edge to edge (a full-diameter
-      diagonal through a thick ring reads as a "no entry" sign, not a letter). The footer is a miniature of the
-      green–white–black flag stripe already used under every section title on omran.blog, with three small red
-      dots standing in for the flag's three stars — the "3 dots as stars" brief, rendered in the same circular
-      style already established across the site rather than sharp points.
-    </p>
-  </section>
+<div class="canvas-tabs" role="tablist" aria-label="Identity canvases">
+  <button type="button" class="canvas-tab" role="tab" id="tab-identity" aria-selected="true" aria-controls="panel-identity">Identity</button>
+  <button type="button" class="canvas-tab" role="tab" id="tab-variants" aria-selected="false" aria-controls="panel-variants" tabindex="-1">Variants &amp; Palette</button>
+  <button type="button" class="canvas-tab" role="tab" id="tab-usage" aria-selected="false" aria-controls="panel-usage" tabindex="-1">Usage &amp; Specs</button>
+</div>
 
-  <!-- Shared language with OSM Syria -->
-  <section style="display: flex; flex-direction: column; gap: 20px;">
-    <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Shared language with OSM Syria</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 24px;">
-      <div style="background: #ffffff; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
-        <img src="../osm-syria-logo.svg" alt="OSM Syria logo: a teal map pin with a red location dot and three small red stars" style="width: 100%; max-width: 220px; height: auto;">
-        <span style="font-size: 13px; font-weight: 700; color: #666;">OSM Syria</span>
-      </div>
-      <div style="background: #ffffff; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
-        <img src="on-mark-primary.svg" alt="The new O N personal mark" style="width: 100%; max-width: 160px; height: auto;">
-        <span style="font-size: 13px; font-weight: 700; color: #666;">Omran Najjar</span>
-      </div>
-    </div>
-    <ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.8; color: #444;">
-      <li>Same teal, <code>#0c7c70</code>, carried into the ring gradient</li>
-      <li>Same instinct for a dark badge ground rather than a flat white tile</li>
-      <li>Same red accent, <code>#ce1126</code>, used for a small cluster of stars</li>
-    </ul>
-  </section>
+<div style="width: 100%; max-width: 1100px; margin: 0 auto; padding: 40px 24px 96px; box-sizing: border-box;">
 
-  <!-- Variants -->
-  <section style="display: flex; flex-direction: column; gap: 20px;">
-    <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Variants</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 24px;">
-      <div style="background: #ffffff; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
-        <img src="on-mark-primary.svg" alt="Primary full-color mark" width="100" height="100">
-        <div style="text-align: center;">
-          <div style="font-size: 14px; font-weight: 700;">Primary</div>
-          <div style="font-size: 12px; color: #888;">on-mark-primary.svg</div>
+  <!-- Canvas: Identity -->
+  <div class="canvas-panel" id="panel-identity" role="tabpanel" aria-labelledby="tab-identity" style="display: flex; flex-direction: column; gap: 64px;">
+
+    <section style="display: flex; flex-direction: column; gap: 16px;">
+      <h2 style="margin: 0; font-size: 24px; font-weight: 800;">How it's built</h2>
+      <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #444; max-width: 72ch;">
+        The ring is the <strong>O</strong>; a bold letterform nested inside it is the <strong>N</strong> — two
+        verticals and a diagonal, scaled to sit clear of the ring rather than cross it edge to edge (a full-diameter
+        diagonal through a thick ring reads as a "no entry" sign, not a letter). The footer is a miniature of the
+        green–white–black flag stripe already used under every section title on omran.blog, with three small red
+        dots standing in for the flag's three stars — the "3 dots as stars" brief, rendered in the same circular
+        style already established across the site rather than sharp points.
+      </p>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 20px;">
+      <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Shared language with OSM Syria</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 24px;">
+        <div style="background: #ffffff; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+          <img src="../osm-syria-logo.svg" alt="OSM Syria logo: a teal map pin with a red location dot and three small red stars" style="width: 100%; max-width: 220px; height: auto;">
+          <span style="font-size: 13px; font-weight: 700; color: #666;">OSM Syria</span>
+        </div>
+        <div style="background: #ffffff; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+          <img src="on-mark-primary.svg" alt="The new O N personal mark" style="width: 100%; max-width: 160px; height: auto;">
+          <span style="font-size: 13px; font-weight: 700; color: #666;">Omran Najjar</span>
         </div>
       </div>
-      <div style="background: #111111; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
-        <img src="on-mark-mono.svg" alt="Monochrome line-art mark, white on dark" width="100" height="100">
-        <div style="text-align: center;">
-          <div style="font-size: 14px; font-weight: 700; color: #ffffff;">Mono</div>
-          <div style="font-size: 12px; color: #999;">on-mark-mono.svg</div>
+      <ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.8; color: #444;">
+        <li>Same teal, <code style="background: #e9e9e9; padding: 1px 6px; border-radius: 4px;">#0c7c70</code>, carried into the ring gradient</li>
+        <li>Same instinct for a dark badge ground rather than a flat white tile</li>
+        <li>Same red accent, <code style="background: #e9e9e9; padding: 1px 6px; border-radius: 4px;">#ce1126</code>, used for a small cluster of stars</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- Canvas: Variants & Palette -->
+  <div class="canvas-panel" id="panel-variants" role="tabpanel" aria-labelledby="tab-variants" hidden style="display: flex; flex-direction: column; gap: 64px;">
+
+    <section style="display: flex; flex-direction: column; gap: 20px;">
+      <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Variants</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 24px;">
+        <div style="background: #ffffff; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+          <img src="on-mark-primary.svg" alt="Primary full-color mark" width="100" height="100">
+          <div style="text-align: center;">
+            <div style="font-size: 14px; font-weight: 700;">Primary</div>
+            <div style="font-size: 12px; color: #888;">on-mark-primary.svg</div>
+          </div>
+        </div>
+        <div style="background: #111111; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+          <img src="on-mark-mono.svg" alt="Monochrome line-art mark, white on dark" width="100" height="100">
+          <div style="text-align: center;">
+            <div style="font-size: 14px; font-weight: 700; color: #ffffff;">Mono</div>
+            <div style="font-size: 12px; color: #999;">on-mark-mono.svg</div>
+          </div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+          <img src="on-lockup.svg" alt="Horizontal lockup with the Omran Najjar wordmark" style="width: 100%; max-width: 220px; height: auto;">
+          <div style="text-align: center;">
+            <div style="font-size: 14px; font-weight: 700;">Lockup</div>
+            <div style="font-size: 12px; color: #888;">on-lockup.svg</div>
+          </div>
         </div>
       </div>
-      <div style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
-        <img src="on-lockup.svg" alt="Horizontal lockup with the Omran Najjar wordmark" style="width: 100%; max-width: 220px; height: auto;">
-        <div style="text-align: center;">
-          <div style="font-size: 14px; font-weight: 700;">Lockup</div>
-          <div style="font-size: 12px; color: #888;">on-lockup.svg</div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 20px;">
+      <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Palette</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 64px; border-radius: 10px; background: #0c7c70;"></div>
+          <div style="font-size: 13px; font-weight: 700;">OSM Teal</div>
+          <div style="font-size: 12px; color: #888;">#0c7c70</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 64px; border-radius: 10px; background: #007a3d;"></div>
+          <div style="font-size: 13px; font-weight: 700;">Flag Green</div>
+          <div style="font-size: 12px; color: #888;">#007a3d · var(--green)</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 64px; border-radius: 10px; background: #042010;"></div>
+          <div style="font-size: 13px; font-weight: 700;">Panel Dark</div>
+          <div style="font-size: 12px; color: #888;">#042010 · var(--panel-dark)</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 64px; border-radius: 10px; background: #ce1126;"></div>
+          <div style="font-size: 13px; font-weight: 700;">Flag Red</div>
+          <div style="font-size: 12px; color: #888;">#ce1126 · var(--teal)</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 64px; border-radius: 10px; background: #ffffff; border: 1px solid #e0e0e0;"></div>
+          <div style="font-size: 13px; font-weight: 700;">White</div>
+          <div style="font-size: 12px; color: #888;">#ffffff</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="height: 64px; border-radius: 10px; background: #111111;"></div>
+          <div style="font-size: 13px; font-weight: 700;">Black</div>
+          <div style="font-size: 12px; color: #888;">#111111 · var(--navy)</div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Palette -->
-  <section style="display: flex; flex-direction: column; gap: 20px;">
-    <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Palette</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 16px;">
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="height: 64px; border-radius: 10px; background: #0c7c70;"></div>
-        <div style="font-size: 13px; font-weight: 700;">OSM Teal</div>
-        <div style="font-size: 12px; color: #888;">#0c7c70</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="height: 64px; border-radius: 10px; background: #007a3d;"></div>
-        <div style="font-size: 13px; font-weight: 700;">Flag Green</div>
-        <div style="font-size: 12px; color: #888;">#007a3d · var(--green)</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="height: 64px; border-radius: 10px; background: #042010;"></div>
-        <div style="font-size: 13px; font-weight: 700;">Panel Dark</div>
-        <div style="font-size: 12px; color: #888;">#042010 · var(--panel-dark)</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="height: 64px; border-radius: 10px; background: #ce1126;"></div>
-        <div style="font-size: 13px; font-weight: 700;">Flag Red</div>
-        <div style="font-size: 12px; color: #888;">#ce1126 · var(--teal)</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="height: 64px; border-radius: 10px; background: #ffffff; border: 1px solid #e0e0e0;"></div>
-        <div style="font-size: 13px; font-weight: 700;">White</div>
-        <div style="font-size: 12px; color: #888;">#ffffff</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="height: 64px; border-radius: 10px; background: #111111;"></div>
-        <div style="font-size: 13px; font-weight: 700;">Black</div>
-        <div style="font-size: 12px; color: #888;">#111111 · var(--navy)</div>
-      </div>
-    </div>
-  </section>
+  </div>
 
-  <!-- Usage -->
-  <section style="display: flex; flex-direction: column; gap: 20px;">
-    <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Usage</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px;">
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <div style="font-size: 14px; font-weight: 700; color: #007a3d;">Do</div>
-        <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: #444;">
-          <li>Keep clearspace around the mark at least equal to the ring's stroke width</li>
-          <li>Use the mono version when placed on a busy photo or a colored background</li>
-          <li>Keep the flag-stripe footer and its three stars — they're the signature, not decoration</li>
-        </ul>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <div style="font-size: 14px; font-weight: 700; color: #ce1126;">Don't</div>
-        <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: #444;">
-          <li>Don't recolor the ring gradient or swap in a different red for the stars</li>
-          <li>Don't stretch the mark non-uniformly — scale width and height together</li>
-          <li>Don't rotate the mark; it reads as a monogram only upright</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <!-- Canvas: Usage & Specs -->
+  <div class="canvas-panel" id="panel-usage" role="tabpanel" aria-labelledby="tab-usage" hidden style="display: flex; flex-direction: column; gap: 64px;">
 
-  <!-- Small-size check -->
-  <section style="display: flex; flex-direction: column; gap: 16px;">
-    <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Reads small, too</h2>
-    <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
-      <img src="on-mark-primary.svg" alt="Mark at favicon size" width="32" height="32" style="border-radius: 7px;">
-      <img src="on-mark-primary.svg" alt="Mark at small avatar size" width="48" height="48" style="border-radius: 10px;">
-      <img src="on-mark-primary.svg" alt="Mark at app icon size" width="80" height="80" style="border-radius: 17px;">
-      <span style="font-size: 13px; color: #888;">32px · 48px · 80px</span>
-    </div>
-  </section>
+    <section style="display: flex; flex-direction: column; gap: 20px;">
+      <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Usage</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-size: 14px; font-weight: 700; color: #007a3d;">Do</div>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: #444;">
+            <li>Keep clearspace around the mark at least equal to the ring's stroke width</li>
+            <li>Use the mono version when placed on a busy photo or a colored background</li>
+            <li>Keep the flag-stripe footer and its three stars — they're the signature, not decoration</li>
+          </ul>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-size: 14px; font-weight: 700; color: #ce1126;">Don't</div>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: #444;">
+            <li>Don't recolor the ring gradient or swap in a different red for the stars</li>
+            <li>Don't stretch the mark non-uniformly — scale width and height together</li>
+            <li>Don't rotate the mark; it reads as a monogram only upright</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <!-- Files -->
-  <section style="display: flex; flex-direction: column; gap: 10px; padding-top: 24px; border-top: 1px solid #e0e0e0;">
-    <h2 style="margin: 0; font-size: 18px; font-weight: 800;">Delivered files</h2>
-    <p style="margin: 0; font-size: 14px; line-height: 1.8; color: #444;">
-      <code>assets/visual/on-mark-primary.svg</code> · full-color badge, for dark surfaces and the site itself<br>
-      <code>assets/visual/on-mark-mono.svg</code> · single-color line mark, for merch, stamps, busy backgrounds<br>
-      <code>assets/visual/on-lockup.svg</code> · horizontal mark + wordmark, for letterhead and email signatures
-    </p>
-  </section>
+    <section style="display: flex; flex-direction: column; gap: 16px;">
+      <h2 style="margin: 0; font-size: 24px; font-weight: 800;">Reads small, too</h2>
+      <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+        <img src="on-mark-primary.svg" alt="Mark at favicon size" width="32" height="32" style="border-radius: 7px;">
+        <img src="on-mark-primary.svg" alt="Mark at small avatar size" width="48" height="48" style="border-radius: 10px;">
+        <img src="on-mark-primary.svg" alt="Mark at app icon size" width="80" height="80" style="border-radius: 17px;">
+        <span style="font-size: 13px; color: #888;">32px · 48px · 80px</span>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 10px; padding-top: 24px; border-top: 1px solid #e0e0e0;">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 800;">Delivered files</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.8; color: #444;">
+        <code style="background: #e9e9e9; padding: 1px 6px; border-radius: 4px;">assets/visual/on-mark-primary.svg</code> · full-color badge, for dark surfaces and the site itself<br>
+        <code style="background: #e9e9e9; padding: 1px 6px; border-radius: 4px;">assets/visual/on-mark-mono.svg</code> · single-color line mark, for merch, stamps, busy backgrounds<br>
+        <code style="background: #e9e9e9; padding: 1px 6px; border-radius: 4px;">assets/visual/on-lockup.svg</code> · horizontal mark + wordmark, for letterhead and email signatures
+      </p>
+    </section>
+
+  </div>
 
 </div>
+
+<script>
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.canvas-tab'));
+
+    function activate(tab) {
+      tabs.forEach(function (t) {
+        var selected = t === tab;
+        t.setAttribute('aria-selected', String(selected));
+        t.tabIndex = selected ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !selected;
+      });
+      tab.focus();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { activate(tab); });
+      tab.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') activate(tabs[(i + 1) % tabs.length]);
+        if (e.key === 'ArrowLeft') activate(tabs[(i - 1 + tabs.length) % tabs.length]);
+      });
+    });
+
+    document.getElementById('export-pdf').addEventListener('click', function () {
+      window.print();
+    });
+  })();
+</script>
+
 </body>
 </html>
